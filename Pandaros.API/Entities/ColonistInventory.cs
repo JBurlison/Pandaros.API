@@ -45,7 +45,7 @@ namespace Pandaros.API.Entities
         }
 
         public double MagicItemUpdateTime { get; set; } = Pipliz.Time.SecondsSinceStartDouble + Pipliz.Random.Next(1, 10);
-
+        public double HealingItemUpdateTime { get; set; } = Pipliz.Time.SecondsSinceStartDouble + Pipliz.Random.Next(1, 10);
         public int SettlerId { get; set; }
 
         public double PunchCooldown { get; set; }
