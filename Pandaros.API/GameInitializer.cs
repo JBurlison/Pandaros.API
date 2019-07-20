@@ -43,8 +43,6 @@ namespace Pandaros.API
         {
             WorldLoaded                 = true;
             SAVE_LOC                    = GAMEDATA_FOLDER + "savegames/" + ServerManager.WorldName + "/";
-            RoamingJobManager.MACHINE_JSON = $"{SAVE_LOC}/{NAMESPACE}.Machines.json";
-
             StubColony = Colony.CreateStub(-99998);
         }
 

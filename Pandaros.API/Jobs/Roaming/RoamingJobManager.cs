@@ -12,7 +12,6 @@ namespace Pandaros.API.Jobs.Roaming
     public static class RoamingJobManager
     {
         private const int OBJECTIVE_REFRESH = 1;
-        public static string MACHINE_JSON = "";
 
         public static Dictionary<string, IRoamingJobObjective> ObjectiveCallbacks = new Dictionary<string, IRoamingJobObjective>(StringComparer.OrdinalIgnoreCase);
 
