@@ -33,8 +33,8 @@ namespace Pandaros.API.Jobs.Roaming
             if (ObjectiveCallbacks.ContainsKey(objectiveName))
                 return ObjectiveCallbacks[objectiveName];
 
-            APILogger.Log($"Unknown objective {objectiveName}. Returning {GameInitializer.NAMESPACE + ".Miner"}.");
-            return ObjectiveCallbacks[GameInitializer.NAMESPACE + ".Miner"];
+            APILogger.Log($"Unknown objective {objectiveName}.");
+            return null;
         }
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnUpdate, GameInitializer.NAMESPACE + ".Managers.RoamingJobManager.OnUpdate")]
@@ -162,23 +162,32 @@ namespace Pandaros.API.Jobs.Roaming
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnTryChangeBlock,  GameInitializer.NAMESPACE + ".Managers.RoamingJobManager.OnTryChangeBlockUser")]
         public static void OnTryChangeBlockUser(ModLoader.OnTryChangeBlockData d)
         {
-            if (d.CallbackState == ModLoader.OnTryChangeBlockData.ECallbackState.Cancelled ||
-                d.RequestOrigin.AsPlayer == null ||
-                d.RequestOrigin.AsPlayer.ID.type == NetworkID.IDType.Server ||
-                d.RequestOrigin.AsPlayer.ID.type == NetworkID.IDType.Invalid ||
-                d.RequestOrigin.AsPlayer.ActiveColony == null)
+            if (d.CallbackState == ModLoader.OnTryChangeBlockData.ECallbackState.Cancelled)
                     return;
 
             IRoamingJobObjective roamingJobObjective = null;
+            Colony colony = null;
 
-            if (d.TypeNew.ItemIndex == ColonyBuiltIn.ItemTypes.AIR.Id)
-                RemoveObjective(d.RequestOrigin.AsPlayer.ActiveColony, d.Position);
-            else if (ItemTypes.TryGetType(d.TypeNew.ItemIndex, out ItemTypes.ItemType item))
+            if (d.RequestOrigin.AsPlayer != null &&
+                d.RequestOrigin.AsPlayer.ID.type != NetworkID.IDType.Server &&
+                d.RequestOrigin.AsPlayer.ID.type != NetworkID.IDType.Invalid &&
+                d.RequestOrigin.AsPlayer.ActiveColony != null)
+                colony = d.RequestOrigin.AsPlayer.ActiveColony;
+
+            if (d.RequestOrigin.AsColony != null)
+                colony = d.RequestOrigin.AsColony;
+
+            if (colony != null)
             {
-                if (ObjectiveCallbacks.TryGetValue(item.Name, out roamingJobObjective))
-                    RegisterRoamingJobState(d.RequestOrigin.AsPlayer.ActiveColony, new RoamingJobState(d.Position, d.RequestOrigin.AsPlayer.ActiveColony, roamingJobObjective.ItemIndex, roamingJobObjective));
-                else if (!string.IsNullOrEmpty(item.ParentType) && ObjectiveCallbacks.TryGetValue(item.ParentType, out roamingJobObjective))
-                    RegisterRoamingJobState(d.RequestOrigin.AsPlayer.ActiveColony, new RoamingJobState(d.Position, d.RequestOrigin.AsPlayer.ActiveColony, roamingJobObjective.ItemIndex, roamingJobObjective));
+                if (d.TypeNew.ItemIndex == ColonyBuiltIn.ItemTypes.AIR.Id)
+                    RemoveObjective(colony, d.Position);
+                else if (ItemTypes.TryGetType(d.TypeNew.ItemIndex, out ItemTypes.ItemType item))
+                {
+                    if (ObjectiveCallbacks.TryGetValue(item.Name, out roamingJobObjective))
+                        RegisterRoamingJobState(colony, new RoamingJobState(d.Position, colony, roamingJobObjective.ItemIndex, roamingJobObjective));
+                    else if (!string.IsNullOrEmpty(item.ParentType) && ObjectiveCallbacks.TryGetValue(item.ParentType, out roamingJobObjective))
+                        RegisterRoamingJobState(colony, new RoamingJobState(d.Position, colony, roamingJobObjective.ItemIndex, roamingJobObjective));
+                }
             }
         }
 
