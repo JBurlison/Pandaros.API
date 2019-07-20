@@ -31,6 +31,60 @@ namespace Pandaros.API
                 UnhappyColonistsBought = 0f
             };
 
+            Easy = new GameDifficulty("Easy", 1.0f, 1f, 0.10f, 10f)
+            {
+                Rank = 1,
+                ZombieQueenTargetTeleportHp = 100,
+                BossHPPerColonist = 50,
+                ZombieQueenTargetTeleportCooldownSeconds = 3,
+                AdditionalChance = 0.4f,
+                UnhappinessPerColonistDeath = 1,
+                UnhappyGuardsMultiplyRate = 0.5f,
+                MonsterHPPerColonist = .2f,
+                UnhappyColonistsBought = -1f
+            };
+
+            Medium = new GameDifficulty("Medium", 1.25f, 0f, 0.35f, 50f)
+            {
+                Rank = 2,
+                ZombieQueenTargetTeleportHp = 300,
+                BossHPPerColonist = 70,
+                ZombieQueenTargetTeleportCooldownSeconds = 15,
+                AdditionalChance = 0f,
+                UnhappinessPerColonistDeath = 2,
+                UnhappyGuardsMultiplyRate = 1,
+                MonsterHPPerColonist = .5f,
+                FoodMultiplier = .1f,
+                UnhappyColonistsBought = -2f
+            };
+
+            Hard = new GameDifficulty("Hard", 1.50f, -0.1f, 0.60f, 70f)
+            {
+                Rank = 3,
+                ZombieQueenTargetTeleportHp = 500,
+                BossHPPerColonist = 80,
+                ZombieQueenTargetTeleportCooldownSeconds = 10,
+                AdditionalChance = -0.2f,
+                UnhappinessPerColonistDeath = 3,
+                UnhappyGuardsMultiplyRate = 1.5f,
+                MonsterHPPerColonist = 1f,
+                FoodMultiplier = .2f,
+                UnhappyColonistsBought = -3f
+            };
+
+            Insane = new GameDifficulty("Insane", 2f, -0.2f, .80f, 80f)
+            {
+                Rank = 4,
+                ZombieQueenTargetTeleportHp = 500,
+                BossHPPerColonist = 100,
+                ZombieQueenTargetTeleportCooldownSeconds = 5,
+                AdditionalChance = -0.4f,
+                UnhappinessPerColonistDeath = 4,
+                UnhappyGuardsMultiplyRate = 2,
+                MonsterHPPerColonist = 2f,
+                FoodMultiplier = .3f,
+                UnhappyColonistsBought = -5f
+            };
         }
 
         public GameDifficulty()
@@ -51,7 +105,11 @@ namespace Pandaros.API
         public static Dictionary<string, GameDifficulty> GameDifficulties { get; }
 
         public static GameDifficulty Normal { get; }
-        public static bool DifficultyCanBeChanged { get; } = true;
+    public static GameDifficulty Easy { get; }
+    public static GameDifficulty Medium { get; }
+    public static GameDifficulty Hard { get; }
+    public static GameDifficulty Insane { get; }
+    public static bool DifficultyCanBeChanged { get; } = true;
 
         public string Name { get; set; }
         public int Rank { get; set; }

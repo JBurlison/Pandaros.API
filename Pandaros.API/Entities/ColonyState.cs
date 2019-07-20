@@ -16,12 +16,13 @@ namespace Pandaros.API.Entities
 
         public Colony ColonyRef { get; set; }
         public int FaiedBossSpawns { get; set; }
-        public GameDifficulty Difficulty { get; set; } = GameDifficulty.Normal;
+        public GameDifficulty Difficulty { get; set; } = GameDifficulty.Medium;
         public bool BossesEnabled { get; set; } = true;
         public SettlersState SettlersEnabled { get; set; }
         public double NeedsABed { get; set; }
         public double NextLaborerTime { get; set; }
         public double MagicUpdateTime { get; set; }
+        public double HealingUpdateTime { get; set; }
         public double NextBedTime { get; set; }
         public int HighestColonistCount { get; set; }
         public double NextGenTime { get; set; }
