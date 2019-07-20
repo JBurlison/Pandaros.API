@@ -20,6 +20,12 @@ namespace Pandaros.API.WorldGen
         {
             var settings = GameInitializer.GetJSONSettingPaths(GameInitializer.NAMESPACE + ".OreLayers");
 
+            if (settings.Count == 0)
+            {
+                APILogger.Log("No Ore layers loaded.");
+                return;
+            }
+
             foreach (var modInfo in settings)
             {
                 foreach (var path in modInfo.Value)
