@@ -20,7 +20,6 @@ namespace Pandaros.API.Monsters
     [ModLoader.ModManager]
     public class MonsterManager : IPathingThreadAction
     {
-        private static double _nextUpdateTime;
         private static double _justQueued;
         private static int _nextBossUpdateTime = int.MaxValue;
         private static MonsterManager _monsterManager = new MonsterManager();
@@ -120,20 +119,6 @@ namespace Pandaros.API.Monsters
                 return;
 
             var secondsSinceStartDouble = Time.SecondsSinceStartDouble;
-
-            if (_nextUpdateTime < secondsSinceStartDouble)
-            {
-                IMonster m = null;
-
-                foreach (var monster in GetAllMonsters())
-                    if (m == null || UnityEngine.Vector3.Distance(monster.Value.Position, m.Position) > 15 && Random.NextBool())
-                    {
-                        m = monster.Value;
-                        AudioManager.SendAudio(monster.Value.Position, GameInitializer.NAMESPACE + ".ZombieAudio");
-                    }
-
-                _nextUpdateTime = secondsSinceStartDouble + 5;
-            }
 
             if (World.Initialized)
             {
