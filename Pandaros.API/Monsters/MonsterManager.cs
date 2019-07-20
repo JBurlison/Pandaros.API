@@ -352,8 +352,6 @@ namespace Pandaros.API.Monsters
                     }
                 }
             }
-            else if (Random.NextFloat() > .5f)
-                AudioManager.SendAudio(monster.Position, GameInitializer.NAMESPACE + ".ZombieAudio");
         }
 
         public static Dictionary<int, IMonster> GetAllMonsters()
