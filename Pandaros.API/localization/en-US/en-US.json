@@ -1,11 +1,43 @@
 {
   "sentences": {
     "Pandaros": {
-      "Settlers": {
+      "API": {
+        "GameDifficulty": {
+          "FoodMultiplier": "FoodMultiplier: ",
+          "MonsterDamage": "MonsterDamage: ",
+          "MonsterDamageReduction": "MonsterDamageReduction: ",
+          "CurrentDifficulty": "Settlers! Mod difficulty set to {0}.",
+          "DifficultyChangeDisabled": "The server administrator had disabled the changing of game difficulty.",
+          "DisabledBelow": "The server administrator had disabled setting your difficulty below {0}.",
+          "UnknownCommand": "Unknown command {0}",
+          "PossibleCommands": "Possible commands: "
+        },
+        "Bosses": {
+          "AdminDisabledBosses": "The server administrator had disabled the changing of bosses.",
+          "BossesToggled": "Settlers! Mod Bosses are now ",
+          "on": "on",
+          "off": "off",
+          "NoColony": "You must be near a colony to set its difficulty"
+        },
+        "Configuration": {
+          "UnknownConfiguration": "The configuration {0} does not exist."
+        },
+        "Weapon": {
+          "Broke": "Your {0} has broke!"
+        },
+        "inventory": {
+          "PlayerNumberPlaced": "Placed by you",
+          "PlayerNumberRemoved": "Removed by you",
+          "PlayerNumberInWorld": "In World by you",
+          "ColonyNumberPlaced": "Placed in Colony",
+          "ColonyNumberRemoved": "Removed in Colony",
+          "ColonyNumberInWorld": "In Colony",
+          "ColonyCreationDate": "Colony Creation Date"
+        },
         "colonytool": {
           "TimeToLeave": "Time To Leave",
           "UnemployedLength": "Unemployment Length",
-          "SettlersColonyTool": "Settlers Colony Tool!",
+          "SettlersColonyTool": "Pandaros' Colony Tool!",
           "RecruitmentCost": "Recruitment Cost: ",
           "ResetPlayer": "Reset Player",
           "MagicItemLabel": "Magic Item",
@@ -96,11 +128,12 @@
           "WheatFarmer": "Wheat Farmer",
           "Knight": "Knight",
           "Machinist": "Machinist",
-          "NoJobs": "No Jobs Available",
-          "DeactivateCallToArms": "Deactivate Call To Arms",
-          "ActivateCallToArms": "Activate Call To Arms"
+          "NoJobs": "No Jobs Available"
         }
       }
     }
+  },
+  "types": {
+    "Pandaros.API.ColonyManagementTool": "Colony Management Tool"
   }
 }

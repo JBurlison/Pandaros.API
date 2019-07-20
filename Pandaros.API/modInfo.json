@@ -12,7 +12,7 @@
     "jsonFiles": [
       {
         "fileType": "addOrOverrideLocalization",
-        "relativePath": "localization/en-US/colonytool/en-US.json",
+        "relativePath": "localization/en-US/en-US.json",
         "index": -99999
       }
     ],

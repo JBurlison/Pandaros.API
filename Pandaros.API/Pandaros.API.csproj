@@ -210,7 +210,7 @@
     <None Include="AI\LastNames.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="localization\en-US\colonytool\en-US.json">
+    <None Include="localization\en-US\en-US.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Meshes\arrow.ply">
