@@ -135,5 +135,8 @@
   },
   "types": {
     "Pandaros.API.ColonyManagementTool": "Colony Management Tool"
+  },
+  "typeuses": {
+    "Pandaros.Settlers.ColonyManagementTool": "To use: place it on your toolbar and right click. The management tool is used to help recruit colonists and assign them directly to the jobs you want. It also shows job stats."
   }
 }
