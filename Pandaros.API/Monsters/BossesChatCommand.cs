@@ -18,7 +18,7 @@ namespace Pandaros.API.Monsters
         {
             if (player.ActiveColony != null)
             {
-                menu.Items.Add(new NetworkUI.Items.DropDown("Settlers Bosses", _Bosses, new List<string>() { "Disabled", "Enabled" }));
+                menu.Items.Add(new NetworkUI.Items.DropDown("Pandaros.API Bosses", _Bosses, new List<string>() { "Disabled", "Enabled" }));
                 var ps = ColonyState.GetColonyState(player.ActiveColony);
                 menu.LocalStorage.SetAs(_Bosses, Convert.ToInt32(ps.BossesEnabled));
             }

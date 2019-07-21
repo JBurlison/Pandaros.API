@@ -86,7 +86,7 @@ namespace Pandaros.API
             LOG_NAME = logName + "." + DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
 
             _logFile = LOG_DIR + LOG_NAME + DOT_LOG;
-            ServerLog.LogAsyncMessage(new LogMessage("Settlers Log file set to: " + _logFile, LogType.Log));
+            ServerLog.LogAsyncMessage(new LogMessage("Log file set to: " + _logFile, LogType.Log));
             _thread = new Thread(new ThreadStart(Log));
             _thread.IsBackground = true;
             _thread.Start();

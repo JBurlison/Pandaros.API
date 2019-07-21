@@ -12,6 +12,9 @@
           "UnknownCommand": "Unknown command {0}",
           "PossibleCommands": "Possible commands: "
         },
+        "Settlers": {
+          "SkillChance": "Additional Skill chance: {0}%"
+        },
         "Bosses": {
           "AdminDisabledBosses": "The server administrator had disabled the changing of bosses.",
           "BossesToggled": "Pandaros.API! Mod Bosses are now ",

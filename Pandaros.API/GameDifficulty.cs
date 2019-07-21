@@ -153,7 +153,7 @@ namespace Pandaros.API
         {
             if (player.ActiveColony != null)
             {
-                menu.Items.Add(new NetworkUI.Items.DropDown("Settlers Difficulty", _Difficulty, GameDifficulty.GameDifficulties.Keys.ToList()));
+                menu.Items.Add(new NetworkUI.Items.DropDown("Pandaros.API Difficulty", _Difficulty, GameDifficulty.GameDifficulties.Keys.ToList()));
                 var ps = ColonyState.GetColonyState(player.ActiveColony);
                 menu.LocalStorage.SetAs(_Difficulty, ps.Difficulty.Rank);
             }
