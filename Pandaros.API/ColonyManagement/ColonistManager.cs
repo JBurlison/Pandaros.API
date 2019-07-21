@@ -238,9 +238,31 @@ namespace Pandaros.API.ColonyManagement
                             SleepType = settings.SleepType
                         };
                 }
-                else if (data.Item3 is CraftingJobInstance craftingJob &&  data.Item3.TryGetNPCCraftDefaultSettings(out var craftSettings))
+                else if (data.Item3 is CraftingJobInstance craftingJob)
                 {
-                    if (craftSettings != null)
+                    if (craftingJob.Settings.GetType() == typeof(CraftingJobRotatedLitSettings) && data.Item3.TryGetNPCCraftDefaultSettings(out CraftingJobRotatedLitSettings craftSettingslit))
+                        craftingJob.Settings = new CraftingJobRotatedLitSettings(craftSettingslit.BlockTypes[0].Name, craftSettingslit.NPCTypeKey, craftSettingslit.CraftingCooldown, craftSettingslit.MaxCraftsPerHaul, craftSettingslit.OnCraftedAudio)
+                        {
+                            BlockTypes = craftSettingslit.BlockTypes,
+                            CraftingCooldown = craftSettingslit.CraftingCooldown,
+                            MaxCraftsPerHaul = craftSettingslit.MaxCraftsPerHaul,
+                            NPCType = craftSettingslit.NPCType,
+                            NPCTypeKey = craftSettingslit.NPCTypeKey,
+                            OnCraftedAudio = craftSettingslit.OnCraftedAudio,
+                            RecruitmentItem = craftSettingslit.RecruitmentItem
+                        };
+                    else if (craftingJob.Settings.GetType() == typeof(CraftingJobRotatedSettings) && data.Item3.TryGetNPCCraftDefaultSettings(out CraftingJobRotatedSettings craftSettingsRot))
+                        craftingJob.Settings = new CraftingJobRotatedSettings(craftSettingsRot.BlockTypes[0].Name, craftSettingsRot.NPCTypeKey, craftSettingsRot.CraftingCooldown, craftSettingsRot.MaxCraftsPerHaul, craftSettingsRot.OnCraftedAudio)
+                        {
+                            BlockTypes = craftSettingsRot.BlockTypes,
+                            CraftingCooldown = craftSettingsRot.CraftingCooldown,
+                            MaxCraftsPerHaul = craftSettingsRot.MaxCraftsPerHaul,
+                            NPCType = craftSettingsRot.NPCType,
+                            NPCTypeKey = craftSettingsRot.NPCTypeKey,
+                            OnCraftedAudio = craftSettingsRot.OnCraftedAudio,
+                            RecruitmentItem = craftSettingsRot.RecruitmentItem
+                        };
+                    else if(craftingJob.Settings.GetType() == typeof(CraftingJobSettings) && data.Item3.TryGetNPCCraftDefaultSettings(out CraftingJobSettings craftSettings))
                         craftingJob.Settings = new CraftingJobSettings()
                         {
                             BlockTypes = craftSettings.BlockTypes,

@@ -14,7 +14,43 @@ namespace Pandaros.API
         {
             if (job != null && job is CraftingJobInstance craftingJob)
             {
-                settings = (CraftingJobSettings)craftingJob.Settings;
+                settings = craftingJob.Settings as CraftingJobRotatedLitSettings;
+
+                if (settings == null)
+                    return false;
+
+                return true;
+            }
+
+            settings = null;
+            return false;
+        }
+
+        public static bool TryGetNPCCraftSettings(this IJob job, out CraftingJobRotatedLitSettings settings)
+        {
+            if (job != null && job is CraftingJobInstance craftingJob)
+            {
+                settings = craftingJob.Settings as CraftingJobRotatedLitSettings;
+
+                if (settings == null)
+                    return false;
+
+                return true;
+            }
+
+            settings = null;
+            return false;
+        }
+
+        public static bool TryGetNPCCraftSettings(this IJob job, out CraftingJobRotatedSettings settings)
+        {
+            if (job != null && job is CraftingJobInstance craftingJob)
+            {
+                settings = craftingJob.Settings as CraftingJobRotatedSettings;
+
+                if (settings == null)
+                    return false;
+
                 return true;
             }
 
@@ -31,7 +67,44 @@ namespace Pandaros.API
         {
             if (job != null && job is CraftingJobInstance craftingJob)
             {
-                settings = (CraftingJobSettings)craftingJob.Settings;
+                settings = craftingJob.Settings as CraftingJobSettings;
+
+                if (settings == null)
+                    return false;
+
+                if (ServerManager.BlockEntityCallbacks.TryGetCraftJobSettings(settings.NPCTypeKey, out settings))
+                    return true;
+            }
+
+            settings = null;
+            return false;
+        }
+
+        public static bool TryGetNPCCraftDefaultSettings(this IJob job, out CraftingJobRotatedLitSettings settings)
+        {
+            if (job != null && job is CraftingJobInstance craftingJob)
+            {
+                settings = craftingJob.Settings as CraftingJobRotatedLitSettings;
+
+                if (settings == null)
+                    return false;
+
+                if (ServerManager.BlockEntityCallbacks.TryGetCraftJobSettings(settings.NPCTypeKey, out settings))
+                    return true;
+            }
+
+            settings = null;
+            return false;
+        }
+
+        public static bool TryGetNPCCraftDefaultSettings(this IJob job, out CraftingJobRotatedSettings settings)
+        {
+            if (job != null && job is CraftingJobInstance craftingJob)
+            {
+                settings = craftingJob.Settings as CraftingJobRotatedSettings;
+
+                if (settings == null)
+                    return false;
 
                 if (ServerManager.BlockEntityCallbacks.TryGetCraftJobSettings(settings.NPCTypeKey, out settings))
                     return true;
@@ -67,7 +140,10 @@ namespace Pandaros.API
         {
             if (job != null && job is GuardJobInstance guardJob)
             {
-                settings = (GuardJobSettings)guardJob.Settings;
+                settings = guardJob.Settings as GuardJobSettings;
+
+                if (settings == null)
+                    return false;
 
                 if (ServerManager.BlockEntityCallbacks.TryGetGuardJobSettings(settings.NPCTypeKey, out settings))
                     return true;
@@ -105,6 +181,34 @@ namespace Pandaros.API
             return craftingJobSettings != null;
         }
 
+        public static bool TryGetCraftJobSettings(this BlockEntities.BlockEntityCallbacks callbacks, string name, out CraftingJobRotatedLitSettings craftingJobSettings)
+        {
+            craftingJobSettings = null;
+
+            var craftJobInstance = callbacks.AutoLoadedInstances.FirstOrDefault(o => o is BlockJobManager<CraftingJobInstance> manager && manager.Settings is CraftingJobRotatedLitSettings set && set.NPCTypeKey == name) as BlockJobManager<CraftingJobInstance>;
+
+            if (craftJobInstance == null)
+                APILogger.Log(ChatColor.yellow, "Unable to find craft lit job settings for {0}", name);
+            else
+                craftingJobSettings = craftJobInstance.Settings as CraftingJobRotatedLitSettings;
+
+            return craftingJobSettings != null;
+        }
+
+        public static bool TryGetCraftJobSettings(this BlockEntities.BlockEntityCallbacks callbacks, string name, out CraftingJobRotatedSettings craftingJobSettings)
+        {
+            craftingJobSettings = null;
+
+            var craftJobInstance = callbacks.AutoLoadedInstances.FirstOrDefault(o => o is BlockJobManager<CraftingJobInstance> manager && manager.Settings is CraftingJobRotatedSettings set && set.NPCTypeKey == name) as BlockJobManager<CraftingJobInstance>;
+
+            if (craftJobInstance == null)
+                APILogger.Log(ChatColor.yellow, "Unable to find craft lit job settings for {0}", name);
+            else
+                craftingJobSettings = craftJobInstance.Settings as CraftingJobRotatedSettings;
+
+            return craftingJobSettings != null;
+        }
+
         public static void ApplyJobResearch(this NPC.NPCBase npc)
         {
             ApplyJobResearch(npc?.Job);
@@ -134,7 +238,7 @@ namespace Pandaros.API
                     guardSettings.CooldownShot = cooldown;
                 }
             }
-            else if (job.TryGetNPCCraftSettings(out var craftSettings) && job.TryGetNPCCraftDefaultSettings(out var craftingJobDefaultSettings))
+            else if (job.TryGetNPCCraftSettings(out CraftingJobSettings craftSettings) && job.TryGetNPCCraftDefaultSettings(out CraftingJobSettings craftingJobDefaultSettings))
             {
                 job.Owner.TemporaryData.TryGetAs(craftSettings.NPCTypeKey, out float cooldownReduction);
                 var total = masterOfAll + cooldownReduction;
