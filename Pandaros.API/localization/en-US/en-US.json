@@ -6,7 +6,7 @@
           "FoodMultiplier": "FoodMultiplier: ",
           "MonsterDamage": "MonsterDamage: ",
           "MonsterDamageReduction": "MonsterDamageReduction: ",
-          "CurrentDifficulty": "Settlers! Mod difficulty set to {0}.",
+          "CurrentDifficulty": "Pandaros.API! Mod difficulty set to {0}.",
           "DifficultyChangeDisabled": "The server administrator had disabled the changing of game difficulty.",
           "DisabledBelow": "The server administrator had disabled setting your difficulty below {0}.",
           "UnknownCommand": "Unknown command {0}",
@@ -14,7 +14,7 @@
         },
         "Bosses": {
           "AdminDisabledBosses": "The server administrator had disabled the changing of bosses.",
-          "BossesToggled": "Settlers! Mod Bosses are now ",
+          "BossesToggled": "Pandaros.API! Mod Bosses are now ",
           "on": "on",
           "off": "off",
           "NoColony": "You must be near a colony to set its difficulty"
@@ -137,6 +137,6 @@
     "Pandaros.API.ColonyManagementTool": "Colony Management Tool"
   },
   "typeuses": {
-    "Pandaros.Settlers.ColonyManagementTool": "To use: place it on your toolbar and right click. The management tool is used to help recruit colonists and assign them directly to the jobs you want. It also shows job stats."
+    "Pandaros.API.ColonyManagementTool": "To use: place it on your toolbar and right click. The management tool is used to help recruit colonists and assign them directly to the jobs you want. It also shows job stats."
   }
 }

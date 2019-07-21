@@ -131,13 +131,6 @@ namespace Pandaros.API
         public Dictionary<string, int> IntSettings { get; set; } = new Dictionary<string, int>();
         public Dictionary<string, double> DoubleSettings { get; set; } = new Dictionary<string, double>();
 
-        public void Print(Players.Player player)
-        {
-            PandaChat.Send(player, _localizationHelper, "FoodMultiplier", ChatColor.green, FoodMultiplier.ToString());
-            PandaChat.Send(player, _localizationHelper, "MonsterDamage", ChatColor.green, MonsterDamage.ToString());
-            PandaChat.Send(player, _localizationHelper, "MonsterDamageReduction", ChatColor.green, MonsterDamageReduction.ToString());
-        }
-
         public JSONNode ToJson()
         {
             return this.JsonSerialize();
@@ -239,7 +232,6 @@ namespace Pandaros.API
                 var newDiff = GameDifficulty.GameDifficulties[difficulty];
 
                 state.Difficulty = newDiff;
-                state.Difficulty.Print(player);
 
                 PandaChat.Send(player, _localizationHelper, "CurrentDifficulty", ChatColor.green, state.Difficulty.Name);
 
