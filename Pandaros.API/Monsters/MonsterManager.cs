@@ -50,6 +50,7 @@ namespace Pandaros.API.Monsters
         {
             IPandaBoss t = null;
 
+            if (_bossList.Count != 0)
             lock (_bossList)
             {
                 var rand = _boss;
@@ -128,12 +129,21 @@ namespace Pandaros.API.Monsters
                 {
                     BossActive = true;
                     var bossType   = GetMonsterType();
-                    _monsterManager.CurrentPandaBoss = bossType;
-                    ServerManager.PathingManager.QueueAction(_monsterManager);
-                    _justQueued = secondsSinceStartDouble + 5;
 
-                    if (Players.CountConnected != 0)
-                        APILogger.Log(ChatColor.yellow, $"Boss Active! Boss is: {bossType.name}");
+                    if (bossType != null)
+                    {
+                        _monsterManager.CurrentPandaBoss = bossType;
+                        ServerManager.PathingManager.QueueAction(_monsterManager);
+                        _justQueued = secondsSinceStartDouble + 5;
+
+                        if (Players.CountConnected != 0)
+                            APILogger.Log(ChatColor.yellow, $"Boss Active! Boss is: {bossType.name}");
+                    }
+                    else
+                    {
+                        BossActive = false;
+                        GetNextBossSpawnTime();
+                    }
                 }
 
                 if (BossActive && _justQueued < secondsSinceStartDouble) 

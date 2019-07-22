@@ -18,72 +18,44 @@ namespace Pandaros.API
         {
             GameDifficulties = new Dictionary<string, GameDifficulty>(StringComparer.OrdinalIgnoreCase);
 
-            Normal = new GameDifficulty("Normal", 0f, 0f, 0f, 0f)
+            Normal = new GameDifficulty("Normal", 0, 0f, 0f)
             {
                 Rank = 0,
-                ZombieQueenTargetTeleportHp = 100,
                 BossHPPerColonist = 50,
-                ZombieQueenTargetTeleportCooldownSeconds = 30,
-                AdditionalChance = 0f,
-                UnhappinessPerColonistDeath = 0f,
-                UnhappyGuardsMultiplyRate = 0f,
                 MonsterHPPerColonist = 0f,
-                UnhappyColonistsBought = 0f
+                RoamingJobActionEnergy = 0f
             };
 
-            Easy = new GameDifficulty("Easy", 1.0f, 1f, 0.10f, 10f)
+            Easy = new GameDifficulty("Easy", 1, 0f, 10f)
             {
                 Rank = 1,
-                ZombieQueenTargetTeleportHp = 100,
                 BossHPPerColonist = 50,
-                ZombieQueenTargetTeleportCooldownSeconds = 3,
-                AdditionalChance = 0.4f,
-                UnhappinessPerColonistDeath = 1,
-                UnhappyGuardsMultiplyRate = 0.5f,
                 MonsterHPPerColonist = .2f,
-                UnhappyColonistsBought = -1f
+                RoamingJobActionEnergy = .5f
             };
 
-            Medium = new GameDifficulty("Medium", 1.25f, 0f, 0.35f, 50f)
+            Medium = new GameDifficulty("Medium", 2, 0f, 50f)
             {
                 Rank = 2,
-                ZombieQueenTargetTeleportHp = 300,
                 BossHPPerColonist = 70,
-                ZombieQueenTargetTeleportCooldownSeconds = 15,
-                AdditionalChance = 0f,
-                UnhappinessPerColonistDeath = 2,
-                UnhappyGuardsMultiplyRate = 1,
                 MonsterHPPerColonist = .5f,
-                FoodMultiplier = .1f,
-                UnhappyColonistsBought = -2f
+                RoamingJobActionEnergy = 0f
             };
 
-            Hard = new GameDifficulty("Hard", 1.50f, -0.1f, 0.60f, 70f)
+            Hard = new GameDifficulty("Hard", 3, -0.1f, 70f)
             {
                 Rank = 3,
-                ZombieQueenTargetTeleportHp = 500,
                 BossHPPerColonist = 80,
-                ZombieQueenTargetTeleportCooldownSeconds = 10,
-                AdditionalChance = -0.2f,
-                UnhappinessPerColonistDeath = 3,
-                UnhappyGuardsMultiplyRate = 1.5f,
                 MonsterHPPerColonist = 1f,
-                FoodMultiplier = .2f,
-                UnhappyColonistsBought = -3f
+                RoamingJobActionEnergy = -.2f
             };
 
-            Insane = new GameDifficulty("Insane", 2f, -0.2f, .80f, 80f)
+            Insane = new GameDifficulty("Insane", 4, -0.2f, 80f)
             {
                 Rank = 4,
-                ZombieQueenTargetTeleportHp = 500,
                 BossHPPerColonist = 100,
-                ZombieQueenTargetTeleportCooldownSeconds = 5,
-                AdditionalChance = -0.4f,
-                UnhappinessPerColonistDeath = 4,
-                UnhappyGuardsMultiplyRate = 2,
                 MonsterHPPerColonist = 2f,
-                FoodMultiplier = .3f,
-                UnhappyColonistsBought = -5f
+                RoamingJobActionEnergy = -.5f
             };
         }
 
@@ -91,45 +63,74 @@ namespace Pandaros.API
         {
         }
 
-        public GameDifficulty(string name, float foodMultiplier, float roamingJobActionEnergy, float monsterDr,
-                              float  monsterDamage)
+        public GameDifficulty(string name, int rank, float monsterDr, float  monsterDamage)
         {
             Name                   = name;
-            FoodMultiplier         = foodMultiplier;
             GameDifficulties[name] = this;
-            RoamingJobActionEnergy = roamingJobActionEnergy;
             MonsterDamageReduction = monsterDr;
             MonsterDamage          = monsterDamage;
         }
 
         public static Dictionary<string, GameDifficulty> GameDifficulties { get; }
 
+
         public static GameDifficulty Normal { get; }
-    public static GameDifficulty Easy { get; }
-    public static GameDifficulty Medium { get; }
-    public static GameDifficulty Hard { get; }
-    public static GameDifficulty Insane { get; }
-    public static bool DifficultyCanBeChanged { get; } = true;
+        public static GameDifficulty Easy { get; }
+        public static GameDifficulty Medium { get; }
+        public static GameDifficulty Hard { get; }
+        public static GameDifficulty Insane { get; }
 
         public string Name { get; set; }
         public int Rank { get; set; }
 
-        public float FoodMultiplier { get; set; }
-        public float RoamingJobActionEnergy { get; set; }
         public float MonsterDamageReduction { get; set; }
-        public float AdditionalChance { get; set; }
         public float MonsterDamage { get; set; }
-        public float ZombieQueenTargetTeleportHp { get; set; } = 250;
-        public float ZombieQueenTargetTeleportCooldownSeconds { get; set; } = 45;
         public float BossHPPerColonist { get; set; } = 30;
-        public float MonsterHPPerColonist { get; set; } = 1;
-        public double UnhappinessPerColonistDeath { get; set; } = 2;
-        public float UnhappyGuardsMultiplyRate { get; set; } = 1;
-        public float UnhappyColonistsBought { get; set; } = -1;
+        public float MonsterHPPerColonist { get; set; } = 0;
+        public float RoamingJobActionEnergy { get; set; }
 
         public Dictionary<string, string> StringSettings { get; set; } = new Dictionary<string, string>();
         public Dictionary<string, int> IntSettings { get; set; } = new Dictionary<string, int>();
         public Dictionary<string, double> DoubleSettings { get; set; } = new Dictionary<string, double>();
+
+        public string GetorDefault(string key, string defaultVal)
+        {
+            if (!StringSettings.ContainsKey(key))
+                SetValue(key, defaultVal);
+
+            return StringSettings[key];
+        }
+
+        public void SetValue(string key, string val)
+        {
+            StringSettings[key] = val;
+        }
+
+        public double GetorDefault(string key, double defaultVal)
+        {
+            if (!DoubleSettings.ContainsKey(key))
+                SetValue(key, defaultVal);
+
+            return DoubleSettings[key];
+        }
+
+        public void SetValue(string key, double val)
+        {
+            DoubleSettings[key] = val;
+        }
+
+        public int GetorDefault(string key, int defaultVal)
+        {
+            if (!IntSettings.ContainsKey(key))
+                SetValue(key, defaultVal);
+
+            return IntSettings[key];
+        }
+
+        public void SetValue(string key, int val)
+        {
+            IntSettings[key] = val;
+        }
 
         public JSONNode ToJson()
         {
@@ -213,7 +214,7 @@ namespace Pandaros.API
                 return ChangeDifficulty(player, state, difficulty);
             }
 
-            if (!GameDifficulty.DifficultyCanBeChanged)
+            if (!APIConfiguration.DifficutlyCanBeChanged)
                 PandaChat.Send(player, _localizationHelper, "DifficultyChangeDisabled", ChatColor.green);
 
             return true;
@@ -221,7 +222,7 @@ namespace Pandaros.API
 
         public static bool ChangeDifficulty(Players.Player player, ColonyState state, string difficulty)
         {
-            if (GameDifficulty.DifficultyCanBeChanged)
+            if (APIConfiguration.DifficutlyCanBeChanged)
             {
                 if (!GameDifficulty.GameDifficulties.ContainsKey(difficulty))
                 {
@@ -231,12 +232,18 @@ namespace Pandaros.API
 
                 var newDiff = GameDifficulty.GameDifficulties[difficulty];
 
-                state.Difficulty = newDiff;
+                if (newDiff.Rank >= APIConfiguration.MinDifficulty.Rank)
+                {
+                    state.Difficulty = newDiff;
 
-                PandaChat.Send(player, _localizationHelper, "CurrentDifficulty", ChatColor.green, state.Difficulty.Name);
+                    PandaChat.Send(player, _localizationHelper, "CurrentDifficulty", ChatColor.green, state.Difficulty.Name);
+
+                    NetworkUI.NetworkMenuManager.SendColonySettingsUI(player);
+                    return true;
+                }
 
                 NetworkUI.NetworkMenuManager.SendColonySettingsUI(player);
-                return true;
+                PandaChat.Send(player, _localizationHelper, "DisabledBelow", ChatColor.green, APIConfiguration.MinDifficulty.Name);
             }
 
             return true;

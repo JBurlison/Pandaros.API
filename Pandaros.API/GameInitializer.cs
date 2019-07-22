@@ -31,7 +31,7 @@ namespace Pandaros.API
         public static string GAMEDATA_FOLDER = @"";
         public static string GAME_ROOT = @"";
         public static string SAVE_LOC = "";
-        public static readonly Version MOD_VER = new Version(0, 0, 3, 0);
+        public static readonly Version MOD_VER = new Version(0, 1, 0, 0);
         public static bool RUNNING { get; private set; }
         public static bool WorldLoaded { get; private set; }
         public static Colony StubColony { get; private set; }
@@ -44,6 +44,8 @@ namespace Pandaros.API
             WorldLoaded                 = true;
             SAVE_LOC                    = GAMEDATA_FOLDER + "savegames/" + ServerManager.WorldName + "/";
             StubColony = Colony.CreateStub(-99998);
+
+            APIConfiguration.Save();
         }
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnAssemblyLoaded, NAMESPACE + ".OnAssemblyLoaded")]
