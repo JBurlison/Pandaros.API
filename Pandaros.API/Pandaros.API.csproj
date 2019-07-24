@@ -202,6 +202,7 @@
     <Compile Include="Transportation\Train.cs" />
     <Compile Include="Transportation\TrainTransport.cs" />
     <Compile Include="WorldGen\Ore.cs" />
+    <Compile Include="WorldGen\PandarosSpawnPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="AI\FirstNames.csv">
