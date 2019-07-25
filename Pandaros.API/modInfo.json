@@ -3,7 +3,7 @@
     "dllpath": "Pandaros.API.dll",
     "name": "Pandaros.API",
     "namepretty": "Pandaros' API!",
-    "version": "0.1.0.0",
+    "version": "0.1.2.0",
     "enabled": true,
     "marksgamemodded": true,
     "compatibleversions": [

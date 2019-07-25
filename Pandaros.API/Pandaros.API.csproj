@@ -96,6 +96,7 @@
     <Compile Include="Extender\IOnConstructInventoryManageColonyUIExtender.cs" />
     <Compile Include="Extender\IOnLoadingColony.cs" />
     <Compile Include="Extender\IOnTimedUpdate.cs" />
+    <Compile Include="Extender\IPandaController.cs" />
     <Compile Include="Extender\IPandarosExtention.cs" />
     <Compile Include="Extender\Providers\AfterModsLoadedProvider.cs" />
     <Compile Include="Extender\Providers\ArmorProvider.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Extender\Providers\RecipeProvider.cs" />
     <Compile Include="Extender\Providers\ResearchProvider.cs" />
     <Compile Include="Extender\Providers\RoamingJobObjectiveProvider.cs" />
+    <Compile Include="Extender\Providers\SimpleRestProvider.cs" />
     <Compile Include="Extender\Providers\TextureMappingProvider.cs" />
     <Compile Include="Extender\Providers\WeaponProvider.cs" />
     <Compile Include="Extender\PandarosAPIExtender.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="GameDifficulty.cs" />
     <Compile Include="GameInitializer.cs" />
     <Compile Include="Help\UIManager.cs" />
+    <Compile Include="HTTPControllers\ColoniesController.cs" />
     <Compile Include="IMagicEffect.cs" />
     <Compile Include="INameable.cs" />
     <Compile Include="IPandaArmor.cs" />
@@ -157,6 +160,7 @@
     <Compile Include="Models\BlockSides.cs" />
     <Compile Include="Models\BlockSideValuesAttribute.cs" />
     <Compile Include="Models\Colliders.cs" />
+    <Compile Include="Models\HTTP\ColonyModel.cs" />
     <Compile Include="Models\ConnectedBlock.cs" />
     <Compile Include="Models\CSGenerateType.cs" />
     <Compile Include="Models\CSTextureMapping.cs" />
@@ -173,7 +177,9 @@
     <Compile Include="Models\LootPoolEntry.cs" />
     <Compile Include="Models\OnRemove.cs" />
     <Compile Include="Models\OpenMenuSettings.cs" />
+    <Compile Include="Models\HTTP\PandaHttp.cs" />
     <Compile Include="Models\PlayerMagicItem.cs" />
+    <Compile Include="Models\HTTP\RestVerb.cs" />
     <Compile Include="Models\RotationAxis.cs" />
     <Compile Include="Models\SerializableVector3.cs" />
     <Compile Include="Models\SettlersState.cs" />
