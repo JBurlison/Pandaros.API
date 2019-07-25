@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Pandaros.API.Items;
 using Pipliz.JSON;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace Pandaros.API.Models
         List<string> categories { get; set; }
         Colliders colliders { get; set; }
         string color { get; set; }
-        dynamic customData { get; set; }
+        JObject customData { get; set; }
         int? destructionTime { get; set; }
         string icon { get; set; }
         bool? isDestructible { get; set; }

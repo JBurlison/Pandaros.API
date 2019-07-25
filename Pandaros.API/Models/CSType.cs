@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Pipliz.JSON;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace Pandaros.API.Models
         public virtual string onRemoveAudio { get; set; }
         public virtual string onPlaceAudio { get; set; }
         public virtual int? destructionTime { get; set; }
-        public virtual dynamic customData { get; set; }
+        public virtual JObject customData { get; set; }
         public virtual string parentType { get; set; }
         [JsonProperty("rotatablex+")]
         public virtual string rotatablexp { get; set; }
