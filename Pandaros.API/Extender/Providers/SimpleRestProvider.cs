@@ -72,7 +72,7 @@ namespace Pandaros.API.Extender.Providers
                         {
                             if (callbacks.TryGetValue(methodName, out var method))
                             {
-                                var buffer = default(byte[]);
+                                var response = default(RestResponse);
                                 var mehodParams = method.Item2.GetParameters();
 
                                 if (mehodParams.Length > 0)
@@ -81,20 +81,23 @@ namespace Pandaros.API.Extender.Providers
                                                             .Select((p, i) => Convert.ChangeType(strParams[i], p.ParameterType))
                                                             .ToArray();
 
-                                    object ret = method.Item2.Invoke(method.Item1, requestParams);
-                                    string retstr = JsonConvert.SerializeObject(ret);
-                                    buffer = Encoding.UTF8.GetBytes(retstr);
+                                    response = method.Item2.Invoke(method.Item1, requestParams) as RestResponse;
                                 }
                                 else
                                 {
-                                    object ret = method.Item2.Invoke(method.Item1, null);
-                                    string retstr = JsonConvert.SerializeObject(ret);
-                                    buffer = Encoding.UTF8.GetBytes(retstr);
+                                    response = method.Item2.Invoke(method.Item1, null) as RestResponse;
                                 }
 
-                                context.Response.ContentType = "application/json";
-                                context.Response.ContentLength64 = buffer.Length;
-                                context.Response.OutputStream.Write(buffer, 0, buffer.Length);
+                                if (response != null)
+                                {
+                                    context.Response.ContentType = response.ContentType;
+                                    context.Response.ContentLength64 = response.Content.Length;
+                                    context.Response.OutputStream.Write(response.Content, 0, response.Content.Length);
+                                }
+                                else
+                                {
+                                    throw new InvalidCastException("All methods decorated with PandaHttp must return type RestResponse.");
+                                }
                             }
                             else
                             {

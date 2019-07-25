@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Pandaros.API.Extender;
 using Pandaros.API.Models;
 using Pandaros.API.Models.HTTP;
@@ -12,7 +13,7 @@ namespace Pandaros.API.HTTPControllers
     public class ColoniesController : IPandaController
     {
         [PandaHttp(RestVerb.Get, "AllColonies")]
-        public List<ColonyModel> GetColonies()
+        public RestResponse GetColonies()
         {
             var retVal = new List<ColonyModel>();
 
@@ -20,11 +21,22 @@ namespace Pandaros.API.HTTPControllers
                 retVal.Add(new ColonyModel()
                 {
                     ColonyId = c.Key,
+                    Name = c.Value.Name,
+                    LaborerCount = c.Value.LaborerCount,
+                    AutoRecruit = c.Value.JobFinder.AutoRecruit,
+                    AvailableFood = c.Value.Stockpile.TotalFood,
+                    BedCount = c.Value.BedTracker.BedCount,
+                    Happiness = c.Value.HappinessData.CachedHappiness,
+                    OpenJobCount = c.Value.JobFinder.OpenJobCount,
+                    StockpileCount = c.Value.Stockpile.ItemCount,
                     BannerCount = c.Value.Banners.Length,
-                    ColonistCount = c.Value.FollowerCount
+                    ColonistCount = c.Value.FollowerCount,
+                    Owners = c.Value.Owners.Select(o => o.Name).ToList()
                 });
 
-            return retVal;
+            return new RestResponse() { Content = retVal.ToJsonSerializedByteArray() };
         }
+
+
     }
 }

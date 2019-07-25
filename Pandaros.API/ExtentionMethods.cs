@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Random = System.Random;
 
 namespace Pandaros.API
@@ -129,6 +130,12 @@ namespace Pandaros.API
         public static void SetFieldValue<oT>(this object o, string fieldName, object fieldValue)
         {
             typeof(oT).GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).SetValue(o, fieldValue);
+        }
+
+        public static byte[] ToJsonSerializedByteArray(this object o)
+        {
+            string retstr = JsonConvert.SerializeObject(o);
+            return Encoding.UTF8.GetBytes(retstr);
         }
 
         public static float TotalDamage(this Dictionary<DamageType, float> damage)
