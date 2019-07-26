@@ -5,6 +5,7 @@ using Pandaros.API.Models;
 using Pipliz.JSON;
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Pandaros.API.Entities
 {
@@ -13,7 +14,8 @@ namespace Pandaros.API.Entities
     {
         private static readonly Dictionary<Colony, ColonyState> _colonyStates = new Dictionary<Colony, ColonyState>();
         static readonly Pandaros.API.localization.LocalizationHelper _localizationHelper = new localization.LocalizationHelper(GameInitializer.NAMESPACE, "colonytool");
-
+        
+        [JsonIgnore]
         public Colony ColonyRef { get; set; }
         public int FaiedBossSpawns { get; set; }
         public GameDifficulty Difficulty { get; set; } = GameDifficulty.Medium;

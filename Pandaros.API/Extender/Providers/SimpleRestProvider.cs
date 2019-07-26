@@ -72,6 +72,36 @@ namespace Pandaros.API.Extender.Providers
                                 
                                 if (mehodParams.Length > 0)
                                 {
+                                    if (mehodParams.Length != context.Request.QueryString.Count)
+                                    {
+                                        context.Response.StatusCode = 422;
+                                        context.Response.StatusDescription = "Number of parameter mis-match. Expected: " + mehodParams.Length;
+                                        context.Response.OutputStream.Close();
+                                        return;
+                                    }
+
+                                    foreach (var param in mehodParams)
+                                    {
+                                        if (!context.Request.QueryString.AllKeys.Any(k => k == param.Name))
+                                        {
+                                            context.Response.StatusCode = 422;
+                                            context.Response.StatusDescription = "Missing Parameter. Expected: " + param.Name;
+                                            context.Response.OutputStream.Close();
+                                            return;
+                                        }
+                                    }
+
+                                    foreach (var param in context.Request.QueryString.AllKeys)
+                                    {
+                                        if (!mehodParams.Any(k => k.Name == param))
+                                        {
+                                            context.Response.StatusCode = 422;
+                                            context.Response.StatusDescription = "Unknown Parameter: " + param;
+                                            context.Response.OutputStream.Close();
+                                            return;
+                                        }
+                                    }
+
                                     object[] requestParams = mehodParams
                                                             .Select((p, i) => Convert.ChangeType(context.Request.QueryString[p.Name], p.ParameterType))
                                                             .ToArray();

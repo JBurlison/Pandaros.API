@@ -25,6 +25,16 @@ namespace Pandaros.API.Models
             z = vector3.z;
         }
 
+        public SerializableVector3(Vector3? vector3)
+        {
+            if (vector3 == null || !vector3.HasValue)
+                return;
+
+            x = vector3.Value.x;
+            y = vector3.Value.y;
+            z = vector3.Value.z;
+        }
+
         public SerializableVector3(Pipliz.Vector3Int vector3)
         {
             x = vector3.x;

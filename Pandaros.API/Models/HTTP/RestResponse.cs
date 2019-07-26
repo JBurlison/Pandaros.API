@@ -8,6 +8,9 @@ namespace Pandaros.API.Models.HTTP
 {
     public class RestResponse
     {
+        public static RestResponse BlankJsonObject = new RestResponse() { Content = "{}".ToUTF8SerializedJson() };
+        public static RestResponse BlankJsonArray = new RestResponse() { Content = "[]".ToUTF8SerializedJson() };
+
         public byte[] Content { get; set; }
         public string ContentType { get; set; } = "application/json";
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pandaros.API.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,5 +21,6 @@ namespace Pandaros.API.Models.HTTP
         public int OpenJobCount { get; set; }
         public bool AutoRecruit { get; set; }
         public List<string> Owners { get; set; }
+        public ColonyState ColonyState { get; set; }
     }
 }

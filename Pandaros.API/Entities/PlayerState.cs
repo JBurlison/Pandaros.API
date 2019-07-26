@@ -1,4 +1,5 @@
-﻿using Pandaros.API.Items;
+﻿using Newtonsoft.Json;
+using Pandaros.API.Items;
 using Pandaros.API.Items.Armor;
 using Pandaros.API.Models;
 using Pipliz;
@@ -29,11 +30,16 @@ namespace Pandaros.API.Entities
         }
 
         public Dictionary<ushort, int> Backpack { get; set; } = new Dictionary<ushort, int>();
+        [JsonIgnore]
         public JSONNode _playerVariables = new JSONNode();
+        [JsonIgnore]
         public Random Rand { get; set; }
         public static List<HealingOverTimePC> HealingSpells { get; } = new List<HealingOverTimePC>();
+        [JsonIgnore]
         public Players.Player Player { get; }
+        [JsonIgnore]
         public List<Vector3Int> FlagsPlaced { get; set; } = new List<Vector3Int>();
+        [JsonIgnore]
         public Vector3Int TeleporterPlaced { get; set; } = Vector3Int.invalidPos;
         public EventedDictionary<ArmorFactory.ArmorSlot, ItemState> Armor { get; set; } = new EventedDictionary<ArmorFactory.ArmorSlot, ItemState>();
         public Dictionary<ushort, int> ItemsPlaced { get; set; } = new Dictionary<ushort, int>();
@@ -45,11 +51,15 @@ namespace Pandaros.API.Entities
         public int BuildersWandCharge { get; set; } = 750;
         public int BuildersWandMaxCharge { get; set; }
         public IPlayerMagicItem[] MagicItems { get; set; } = new IPlayerMagicItem[0];
+        [JsonIgnore]
         public List<Vector3Int> BuildersWandPreview { get; set; } = new List<Vector3Int>();
+        [JsonIgnore]
         public ushort BuildersWandTarget { get; set; } = ColonyBuiltIn.ItemTypes.AIR.Id;
+        [JsonIgnore]
         public bool Connected { get; set; }
         public int MaxMagicItems { get; set; }
         public DateTime JoinDate { get; set; } = DateTime.Now;
+
         private void HealingOverTimePC_NewInstance(object sender, EventArgs e)
         {
             var healing = sender as HealingOverTimePC;

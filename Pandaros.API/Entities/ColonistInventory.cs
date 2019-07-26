@@ -1,4 +1,5 @@
-﻿using NPC;
+﻿using Newtonsoft.Json;
+using NPC;
 using Pandaros.API.AI;
 using Pandaros.API.ColonyManagement;
 using Pandaros.API.Items.Armor;
@@ -49,7 +50,8 @@ namespace Pandaros.API.Entities
         public int SettlerId { get; set; }
 
         public double PunchCooldown { get; set; }
-        
+
+        [JsonIgnore]
         public NPCBase NPC { get; private set; }
 
         public string ColonistsName { get; set; }

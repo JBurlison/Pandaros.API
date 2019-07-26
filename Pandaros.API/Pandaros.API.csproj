@@ -41,6 +41,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Colony Survival\colonyserver_Data\Managed\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Steamworks.NET, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -122,6 +123,10 @@
     <Compile Include="Help\UIManager.cs" />
     <Compile Include="HTTPControllers\ImageController.cs" />
     <Compile Include="HTTPControllers\ColoniesController.cs" />
+    <Compile Include="HTTPControllers\NpcTypeController.cs" />
+    <Compile Include="HTTPControllers\LocalizationController.cs" />
+    <Compile Include="HTTPControllers\ItemsController.cs" />
+    <Compile Include="HTTPControllers\PlayerController.cs" />
     <Compile Include="IMagicEffect.cs" />
     <Compile Include="INameable.cs" />
     <Compile Include="IPandaArmor.cs" />
@@ -161,11 +166,16 @@
     <Compile Include="Models\BlockSides.cs" />
     <Compile Include="Models\BlockSideValuesAttribute.cs" />
     <Compile Include="Models\Colliders.cs" />
+    <Compile Include="Models\HTTP\ColonyJobs.cs" />
     <Compile Include="Models\HTTP\ColonyModel.cs" />
     <Compile Include="Models\ConnectedBlock.cs" />
     <Compile Include="Models\CSGenerateType.cs" />
     <Compile Include="Models\CSTextureMapping.cs" />
     <Compile Include="Models\CSType.cs" />
+    <Compile Include="Models\HTTP\NpcTypeModel.cs" />
+    <Compile Include="Models\HTTP\LocalizedItem.cs" />
+    <Compile Include="Models\HTTP\NPCModel.cs" />
+    <Compile Include="Models\HTTP\PlayerModel.cs" />
     <Compile Include="Models\HTTP\RestResponse.cs" />
     <Compile Include="Models\HTTP\StockpileItem.cs" />
     <Compile Include="Models\ICSRecipe.cs" />

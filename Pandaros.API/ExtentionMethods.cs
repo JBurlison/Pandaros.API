@@ -132,7 +132,7 @@ namespace Pandaros.API
             typeof(oT).GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).SetValue(o, fieldValue);
         }
 
-        public static byte[] ToJsonSerializedByteArray(this object o)
+        public static byte[] ToUTF8SerializedJson(this object o)
         {
             string retstr = JsonConvert.SerializeObject(o);
             return Encoding.UTF8.GetBytes(retstr);
