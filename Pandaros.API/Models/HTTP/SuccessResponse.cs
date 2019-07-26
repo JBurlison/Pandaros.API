@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace Pandaros.API.Models.HTTP
 {
-    public enum RestVerb
+    public class SuccessResponse
     {
-        Get,
-        Post,
-        Patch,
-        Put,
-        Delete
+        public bool Success { get; set; }
+        public string Details { get; set; } = string.Empty;
     }
 }

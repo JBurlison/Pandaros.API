@@ -37,6 +37,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Colony Survival\colonyserver_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.OpenApi, Version=1.1.3.0, Culture=neutral, PublicKeyToken=3f5743946376f042, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.OpenApi.1.1.3\lib\net46\Microsoft.OpenApi.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Colony Survival\colonyserver_Data\Managed\Newtonsoft.Json.dll</HintPath>
@@ -121,6 +124,7 @@
     <Compile Include="GameDifficulty.cs" />
     <Compile Include="GameInitializer.cs" />
     <Compile Include="Help\UIManager.cs" />
+    <Compile Include="HTTPControllers\APIController.cs" />
     <Compile Include="HTTPControllers\ImageController.cs" />
     <Compile Include="HTTPControllers\ColoniesController.cs" />
     <Compile Include="HTTPControllers\NpcTypeController.cs" />
@@ -179,6 +183,7 @@
     <Compile Include="Models\HTTP\PlayerModel.cs" />
     <Compile Include="Models\HTTP\RestResponse.cs" />
     <Compile Include="Models\HTTP\StockpileItem.cs" />
+    <Compile Include="Models\HTTP\SuccessResponse.cs" />
     <Compile Include="Models\ICSRecipe.cs" />
     <Compile Include="Models\ICSTextureMapping.cs" />
     <Compile Include="Models\ICSType.cs" />
@@ -193,7 +198,6 @@
     <Compile Include="Models\OpenMenuSettings.cs" />
     <Compile Include="Models\HTTP\PandaHttp.cs" />
     <Compile Include="Models\PlayerMagicItem.cs" />
-    <Compile Include="Models\HTTP\RestVerb.cs" />
     <Compile Include="Models\RotationAxis.cs" />
     <Compile Include="Models\SerializableVector3.cs" />
     <Compile Include="Models\SettlersState.cs" />
@@ -249,6 +253,7 @@
     <None Include="modInfo.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons\ColonyManager.png">

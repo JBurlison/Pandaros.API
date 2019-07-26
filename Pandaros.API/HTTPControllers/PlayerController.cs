@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Pandaros.API.Entities;
 using Pandaros.API.Extender;
@@ -14,7 +15,7 @@ namespace Pandaros.API.HTTPControllers
 {
     public class PlayerController : IPandaController
     {
-        [PandaHttp(RestVerb.Get, "/Players/All")]
+        [PandaHttp(OperationType.Get, "/Players/All", "")]
         public RestResponse GetPlayers()
         {
             Dictionary<ulong, PlayerModel> players = new Dictionary<ulong, PlayerModel>();
@@ -25,7 +26,7 @@ namespace Pandaros.API.HTTPControllers
             return new RestResponse() { Content = players.ToUTF8SerializedJson() };
         }
 
-        [PandaHttp(RestVerb.Get, "/Players/Get")]
+        [PandaHttp(OperationType.Get, "/Players", "")]
         public RestResponse GetPlayers(ulong steamId)
         {
             Dictionary<ulong, PlayerModel> players = new Dictionary<ulong, PlayerModel>();

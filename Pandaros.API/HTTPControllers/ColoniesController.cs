@@ -1,4 +1,5 @@
 ﻿using Jobs;
+using Microsoft.OpenApi.Models;
 using Pandaros.API.Entities;
 using Pandaros.API.Extender;
 using Pandaros.API.Models;
@@ -10,7 +11,7 @@ namespace Pandaros.API.HTTPControllers
 {
     public class ColoniesController : IPandaController
     {
-        [PandaHttp(RestVerb.Get, "/Colonies/All")]
+        [PandaHttp(OperationType.Get, "/Colonies/All", "")]
         public RestResponse GetColonies()
         {
             var retVal = new Dictionary<int, ColonyModel>();
@@ -21,7 +22,7 @@ namespace Pandaros.API.HTTPControllers
             return new RestResponse() { Content = retVal.ToUTF8SerializedJson() };
         }
 
-        [PandaHttp(RestVerb.Get, "/Colonies/Get")]
+        [PandaHttp(OperationType.Get, "/Colonies", "")]
         public RestResponse GetColonies(int colonyId)
         {
             var retVal = new Dictionary<int, ColonyModel>();
@@ -35,7 +36,7 @@ namespace Pandaros.API.HTTPControllers
                 return RestResponse.BlankJsonObject;
         }
 
-        [PandaHttp(RestVerb.Get, "/Colonies/Stockpile/All")]
+        [PandaHttp(OperationType.Get, "/Colonies/Stockpile/All", "")]
         public RestResponse GetStockpile(int colonyId)
         {
             if (ServerManager.ColonyTracker.ColoniesByID.TryGetValue(colonyId, out var colony))
@@ -50,8 +51,8 @@ namespace Pandaros.API.HTTPControllers
             else
                 return RestResponse.BlankJsonObject;
         }
-
-        [PandaHttp(RestVerb.Get, "/Colonies/Researh")]
+        
+        [PandaHttp(OperationType.Get, "/Colonies/Researh", "")]
         public RestResponse GetResearh(int colonyId)
         {
             if (ServerManager.ColonyTracker.ColoniesByID.TryGetValue(colonyId, out var colony))
@@ -67,7 +68,7 @@ namespace Pandaros.API.HTTPControllers
                 return RestResponse.BlankJsonObject;
         }
 
-        [PandaHttp(RestVerb.Get, "/Colonies/Colonists/All")]
+        [PandaHttp(OperationType.Get, "/Colonies/Colonists/All", "")]
         public RestResponse GetColonists(int colonyId)
         {
             if (ServerManager.ColonyTracker.ColoniesByID.TryGetValue(colonyId, out var colony))
@@ -85,7 +86,7 @@ namespace Pandaros.API.HTTPControllers
                 return RestResponse.BlankJsonObject;
         }
 
-        [PandaHttp(RestVerb.Get, "/Colonies/Colonists/Get")]
+        [PandaHttp(OperationType.Get, "/Colonies/Colonists", "")]
         public RestResponse GetColonists(int colonyId, int npcId)
         {
             if (ServerManager.ColonyTracker.ColoniesByID.TryGetValue(colonyId, out var colony))
@@ -110,7 +111,7 @@ namespace Pandaros.API.HTTPControllers
                 return RestResponse.BlankJsonObject;
         }
 
-        [PandaHttp(RestVerb.Get, "/Colonies/Jobs/All")]
+        [PandaHttp(OperationType.Get, "/Colonies/Jobs/All", "")]
         public RestResponse GetJobs(int colonyId)
         {
             if (ServerManager.ColonyTracker.ColoniesByID.TryGetValue(colonyId, out var colony))

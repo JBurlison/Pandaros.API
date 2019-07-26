@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Pandaros.API.Extender;
 using Pandaros.API.Models;
@@ -12,7 +13,7 @@ namespace Pandaros.API.HTTPControllers
 {
     public class LocalizationController : IPandaController
     {
-        [PandaHttp(RestVerb.Get, "/Localization/ItemName")]
+        [PandaHttp(OperationType.Get, "/Localization/ItemName", "")]
         public RestResponse GetItemByName(string name)
         {
             if (ItemTypes.TryGetType(name, out ItemTypes.ItemType itemType))

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Pandaros.API.Models.HTTP;
 using System;
 using System.Collections.Generic;
@@ -20,11 +21,12 @@ namespace Pandaros.API.Extender.Providers
         public Type ClassType => null;
 
         private Thread _listenThread;
-        public Dictionary<RestVerb, Dictionary<string, Tuple<object, MethodInfo>>> ApiCallbacks { get; set; } = new Dictionary<RestVerb, Dictionary<string, Tuple<object, MethodInfo>>>();
+        public static Dictionary<OperationType, Dictionary<string, Tuple<object, MethodInfo>>> ApiCallbacks { get; set; } = new Dictionary<OperationType, Dictionary<string, Tuple<object, MethodInfo>>>();
+        public static Dictionary<string, Dictionary<OperationType, Tuple<string, MethodInfo>>> Endpoints { get; set; } = new Dictionary<string, Dictionary<OperationType, Tuple<string, MethodInfo>>>();
 
         public void AfterWorldLoad()
         {
-            foreach (RestVerb verb in Enum.GetValues(typeof(RestVerb)))
+            foreach (OperationType verb in Enum.GetValues(typeof(OperationType)))
                 ApiCallbacks.Add(verb, new Dictionary<string, Tuple<object, MethodInfo>>(StringComparer.InvariantCultureIgnoreCase));
 
             foreach (var ass in LoadedAssembalies)
@@ -39,9 +41,14 @@ namespace Pandaros.API.Extender.Providers
                                 APILogger.Log(ChatColor.red, $"Route {pandaGet.Route} already exists for virb {pandaGet.RestVerb}. Overriding existing registered {ApiCallbacks[pandaGet.RestVerb][pandaGet.Route].Item2.Name} with {method.Name}");
 
                             ApiCallbacks[pandaGet.RestVerb][pandaGet.Route] = Tuple.Create(instance, method);
+
+                            if (!Endpoints.ContainsKey(pandaGet.Route))
+                                Endpoints.Add(pandaGet.Route, new Dictionary<OperationType, Tuple<string, MethodInfo>>());
+
+                            Endpoints[pandaGet.Route][pandaGet.RestVerb] = Tuple.Create(pandaGet.Description, method);
                         }
             }
-
+           
             _listenThread = new Thread(new ThreadStart(Listen));
             _listenThread.IsBackground = true;
             _listenThread.Start();
@@ -59,7 +66,7 @@ namespace Pandaros.API.Extender.Providers
             {
                 HttpListenerContext context = listener.GetContext();
 
-                if (Enum.TryParse(context.Request.HttpMethod, true, out RestVerb verb) && ApiCallbacks.TryGetValue(verb, out var callbacks))
+                if (Enum.TryParse(context.Request.HttpMethod, true, out OperationType verb) && ApiCallbacks.TryGetValue(verb, out var callbacks))
                     ThreadPool.QueueUserWorkItem((_) =>
                     {
                         string methodName = context.Request.Url.AbsolutePath;

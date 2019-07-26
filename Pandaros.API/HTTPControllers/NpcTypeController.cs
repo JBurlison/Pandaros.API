@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using NPC;
 using Pandaros.API.Extender;
@@ -13,7 +14,7 @@ namespace Pandaros.API.HTTPControllers
 {
     public class NpcTypeController : IPandaController
     {
-        [PandaHttp(RestVerb.Get, "/NpcType/All")]
+        [PandaHttp(OperationType.Get, "/NpcType/All", "")]
         public RestResponse GetAllJobTypes()
         {
             Dictionary<ushort, NPCTypeModel> jobs = new Dictionary<ushort, NPCTypeModel>();
@@ -31,7 +32,7 @@ namespace Pandaros.API.HTTPControllers
             return new RestResponse() { Content = jobs.ToUTF8SerializedJson() };
         }
 
-        [PandaHttp(RestVerb.Get, "/NpcType/Get")]
+        [PandaHttp(OperationType.Get, "/NpcType", "")]
         public RestResponse GetAllJobTypes(ushort npcTypeId)
         {
             Dictionary<ushort, NPCTypeModel> jobs = new Dictionary<ushort, NPCTypeModel>();
