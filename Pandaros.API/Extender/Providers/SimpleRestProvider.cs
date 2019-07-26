@@ -2,6 +2,7 @@
 using Pandaros.API.Models.HTTP;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -69,19 +70,21 @@ namespace Pandaros.API.Extender.Providers
                             {
                                 var response = default(RestResponse);
                                 var mehodParams = method.Item2.GetParameters();
-                                
-                                if (mehodParams.Length > 0)
-                                {
-                                    if (mehodParams.Length != context.Request.QueryString.Count)
+                                string bodyStr = string.Empty;
+
+                                if (context.Request.HasEntityBody)
+                                    using (StreamReader reader  = new StreamReader(context.Request.InputStream, Encoding.UTF8, true, 1024, true))
                                     {
-                                        context.Response.StatusCode = 422;
-                                        context.Response.StatusDescription = "Number of parameter mis-match. Expected: " + mehodParams.Length;
-                                        context.Response.OutputStream.Close();
-                                        return;
+                                        bodyStr = reader.ReadToEnd();
                                     }
 
+                                if (mehodParams.Length > 0)
+                                {
                                     foreach (var param in mehodParams)
                                     {
+                                        if (param.Name == "body")
+                                            continue;
+
                                         if (!context.Request.QueryString.AllKeys.Any(k => k == param.Name))
                                         {
                                             context.Response.StatusCode = 422;
@@ -103,7 +106,13 @@ namespace Pandaros.API.Extender.Providers
                                     }
 
                                     object[] requestParams = mehodParams
-                                                            .Select((p, i) => Convert.ChangeType(context.Request.QueryString[p.Name], p.ParameterType))
+                                                            .Select((p, i) =>
+                                                            {
+                                                                if (p.Name == "body")
+                                                                    return bodyStr;
+
+                                                                return Convert.ChangeType(context.Request.QueryString[p.Name], p.ParameterType);
+                                                            })
                                                             .ToArray();
 
                                     response = method.Item2.Invoke(method.Item1, requestParams) as RestResponse;

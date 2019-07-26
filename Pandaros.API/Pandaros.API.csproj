@@ -127,6 +127,7 @@
     <Compile Include="HTTPControllers\LocalizationController.cs" />
     <Compile Include="HTTPControllers\ItemsController.cs" />
     <Compile Include="HTTPControllers\PlayerController.cs" />
+    <Compile Include="HTTPControllers\ServerController.cs" />
     <Compile Include="IMagicEffect.cs" />
     <Compile Include="INameable.cs" />
     <Compile Include="IPandaArmor.cs" />
