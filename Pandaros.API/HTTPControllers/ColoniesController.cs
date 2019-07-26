@@ -1,5 +1,6 @@
 ﻿using Jobs;
 using Microsoft.OpenApi.Models;
+using Monsters;
 using Pandaros.API.Entities;
 using Pandaros.API.Extender;
 using Pandaros.API.Models;
@@ -234,7 +235,8 @@ namespace Pandaros.API.HTTPControllers
                 BannerCount = c.Banners.Length,
                 ColonistCount = c.FollowerCount,
                 Owners = c.Owners.Select(o => o.Name).ToList(),
-                ColonyState = ColonyState.GetColonyState(c)
+                ColonyState = ColonyState.GetColonyState(c),
+                MonsterCount = MonsterTracker.GetAllMonstersByID().Where(m => m.Value.OriginalGoal.ColonyID == c.ColonyID).Count()
             };
         }
     }

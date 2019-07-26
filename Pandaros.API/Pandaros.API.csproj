@@ -130,6 +130,7 @@
     <Compile Include="HTTPControllers\NpcTypeController.cs" />
     <Compile Include="HTTPControllers\LocalizationController.cs" />
     <Compile Include="HTTPControllers\ItemsController.cs" />
+    <Compile Include="HTTPControllers\PermissionController.cs" />
     <Compile Include="HTTPControllers\PlayerController.cs" />
     <Compile Include="HTTPControllers\ResearchController.cs" />
     <Compile Include="HTTPControllers\ServerController.cs" />

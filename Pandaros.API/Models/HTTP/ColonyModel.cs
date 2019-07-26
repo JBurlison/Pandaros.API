@@ -20,6 +20,7 @@ namespace Pandaros.API.Models.HTTP
         public int StockpileCount { get; set; }
         public int OpenJobCount { get; set; }
         public bool AutoRecruit { get; set; }
+        public int MonsterCount { get; set; }
         public List<string> Owners { get; set; }
         public ColonyState ColonyState { get; set; }
     }
