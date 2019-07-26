@@ -12,7 +12,7 @@ namespace Pandaros.API.HTTPControllers
 {
     public class ColoniesController : IPandaController
     {
-        [PandaHttp(RestVerb.Get, "AllColonies")]
+        [PandaHttp(RestVerb.Get, "/Colonies/All")]
         public RestResponse GetColonies()
         {
             var retVal = new List<ColonyModel>();
@@ -37,6 +37,39 @@ namespace Pandaros.API.HTTPControllers
             return new RestResponse() { Content = retVal.ToJsonSerializedByteArray() };
         }
 
+        [PandaHttp(RestVerb.Get, "/Colonies/Stockpile")]
+        public RestResponse GetStockpile(int colonyId)
+        {
+            if (ServerManager.ColonyTracker.ColoniesByID.TryGetValue(colonyId, out var colony))
+            {
+                List<StockpileItem> stockpileItems = new List<StockpileItem>();
 
+                foreach (var item in colony.Stockpile.Items)
+                {
+                    var itemType = ItemTypes.GetType(item.Key);
+
+                    var newItem = new StockpileItem()
+                    {
+                        Count = item.Value,
+                        ItemId = item.Key,
+                        ItemName = itemType.Name,
+                        IconPath = itemType.Icon,
+                        Translations = new Dictionary<string, string>()
+                    };
+
+                    foreach (var localization in Localization.LocaleTexts)
+                    {
+                        if (Localization.TryGetType(localization.Key, itemType, out string localized))
+                            newItem.Translations[localization.Key] = localized;
+                    }
+
+                    stockpileItems.Add(newItem);
+                }
+
+                return new RestResponse() { Content = stockpileItems.ToJsonSerializedByteArray() };
+            }
+            else
+                throw new IndexOutOfRangeException("Unknown colony id " + colonyId);
+        }
     }
 }

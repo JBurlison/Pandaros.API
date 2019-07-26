@@ -120,6 +120,7 @@
     <Compile Include="GameDifficulty.cs" />
     <Compile Include="GameInitializer.cs" />
     <Compile Include="Help\UIManager.cs" />
+    <Compile Include="HTTPControllers\ImageController.cs" />
     <Compile Include="HTTPControllers\ColoniesController.cs" />
     <Compile Include="IMagicEffect.cs" />
     <Compile Include="INameable.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Models\CSTextureMapping.cs" />
     <Compile Include="Models\CSType.cs" />
     <Compile Include="Models\HTTP\RestResponse.cs" />
+    <Compile Include="Models\HTTP\StockpileItem.cs" />
     <Compile Include="Models\ICSRecipe.cs" />
     <Compile Include="Models\ICSTextureMapping.cs" />
     <Compile Include="Models\ICSType.cs" />

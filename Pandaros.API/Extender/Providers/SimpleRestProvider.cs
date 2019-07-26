@@ -24,7 +24,7 @@ namespace Pandaros.API.Extender.Providers
         public void AfterWorldLoad()
         {
             foreach (RestVerb verb in Enum.GetValues(typeof(RestVerb)))
-                ApiCallbacks.Add(verb, new Dictionary<string, Tuple<object, MethodInfo>>());
+                ApiCallbacks.Add(verb, new Dictionary<string, Tuple<object, MethodInfo>>(StringComparer.InvariantCultureIgnoreCase));
 
             foreach (var ass in LoadedAssembalies)
             {
@@ -61,12 +61,7 @@ namespace Pandaros.API.Extender.Providers
                 if (Enum.TryParse(context.Request.HttpMethod, true, out RestVerb verb) && ApiCallbacks.TryGetValue(verb, out var callbacks))
                     ThreadPool.QueueUserWorkItem((_) =>
                     {
-                        string methodName = context.Request.Url.Segments[1].Replace("/", "");
-                        string[] strParams = context.Request.Url
-                                                .Segments
-                                                .Skip(2)
-                                                .Select(s => s.Replace("/", ""))
-                                                .ToArray();
+                        string methodName = context.Request.Url.AbsolutePath;
 
                         try
                         {
@@ -74,11 +69,11 @@ namespace Pandaros.API.Extender.Providers
                             {
                                 var response = default(RestResponse);
                                 var mehodParams = method.Item2.GetParameters();
-
+                                
                                 if (mehodParams.Length > 0)
                                 {
                                     object[] requestParams = mehodParams
-                                                            .Select((p, i) => Convert.ChangeType(strParams[i], p.ParameterType))
+                                                            .Select((p, i) => Convert.ChangeType(context.Request.QueryString[p.Name], p.ParameterType))
                                                             .ToArray();
 
                                     response = method.Item2.Invoke(method.Item1, requestParams) as RestResponse;
