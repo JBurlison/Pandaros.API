@@ -133,6 +133,7 @@ namespace Pandaros.API.Extender.Providers
                                 {
                                     context.Response.ContentType = response.ContentType;
                                     context.Response.ContentLength64 = response.Content.Length;
+                                    context.Response.StatusCode = response.HttpCode;
                                     context.Response.OutputStream.Write(response.Content, 0, response.Content.Length);
                                 }
                                 else

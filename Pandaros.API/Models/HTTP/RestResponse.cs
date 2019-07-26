@@ -14,5 +14,6 @@ namespace Pandaros.API.Models.HTTP
 
         public byte[] Content { get; set; }
         public string ContentType { get; set; } = "application/json";
+        public int HttpCode { get; set; } = 200;
     }
 }

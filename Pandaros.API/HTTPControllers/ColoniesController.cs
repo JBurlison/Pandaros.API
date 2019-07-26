@@ -36,7 +36,7 @@ namespace Pandaros.API.HTTPControllers
                 return RestResponse.BlankJsonObject;
         }
 
-        [PandaHttp(OperationType.Get, "/Colonies/Stockpile/All", "Gets a colonies entire stockpile.")]
+        [PandaHttp(OperationType.Get, "/Colonies/Stockpile", "Gets a colonies entire stockpile.")]
         public RestResponse GetStockpile(int colonyId)
         {
             if (ServerManager.ColonyTracker.ColoniesByID.TryGetValue(colonyId, out var colony))
@@ -51,21 +51,54 @@ namespace Pandaros.API.HTTPControllers
             else
                 return RestResponse.BlankJsonObject;
         }
-        
+
+        [PandaHttp(OperationType.Delete, "/Colonies/Stockpile", "Deletes an item from the stockpile.")]
+        public RestResponse DeleteStockpileItem(int colonyId, ushort itemId, int amount)
+        {
+            if (ServerManager.ColonyTracker.ColoniesByID.TryGetValue(colonyId, out var colony))
+            {
+                colony.Stockpile.TryRemove(itemId, amount);
+
+                return RestResponse.Success;
+            }
+            else
+                return RestResponse.BlankJsonObject;
+        }
+
         [PandaHttp(OperationType.Get, "/Colonies/Researh", "Gets the colonies current research status.")]
         public RestResponse GetResearh(int colonyId)
         {
             if (ServerManager.ColonyTracker.ColoniesByID.TryGetValue(colonyId, out var colony))
             {
-                Dictionary<ushort, StockpileItem> stockpileItems = new Dictionary<ushort, StockpileItem>();
+                var colonyScience = new ColonyScienceModel();
+                colonyScience.CompletedCycles = colony.ScienceData.CompletedCycles.ToDictionary(k => k.Key.Index, v => v.Value);
+                colonyScience.CompletedScience = colony.ScienceData.CompletedScience.Select(s => s.Index).ToList();
 
-                foreach (var item in colony.Stockpile.Items)
-                    stockpileItems.Add(item.Key, MapStockpileItem(item.Key, item.Value));
-
-                return new RestResponse() { Content = stockpileItems.ToUTF8SerializedJson() };
+                return new RestResponse() { Content = colonyScience.ToUTF8SerializedJson() };
             }
             else
                 return RestResponse.BlankJsonObject;
+        }
+
+        [PandaHttp(OperationType.Get, "/Colonies/Banners", "Gets the colonies current banners.")]
+        public RestResponse GetBanners(int colonyId)
+        {
+            if (ServerManager.ColonyTracker.ColoniesByID.TryGetValue(colonyId, out var colony))
+            {
+                var banners = new List<BannerModel>();
+
+                foreach (var banenr in colony.Banners)
+                    banners.Add(new BannerModel()
+                    {
+                        ColonyId = colony.ColonyID,
+                        Position = new SerializableVector3(banenr.Position),
+                        SafeRadius = banenr.SafeRadius
+                    });
+
+                return new RestResponse() { Content = banners.ToUTF8SerializedJson() };
+            }
+            else
+                return RestResponse.BlankJsonArray;
         }
 
         [PandaHttp(OperationType.Get, "/Colonies/Colonists/All", "Gets all the colonists in a colony.")]

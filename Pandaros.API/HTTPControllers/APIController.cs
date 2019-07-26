@@ -81,18 +81,33 @@ namespace Pandaros.API.HTTPControllers
                         Description = verbRoute.Value.Item1,
                         Parameters = verbRoute.Value.Item2.GetParameters().Select(p =>
                         {
-                            return new OpenApiParameter()
-                            {
-                                AllowEmptyValue = false,
-                                Name = p.Name,
-                                In = ParameterLocation.Query,
-                                Required = true,
-                                AllowReserved = true,
-                                Schema = new OpenApiSchema()
+                            if (p.Name != "body")
+                                return new OpenApiParameter()
                                 {
-                                    Type = p.ParameterType.Name
-                                }
-                            };
+                                    AllowEmptyValue = false,
+                                    Name = p.Name,
+                                    In = ParameterLocation.Query,
+                                    Required = true,
+                                    AllowReserved = true,
+                                    Schema = new OpenApiSchema()
+                                    {
+                                        Type = p.ParameterType.Name
+                                    }
+                                };
+                            else
+                                return new OpenApiParameter()
+                                {
+                                    AllowEmptyValue = false,
+                                    Name = p.Name,
+                                    In = ParameterLocation.Query,
+                                    Required = true,
+                                    AllowReserved = true,
+                                    Schema = new OpenApiSchema()
+                                    {
+                                        Type = p.ParameterType.Name
+                                    },
+                                    Description = "Not required in query. This is populated by the body of the request."
+                                };
                         }).ToList()
                     };
                 }
