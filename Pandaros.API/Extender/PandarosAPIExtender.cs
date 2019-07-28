@@ -35,8 +35,8 @@ namespace Pandaros.API.Extender
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnSavingColony, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnSavingColony")]
         public static void OnSavingColony(Colony c, JSONNode n)
         {
-            if (_settlersExtensions.TryGetValue(nameof(IOnSavingColonyExtnder), out var pandarosExtentions))
-                foreach (var extension in pandarosExtentions.Select(ex => ex as IOnSavingColonyExtnder))
+            if (_settlersExtensions.TryGetValue(nameof(IOnSavingColonyExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IOnSavingColonyExtender))
                     try
                     {
                         extension.OnSavingColony(c, n);

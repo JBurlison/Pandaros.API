@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pandaros.API.Extender
 {
-    public interface IOnSavingColonyExtnder : IPandarosExtention
+    public interface IOnSavingColonyExtender : IPandarosExtention
     {
         void OnSavingColony(Colony c, JSONNode n);
     }

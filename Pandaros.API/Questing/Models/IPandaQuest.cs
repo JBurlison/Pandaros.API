@@ -13,12 +13,11 @@ namespace Pandaros.API.Questing.Models
         List<IPandaQuestObjective> QuestObjectives { get; set; }
         List<IPandaQuestReward> QuestRewards { get; set; }
         List<IPandaQuestPrerequisite> QuestPrerequisites { get; set; }
-        int NumberOfTimesCompleted { get; set; }
 
-        string GetQuestText(IPandaQuest quest, Colony colony, Players.Player player);
-        bool CanRepeat(IPandaQuest quest, Colony colony);
-        void QuestComplete(IPandaQuest quest, Colony colony);
-        JObject Save(IPandaQuest quest, Colony colony);
-        void Load(JObject node, IPandaQuest quest, Colony colony);
+        string GetQuestText(Colony colony, Players.Player player);
+        bool CanRepeat(Colony colony);
+        void QuestComplete(Colony colony);
+        JObject Save(Colony colony);
+        void Load(JObject node, Colony colony);
     }
 }
