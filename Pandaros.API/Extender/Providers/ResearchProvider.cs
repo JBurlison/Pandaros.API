@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class ResearchProvider : IOnAddResearchables
+    public class ResearchProvider : IOnAddResearchablesExtender
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 

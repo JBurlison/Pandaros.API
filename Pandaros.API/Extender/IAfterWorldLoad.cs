@@ -1,6 +1,6 @@
 ﻿namespace Pandaros.API.Extender
 {
-    public interface IAfterWorldLoad : IPandarosExtention
+    public interface IAfterWorldLoadExtender : IPandarosExtention
     {
         void AfterWorldLoad();
     }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class RecipeProvider : IAfterItemTypesDefined
+    public class RecipeProvider : IAfterItemTypesDefinedExtender
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 

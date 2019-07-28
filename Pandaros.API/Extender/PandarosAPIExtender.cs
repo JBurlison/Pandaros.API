@@ -11,7 +11,7 @@ namespace Pandaros.API.Extender
     [ModLoader.ModManager]
     public static class PandarosAPIExtender
     {
-        private static List<IPandarosExtention> _settlersExtensions = new List<IPandarosExtention>();
+        private static Dictionary<string, List<IPandarosExtention>> _settlersExtensions = new Dictionary<string, List<IPandarosExtention>>();
         private static List<IOnTimedUpdate> _timedUpdate = new List<IOnTimedUpdate>();
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnUpdate, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnUpdate")]
@@ -32,11 +32,27 @@ namespace Pandaros.API.Extender
                 }
         }
 
+        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnSavingColony, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnSavingColony")]
+        public static void OnSavingColony(Colony c, JSONNode n)
+        {
+            if (_settlersExtensions.TryGetValue(nameof(IOnSavingColonyExtnder), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IOnSavingColonyExtnder))
+                    try
+                    {
+                        extension.OnSavingColony(c, n);
+                    }
+                    catch (Exception ex)
+                    {
+                        APILogger.LogError(ex);
+                    }
+        }
+
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnAddResearchables, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnAddResearchables")]
         public static void Register()
         {
-            foreach (var extension in _settlersExtensions.Where(s => s as IOnAddResearchables != null).Select(ex => ex as IOnAddResearchables))
-                try
+            if (_settlersExtensions.TryGetValue(nameof(IOnAddResearchablesExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IOnAddResearchablesExtender))
+                    try
                 {
                     extension.OnAddResearchables();
                 }
@@ -49,8 +65,9 @@ namespace Pandaros.API.Extender
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnLoadingColony, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnLoadingColony")]
         public static void OnLoadingColony(Colony c, JSONNode n)
         {
-            foreach (var extension in _settlersExtensions.Where(s => s as IOnLoadingColony != null).Select(ex => ex as IOnLoadingColony))
-                try
+            if (_settlersExtensions.TryGetValue(nameof(IOnLoadingColonyExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IOnLoadingColonyExtender))
+                    try
                 {
                     extension.OnLoadingColony(c, n);
                 }
@@ -64,8 +81,9 @@ namespace Pandaros.API.Extender
         [ModLoader.ModCallbackProvidesFor(GameInitializer.NAMESPACE + ".Managers.MonsterManager.AfterWorldLoad")]
         public static void AfterWorldLoad()
         {
-            foreach (var extension in _settlersExtensions.Where(s => s as IAfterWorldLoad != null).Select(ex => ex as IAfterWorldLoad))
-                try
+            if (_settlersExtensions.TryGetValue(nameof(IAfterWorldLoadExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IAfterWorldLoadExtender))
+                    try
                 {
                     extension.AfterWorldLoad();
                 }
@@ -81,8 +99,9 @@ namespace Pandaros.API.Extender
             LoadExtenstions(list);
             LoadImplementation(list);
 
-            foreach (var extension in _settlersExtensions.Where(s => s as IAfterModsLoadedExtention != null).Select(ex => ex as IAfterModsLoadedExtention))
-                try
+            if (_settlersExtensions.TryGetValue(nameof(IAfterModsLoadedExtention), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IAfterModsLoadedExtention))
+                    try
                 {
                     extension.AfterModsLoaded(list);
                 }
@@ -96,8 +115,9 @@ namespace Pandaros.API.Extender
         [ModLoader.ModCallbackProvidesFor("pipliz.server.loadresearchables")]
         public static void AfterItemTypesDefined()
         {
-            foreach (var extension in _settlersExtensions.Where(s => s as IAfterItemTypesDefined != null).Select(ex => ex as IAfterItemTypesDefined))
-                try
+            if (_settlersExtensions.TryGetValue(nameof(IAfterItemTypesDefinedExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IAfterItemTypesDefinedExtender))
+                    try
                 {
                     extension.AfterItemTypesDefined();
                 }
@@ -111,8 +131,9 @@ namespace Pandaros.API.Extender
         [ModLoader.ModCallbackProvidesFor("pipliz.server.registertexturemappingtextures")]
         public static void AfterSelectedWorld()
         {
-            foreach (var extension in _settlersExtensions.Where(s => s as IAfterSelectedWorld != null).Select(ex => ex as IAfterSelectedWorld))
-                try
+            if (_settlersExtensions.TryGetValue(nameof(IAfterSelectedWorldExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IAfterSelectedWorldExtender))
+                    try
                 {
                     extension.AfterSelectedWorld();
                 }
@@ -125,8 +146,9 @@ namespace Pandaros.API.Extender
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnCreatedColony, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnCreatedColony")]
         public static void OnCreatedColony(Colony c)
         {
-            foreach (var extension in _settlersExtensions.Where(s => s as IOnColonyCreated != null).Select(ex => ex as IOnColonyCreated))
-                try
+            if (_settlersExtensions.TryGetValue(nameof(IOnColonyCreatedExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IOnColonyCreatedExtender))
+                    try
                 {
                     extension.ColonyCreated(c);
                 }
@@ -140,8 +162,9 @@ namespace Pandaros.API.Extender
         [ModLoader.ModCallbackDependsOn("pipliz.server.applymoditempatches")]
         public static void AddItemTypes(Dictionary<string, ItemTypesServer.ItemTypeRaw> itemTypes)
         {
-            foreach (var extension in _settlersExtensions.Where(s => s as IAddItemTypes != null).Select(ex => ex as IAddItemTypes))
-                try
+            if (_settlersExtensions.TryGetValue(nameof(IAddItemTypesExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IAddItemTypesExtender))
+                    try
                 {
                     extension.AddItemTypes(itemTypes);
                 }
@@ -154,15 +177,16 @@ namespace Pandaros.API.Extender
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnConstructInventoryManageColonyUI, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnConstructInventoryManageColonyUI")]
         public static void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu)
         {
-            foreach (var extension in _settlersExtensions.Where(s => s as IOnConstructInventoryManageColonyUIExtender != null).Select(ex => ex as IOnConstructInventoryManageColonyUIExtender))
-                try
-                {
-                    extension.OnConstructInventoryManageColonyUI(player, networkMenu);
-                }
-                catch (Exception ex)
-                {
-                    APILogger.LogError(ex);
-                }
+            if (_settlersExtensions.TryGetValue(nameof(IOnConstructInventoryManageColonyUIExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IOnConstructInventoryManageColonyUIExtender))
+                    try
+                    {
+                        extension.OnConstructInventoryManageColonyUI(player, networkMenu);
+                    }
+                    catch (Exception ex)
+                    {
+                        APILogger.LogError(ex);
+                    }
         }
 
         private static void LoadImplementation(List<ModLoader.ModDescription> list)
@@ -177,19 +201,20 @@ namespace Pandaros.API.Extender
                     foreach (var type in typeArray)
                     {
                         var ifaces = type.GetInterfaces();
-                       
+
                         foreach (var iface in ifaces)
                         {
-                            foreach (var e in _settlersExtensions)
-                                if (!string.IsNullOrEmpty(e.InterfaceName) && e.InterfaceName == iface.Name && !type.IsInterface)
-                                {
-                                    var constructor = type.GetConstructor(Type.EmptyTypes);
+                            foreach (var vals in _settlersExtensions.Values)
+                                foreach (var e in vals)
+                                    if (!string.IsNullOrEmpty(e.InterfaceName) && e.InterfaceName == iface.Name && !type.IsInterface)
+                                    {
+                                        var constructor = type.GetConstructor(Type.EmptyTypes);
 
-                                    if (constructor != null)
-                                        e.LoadedAssembalies.Add(type);
-                                    else
-                                        APILogger.LogToFile("Warning: No empty constructor for " + type.Name);
-                                }
+                                        if (constructor != null)
+                                            e.LoadedAssembalies.Add(type);
+                                        else
+                                            APILogger.LogToFile("Warning: No empty constructor for " + type.Name);
+                                    }
 
                             if (!string.IsNullOrEmpty(iface.Name) && nameof(IOnTimedUpdate) == iface.Name && !type.IsInterface)
                             {
@@ -203,9 +228,10 @@ namespace Pandaros.API.Extender
                             }
                         }
 
-                        foreach (var e in _settlersExtensions)
-                            if (e.ClassType != null && type.Equals(e.ClassType))
-                                e.LoadedAssembalies.Add(type);
+                        foreach (var vals in _settlersExtensions.Values)
+                            foreach (var e in vals)
+                                if (e.ClassType != null && type.Equals(e.ClassType))
+                                    e.LoadedAssembalies.Add(type);
                     }
                 }
                 catch (Exception)
@@ -226,24 +252,33 @@ namespace Pandaros.API.Extender
                     foreach (var type in typeArray)
                     {
                         var ifaces = type.GetInterfaces();
+                        var isExtention = ifaces.Any(f => f.Name == nameof(IPandarosExtention));
 
-                        foreach (var iface in ifaces)
-                            try
+                        try
+                        {
+                            if (isExtention && Activator.CreateInstance(type) is IPandarosExtention extension)
                             {
-                                if (iface.Name == nameof(IPandarosExtention) &&
-                                    Activator.CreateInstance(type) is IPandarosExtention extension)
-                                {
-                                    _settlersExtensions.Add(extension);
-                                }
+                                foreach (var iface in ifaces)
+                                    if (iface.Name != nameof(IPandarosExtention))
+                                        try
+                                        {
+                                            if (!_settlersExtensions.ContainsKey(iface.Name))
+                                                _settlersExtensions.Add(iface.Name, new List<IPandarosExtention>());
+
+                                            if (!_settlersExtensions[iface.Name].Any(f => f.GetType().Name == extension.GetType().Name))
+                                                _settlersExtensions[iface.Name].Add(extension);
+                                        }
+                                        catch (MissingMethodException)
+                                        {
+                                            // do nothing, we tried to load a interface.
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            APILogger.LogError(ex, $"Error loading interface {iface.Name} on type {type.Name}");
+                                        }
                             }
-                            catch (MissingMethodException)
-                            {
-                                // do nothing, we tried to load a interface.
-                            }
-                            catch (Exception ex)
-                            {
-                                APILogger.LogError(ex, $"Error loading interface {iface.Name} on type {type.Name}");
-                            }
+                        }
+                        catch (Exception) { }
                     }
                 }
                 catch (Exception)

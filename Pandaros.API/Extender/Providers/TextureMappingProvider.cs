@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class TextureMappingProvider : IAfterSelectedWorld
+    public class TextureMappingProvider : IAfterSelectedWorldExtender
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 

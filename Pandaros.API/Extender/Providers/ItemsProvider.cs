@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class ItemsProvider : IAfterWorldLoad, IAddItemTypes
+    public class ItemsProvider : IAfterWorldLoadExtender, IAddItemTypesExtender
     {
         StringBuilder _sb = new StringBuilder();
 

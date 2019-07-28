@@ -2,7 +2,7 @@
 
 namespace Pandaros.API.Extender
 {
-    public interface IAddItemTypes : IPandarosExtention
+    public interface IAddItemTypesExtender : IPandarosExtention
     {
         void AddItemTypes(Dictionary<string, ItemTypesServer.ItemTypeRaw> itemTypes);
     }

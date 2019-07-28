@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class RoamingJobObjectiveProvider : IAfterItemTypesDefined
+    public class RoamingJobObjectiveProvider : IAfterItemTypesDefinedExtender
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 

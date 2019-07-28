@@ -1,6 +1,6 @@
 ﻿namespace Pandaros.API.Extender
 {
-    public interface IOnAddResearchables : IPandarosExtention
+    public interface IOnAddResearchablesExtender : IPandarosExtention
     {
         void OnAddResearchables();
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class PandaZombieProvider : IAfterWorldLoad
+    public class PandaZombieProvider : IAfterWorldLoadExtender
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 

@@ -4,7 +4,7 @@ namespace Pandaros.API
 {
     internal static class APILogger
     {
-        private static CSConsoleAndFileLogger _logger = new CSConsoleAndFileLogger(GameInitializer.NAMESPACE, "PandaLog", "<Panaros => API>");
+        private static CSConsoleAndFileLogger _logger = new CSConsoleAndFileLogger(GameInitializer.NAMESPACE, "APILog", "<Panaros => API>");
 
         public static void LogToFile(string message, params object[] args)
         {

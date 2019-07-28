@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class GenerateTypesProvider : IAfterSelectedWorld
+    public class GenerateTypesProvider : IAfterSelectedWorldExtender
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 

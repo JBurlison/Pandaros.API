@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class LootTableProvider : IAfterWorldLoad
+    public class LootTableProvider : IAfterWorldLoadExtender
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 

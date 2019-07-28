@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pandaros.API.Extender
 {
-    public interface IOnColonyCreated : IPandarosExtention
+    public interface IOnColonyCreatedExtender : IPandarosExtention
     {
         void ColonyCreated(Colony c);
     }

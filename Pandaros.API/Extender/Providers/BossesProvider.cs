@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class BossesProvider : IAfterWorldLoad
+    public class BossesProvider : IAfterWorldLoadExtender
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 

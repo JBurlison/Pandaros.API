@@ -47,7 +47,7 @@ namespace Pandaros.API.Items
                             {
                                 var sk = c.ScienceData.CompletedCycles.FirstOrDefault(kvp => kvp.Key.Researchable.GetKey() == item.RequiredScience).Key;
 
-                                if (sk.Researchable == null || sk.Researchable.AreConditionsMet(c.ScienceData))
+                                if (sk.Researchable == null || !sk.Researchable.AreConditionsMet(c.ScienceData))
                                     canAdd = false;
                             }
 

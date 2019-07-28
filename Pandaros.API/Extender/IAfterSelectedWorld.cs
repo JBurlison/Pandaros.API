@@ -1,6 +1,6 @@
 ﻿namespace Pandaros.API.Extender
 {
-    public interface IAfterSelectedWorld : IPandarosExtention
+    public interface IAfterSelectedWorldExtender : IPandarosExtention
     {
         void AfterSelectedWorld();
     }

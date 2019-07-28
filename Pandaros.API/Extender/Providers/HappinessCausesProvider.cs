@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Pandaros.API.Extender.Providers
 {
-    class HappinessCausesProvider : IOnColonyCreated, IOnLoadingColony
+    class HappinessCausesProvider : IOnColonyCreatedExtender, IOnLoadingColonyExtender
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 

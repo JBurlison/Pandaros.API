@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class SimpleRestProvider : IAfterWorldLoad
+    public class SimpleRestProvider : IAfterWorldLoadExtender
     {
         public List<Type> LoadedAssembalies { get; set; } = new List<Type>();
 
