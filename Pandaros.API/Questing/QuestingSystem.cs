@@ -7,6 +7,8 @@ using Pandaros.API.Questing.Models;
 using Pandaros.API.Extender;
 using NetworkUI;
 using Pipliz.JSON;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Pandaros.API.Questing
 {
@@ -28,12 +30,70 @@ namespace Pandaros.API.Questing
 
         public void OnLoadingColony(Colony c, JSONNode n)
         {
-            
+            if (!CompletedQuests.ContainsKey(c))
+                CompletedQuests.Add(c, new List<string>());
+
+            var saveDir = GameInitializer.SAVE_LOC + "Quests/";
+            var saveFile = saveDir + c.ColonyID + ".json";
+
+            if (!Directory.Exists(saveDir))
+                Directory.CreateDirectory(saveDir);
+
+            if (File.Exists(saveFile))
+            {
+                var colonySave = JsonConvert.DeserializeObject<ColonyQuestingSave>(File.ReadAllText(saveFile));
+
+                CompletedQuests[c] = colonySave.CompletedQuests;
+
+                foreach (var kvp in colonySave.InProgressQuests)
+                {
+                    if (QuestPool.TryGetValue(kvp.Key, out var quest))
+                    {
+                        quest.Load(kvp.Value.QuestSave, c);
+
+                        foreach (var o in kvp.Value.Objectives)
+                            if (quest.QuestObjectives.TryGetValue(o.Key, out var objective))
+                                objective.Load(o.Value, quest, c);
+                    }
+                }
+            }
         }
 
         public void OnSavingColony(Colony c, JSONNode n)
         {
-            
+            if (!CompletedQuests.ContainsKey(c))
+                CompletedQuests.Add(c, new List<string>());
+
+            var colonySave = new ColonyQuestingSave()
+            {
+                ColonyId = c.ColonyID,
+                CompletedQuests = CompletedQuests[c],
+                InProgressQuests = new Dictionary<string, QuestingSave>()
+            };
+
+            var saveDir = GameInitializer.SAVE_LOC + "Quests/";
+            var saveFile = saveDir + c.ColonyID + ".json";
+
+            if (!Directory.Exists(saveDir))
+                Directory.CreateDirectory(saveDir);
+
+            if (File.Exists(saveFile))
+                File.Delete(saveFile);
+
+            foreach (var kvp in QuestPool)
+            {
+                colonySave.InProgressQuests.Add(kvp.Key, new QuestingSave()
+                {
+                    Name = kvp.Key,
+                    QuestSave = kvp.Value.Save(c),
+                    Objectives = new Dictionary<string, Newtonsoft.Json.Linq.JObject>()
+                });
+
+                foreach (var o in kvp.Value.QuestObjectives)
+                    colonySave.InProgressQuests[kvp.Key].Objectives.Add(o.Key, o.Value.Save(kvp.Value, c));
+            }
+
+            File.WriteAllText(saveFile, JsonConvert.SerializeObject(colonySave));
         }
 
         public void OnTimedUpdate()
@@ -47,10 +107,6 @@ namespace Pandaros.API.Questing
 
                     bool ok = true;
 
-                    if (CompletedQuests[colony].Contains(quest.Value.QuestKey))
-                        if (!quest.Value.CanRepeat(colony))
-                            ok = false;
-
                     foreach (var pre in quest.Value.QuestPrerequisites)
                         if (!pre.MeetsPrerequisite(quest.Value, colony))
                             ok = false;
@@ -59,7 +115,7 @@ namespace Pandaros.API.Questing
                     {
                         bool allComplete = true;
 
-                        foreach (var objective in quest.Value.QuestObjectives)
+                        foreach (var objective in quest.Value.QuestObjectives.Values)
                         {
                             if (objective.GetProgress(quest.Value, colony) < 1f)
                                 allComplete = false;
@@ -70,8 +126,8 @@ namespace Pandaros.API.Questing
                             foreach (var reward in quest.Value.QuestRewards)
                                 reward.IssueReward(quest.Value, colony);
 
-                            if (!CompletedQuests[colony].Contains(quest.Value.QuestKey))
-                                CompletedQuests[colony].Add(quest.Value.QuestKey)
+                            if (!quest.Value.CanRepeat(colony) && !CompletedQuests[colony].Contains(quest.Value.QuestKey))
+                                CompletedQuests[colony].Add(quest.Value.QuestKey);
                         }
                     }
                 }

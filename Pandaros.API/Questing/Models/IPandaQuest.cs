@@ -10,7 +10,7 @@ namespace Pandaros.API.Questing.Models
     public interface IPandaQuest
     {
         string QuestKey { get; }
-        List<IPandaQuestObjective> QuestObjectives { get; set; }
+        Dictionary<string, IPandaQuestObjective> QuestObjectives { get; set; }
         List<IPandaQuestReward> QuestRewards { get; set; }
         List<IPandaQuestPrerequisite> QuestPrerequisites { get; set; }
 

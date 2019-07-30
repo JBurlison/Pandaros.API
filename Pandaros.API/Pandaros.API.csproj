@@ -229,6 +229,7 @@
     <Compile Include="Questing\Models\IPandaQuestObjective.cs" />
     <Compile Include="Questing\Models\IPandaQuestPrerequisite.cs" />
     <Compile Include="Questing\Models\IPandaQuestReward.cs" />
+    <Compile Include="Questing\Models\QuestingSave.cs" />
     <Compile Include="Questing\QuestingSystem.cs" />
     <Compile Include="QueueFactory.cs" />
     <Compile Include="Research\IPandaResearch.cs" />
