@@ -90,7 +90,12 @@ namespace Pandaros.API.Questing
                 });
 
                 foreach (var o in kvp.Value.QuestObjectives)
-                    colonySave.InProgressQuests[kvp.Key].Objectives.Add(o.Key, o.Value.Save(kvp.Value, c));
+                {
+                    var saveNode = o.Value.Save(kvp.Value, c);
+
+                    if (saveNode != null)
+                        colonySave.InProgressQuests[kvp.Key].Objectives.Add(o.Key, saveNode);
+                }
             }
 
             File.WriteAllText(saveFile, JsonConvert.SerializeObject(colonySave));
