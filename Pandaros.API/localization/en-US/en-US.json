@@ -12,6 +12,9 @@
           "UnknownCommand": "Unknown command {0}",
           "PossibleCommands": "Possible commands: "
         },
+        "Quests": {
+          "CraftObjective": "{0} out of {1} crafted"
+        },
         "Settlers": {
           "SkillChance": "Additional Skill chance: {0}%"
         },

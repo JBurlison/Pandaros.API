@@ -48,7 +48,6 @@ namespace Pandaros.API.Questing.BuiltinObjectives
             if (!CurrentCraftCount.ContainsKey(colony.ColonyID))
                 CurrentCraftCount[colony.ColonyID] = 0;
 
-
             if (CurrentCraftCount[colony.ColonyID] != 0)
                 return CurrentCraftCount[colony.ColonyID] / CraftCount;
             else
