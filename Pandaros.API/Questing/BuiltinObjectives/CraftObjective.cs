@@ -20,6 +20,12 @@ namespace Pandaros.API.Questing.BuiltinObjectives
             CraftCount = count;
             LocalizationHelper = localizationHelper;
             LocalizationKey = localizationKey;
+
+            if (LocalizationHelper == null)
+                LocalizationHelper = new LocalizationHelper(GameInitializer.NAMESPACE, "Quests");
+
+            if (string.IsNullOrEmpty(LocalizationKey))
+                LocalizationKey = nameof(CraftObjective);
         }
 
         public string ObjectiveKey { get; set; }
