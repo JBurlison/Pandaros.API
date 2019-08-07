@@ -138,6 +138,12 @@ namespace Pandaros.API
             return Encoding.UTF8.GetBytes(retstr);
         }
 
+        public static byte[] ToUTF8SerializedJson(this object o, params JsonConverter[] jsonConverters)
+        {
+            string retstr = JsonConvert.SerializeObject(o, jsonConverters);
+            return Encoding.UTF8.GetBytes(retstr);
+        }
+
         public static float TotalDamage(this Dictionary<DamageType, float> damage)
         {
             return damage.Sum(kvp => kvp.Value);

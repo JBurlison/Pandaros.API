@@ -133,7 +133,7 @@ namespace Pandaros.API.ColonyManagement
             var inv = ColonistInventory.Get(job.NPC);
             inv.IncrimentStat("Number of Crafts");
 
-            double weightSum = 1;
+            double weightSum = 0;
             double roll = Random.Next() + inv.GetSkillModifier();
             List<RecipeResult> bonusItems = new List<RecipeResult>();
 
