@@ -225,6 +225,7 @@
     <Compile Include="CSConsoleAndFileLogger.cs" />
     <Compile Include="APILogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Questing\BuiltinObjectives\ColonistCountObjective.cs" />
     <Compile Include="Questing\BuiltinObjectives\CraftObjective.cs" />
     <Compile Include="Questing\BuiltinQuests\GenericQuest.cs" />
     <Compile Include="Questing\Models\IPandaQuest.cs" />
