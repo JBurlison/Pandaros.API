@@ -3,7 +3,7 @@
     "dllpath": "Pandaros.API.dll",
     "name": "Pandaros.API",
     "namepretty": "Pandaros' API!",
-    "version": "0.1.3.0",
+    "version": "0.1.4.0",
     "enabled": true,
     "marksgamemodded": true,
     "compatibleversions": [
@@ -20,9 +20,15 @@
     "about": "Pandaros' API adds a slew of API features that the settlers mod is built upon, Comes with Colony management/job assignment and Player Magic items tool!",
     "patchnotes": [
       {
-        "version": "0.1.3.0",
+        "version": "0.1.4.0",
         "notes": [
           "Fixed Happiness duplication"
+        ]
+      },
+      {
+        "version": "0.1.3.0",
+        "notes": [
+          "Fixed items doubling (like buckets)"
         ]
       },
       {
