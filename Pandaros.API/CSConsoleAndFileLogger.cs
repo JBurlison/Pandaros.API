@@ -77,7 +77,7 @@ namespace Pandaros.API
 
         public CSConsoleAndFileLogger(string namespaceStr, string logName, string consolePrefix)
         {
-            LOG_DIR = GameInitializer.GAME_ROOT + "Logs/" + namespaceStr + "/";
+            LOG_DIR = GameInitializer.GAMEDATA_FOLDER + "Logs/" + namespaceStr + "/";
             _consolePrefix = consolePrefix;
 
             if (!Directory.Exists(LOG_DIR))

@@ -210,7 +210,7 @@ namespace Pandaros.API.Extender
                                     {
                                         var constructor = type.GetConstructor(Type.EmptyTypes);
 
-                                        if (constructor != null)
+                                        if (constructor != null && !e.LoadedAssembalies.Contains(type))
                                             e.LoadedAssembalies.Add(type);
                                         else
                                             APILogger.LogToFile("Warning: No empty constructor for " + type.Name);

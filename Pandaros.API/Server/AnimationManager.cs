@@ -41,7 +41,8 @@ namespace Pandaros.API.Server
                 string mesh = IOHelper.SimplifyRelativeDirectory(meshPath, "");
                 ObjSettings = new MeshedObjectTypeSettings(key, mesh, textureMapping);
                 ObjType     = MeshedObjectType.Register(ObjSettings);
-                FileTable.Register(mesh, ECachedFileType.Mesh);
+
+                ServerManager.FileTable.StartLoading(mesh, ECachedFileType.Mesh);
             }
 
             public string Key { get; private set; }

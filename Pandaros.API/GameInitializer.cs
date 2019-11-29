@@ -28,7 +28,7 @@ namespace Pandaros.API
         public static string NPC_PATH = "gamedata/textures/materials/npc/";
         public static string MOD_FOLDER = @"gamedata/mods/Pandaros/API";
         public static string MODS_FOLDER = @"";
-        public static string GAMEDATA_FOLDER = @"";
+        public static string GAMEDATA_FOLDER = @"gamedata/";
         public static string GAME_ROOT = @"";
         public static string SAVE_LOC = "";
         public static readonly Version MOD_VER = new Version(0, 1, 4, 0);
@@ -186,16 +186,13 @@ namespace Pandaros.API
             }
         }
 
-        [ModLoader.ModCallback(ModLoader.EModCallbackType.AfterStartup, NAMESPACE + ".AfterStartup")]
-        public static void AfterStartup()
+        [ModLoader.ModCallback(ModLoader.EModCallbackType.AfterModsLoaded, NAMESPACE + ".AfterModsLoaded")]
+        public static void AfterStartup(List<ModLoader.ModDescription> modDescriptions)
         {
             RUNNING = true;
             CommandManager.RegisterCommand(new GameDifficultyChatCommand());
             CommandManager.RegisterCommand(new ArmorCommand());
             CommandManager.RegisterCommand(new BossesChatCommand());  
-#if Debug
-            ChatCommands.CommandManager.RegisterCommand(new Research.PandaResearchCommand());
-#endif
         }
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnQuit, NAMESPACE + ".OnQuitLate")]

@@ -108,6 +108,8 @@
     <Compile Include="Extender\Providers\BossesProvider.cs" />
     <Compile Include="Extender\Providers\ConnectedBlockCalculationTypeProvider.cs" />
     <Compile Include="Extender\Providers\GenerateTypesProvider.cs" />
+    <Compile Include="Extender\Providers\HappinessCausesProvider.cs" />
+    <Compile Include="Extender\Providers\HappinessEffectProvider.cs" />
     <Compile Include="Extender\Providers\ItemsProvider.cs" />
     <Compile Include="Extender\Providers\LootTableProvider.cs" />
     <Compile Include="Extender\Providers\OnConstructInventoryManageColonyUIProvider.cs" />
