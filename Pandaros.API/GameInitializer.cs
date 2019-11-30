@@ -20,18 +20,18 @@ namespace Pandaros.API
     {
         public static readonly ReadOnlyCollection<string> BLOCK_ROTATIONS = new ReadOnlyCollection<string>(new List<string>() { "x+", "x-", "z+", "z-" });
 
-        public static string ICON_PATH = "gamedata/mods/Pandaros/API/icons/";
-        public static string MESH_PATH = "gamedata/mods/Pandaros/API/Meshes/";
+        public static string ICON_PATH = "icons/";
+        public static string MESH_PATH = "Meshes/";
         public const string NAMESPACE = "Pandaros.API";
         public const string SETTLER_INV = "Pandaros.API.Inventory";
         public const string ALL_SKILLS = "Pandaros.API.ALLSKILLS";
-        public static string NPC_PATH = "gamedata/textures/materials/npc/";
-        public static string MOD_FOLDER = @"gamedata/mods/Pandaros/API";
+        public static string NPC_PATH = "npc/";
+        public static string MOD_FOLDER = @"";
         public static string MODS_FOLDER = @"";
         public static string GAMEDATA_FOLDER = @"gamedata/";
         public static string GAME_ROOT = @"";
         public static string SAVE_LOC = "";
-        public static readonly Version MOD_VER = new Version(0, 1, 4, 0);
+        public static readonly Version MOD_VER = new Version(0, 1, 6, 0);
         public static bool RUNNING { get; private set; }
         public static bool WorldLoaded { get; private set; }
         public static Colony StubColony { get; private set; }
@@ -57,7 +57,7 @@ namespace Pandaros.API
 
             GAME_ROOT = path.Substring(0, path.IndexOf("gamedata")).Replace("/", "/");
             GAMEDATA_FOLDER = path.Substring(0, path.IndexOf("gamedata") + "gamedata".Length).Replace("/", "/") + "/";
-            MODS_FOLDER = GAMEDATA_FOLDER + "mods/";
+            MODS_FOLDER = @"../../" + GAMEDATA_FOLDER;
             ICON_PATH = Path.Combine(MOD_FOLDER, "icons").Replace("\\", "/") + "/";
             MESH_PATH = Path.Combine(MOD_FOLDER, "Meshes").Replace("\\", "/") + "/";
             ModInfo = JSON.Deserialize(MOD_FOLDER + "/modInfo.json")[0];
