@@ -31,7 +31,7 @@ namespace Pandaros.API
         public static string GAMEDATA_FOLDER = @"gamedata/";
         public static string GAME_ROOT = @"";
         public static string SAVE_LOC = "";
-        public static readonly Version MOD_VER = new Version(0, 1, 7, 0);
+        public static readonly Version MOD_VER = new Version(0, 1, 8, 0);
         public static bool RUNNING { get; private set; }
         public static bool WorldLoaded { get; private set; }
         public static Colony StubColony { get; private set; }
@@ -51,19 +51,21 @@ namespace Pandaros.API
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnAssemblyLoaded, NAMESPACE + ".OnAssemblyLoaded")]
         public static void OnAssemblyLoaded(string path)
         {
-            MOD_FOLDER = Path.GetDirectoryName(path);
+            MOD_FOLDER = Path.GetDirectoryName(path).Replace("\\", "/");
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-            APILogger.Log("Found mod in {0}", MOD_FOLDER);
+            
 
-            GAME_ROOT = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            APILogger.Log("GAME_ROOT in {0}", GAME_ROOT);
+            GAME_ROOT = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location) + @"/../../";
             GAMEDATA_FOLDER = Path.Combine(GAME_ROOT, "gamedata").Replace("\\", "/") + "/";
-            APILogger.Log("GAMEDATA_FOLDER in {0}", GAMEDATA_FOLDER);
-            MODS_FOLDER = @"../../" + MOD_FOLDER;
-            APILogger.Log("MODS_FOLDER in {0}", MODS_FOLDER);
+            MODS_FOLDER =  MOD_FOLDER + @"/../../";
             ICON_PATH = Path.Combine(MOD_FOLDER, "icons").Replace("\\", "/") + "/";
             MESH_PATH = Path.Combine(MOD_FOLDER, "Meshes").Replace("\\", "/") + "/";
             ModInfo = JSON.Deserialize(MOD_FOLDER + "/modInfo.json")[0];
+
+            APILogger.Log("Found mod in {0}", MOD_FOLDER);
+            APILogger.Log("GAME_ROOT in {0}", GAME_ROOT);
+            APILogger.Log("GAMEDATA_FOLDER in {0}", GAMEDATA_FOLDER);
+            APILogger.Log("MODS_FOLDER in {0}", MODS_FOLDER);
 
             List<string> allinfos = new List<string>();
             DirSearch(MODS_FOLDER, "*modInfo.json", allinfos);
