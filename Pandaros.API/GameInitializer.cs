@@ -31,7 +31,7 @@ namespace Pandaros.API
         public static string GAMEDATA_FOLDER = @"gamedata/";
         public static string GAME_ROOT = @"";
         public static string SAVE_LOC = "";
-        public static readonly Version MOD_VER = new Version(0, 1, 6, 0);
+        public static readonly Version MOD_VER = new Version(0, 1, 7, 0);
         public static bool RUNNING { get; private set; }
         public static bool WorldLoaded { get; private set; }
         public static Colony StubColony { get; private set; }
@@ -55,9 +55,12 @@ namespace Pandaros.API
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             APILogger.Log("Found mod in {0}", MOD_FOLDER);
 
-            GAME_ROOT = path.Substring(0, path.IndexOf("gamedata")).Replace("/", "/");
-            GAMEDATA_FOLDER = path.Substring(0, path.IndexOf("gamedata") + "gamedata".Length).Replace("/", "/") + "/";
-            MODS_FOLDER = @"../../" + GAMEDATA_FOLDER;
+            GAME_ROOT = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            APILogger.Log("GAME_ROOT in {0}", GAME_ROOT);
+            GAMEDATA_FOLDER = Path.Combine(GAME_ROOT, "gamedata").Replace("\\", "/") + "/";
+            APILogger.Log("GAMEDATA_FOLDER in {0}", GAMEDATA_FOLDER);
+            MODS_FOLDER = @"../../" + MOD_FOLDER;
+            APILogger.Log("MODS_FOLDER in {0}", MODS_FOLDER);
             ICON_PATH = Path.Combine(MOD_FOLDER, "icons").Replace("\\", "/") + "/";
             MESH_PATH = Path.Combine(MOD_FOLDER, "Meshes").Replace("\\", "/") + "/";
             ModInfo = JSON.Deserialize(MOD_FOLDER + "/modInfo.json")[0];
@@ -192,7 +195,7 @@ namespace Pandaros.API
             RUNNING = true;
             CommandManager.RegisterCommand(new GameDifficultyChatCommand());
             CommandManager.RegisterCommand(new ArmorCommand());
-            CommandManager.RegisterCommand(new BossesChatCommand());  
+            CommandManager.RegisterCommand(new BossesChatCommand());
         }
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnQuit, NAMESPACE + ".OnQuitLate")]
