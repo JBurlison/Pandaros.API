@@ -18,7 +18,7 @@ namespace Pandaros.API.Entities
         [JsonIgnore]
         public Colony ColonyRef { get; set; }
         public int FaiedBossSpawns { get; set; }
-        public GameDifficulty Difficulty { get; set; } = GameDifficulty.Medium;
+        public GameDifficulty Difficulty { get; set; } = GameDifficulty.Normal;
         public bool BossesEnabled { get; set; } = true;
         public SettlersState SettlersEnabled { get; set; }
         public double NeedsABed { get; set; }
@@ -70,6 +70,13 @@ namespace Pandaros.API.Entities
                 networkMenu.Items.Add(new HorizontalSplit(new Label(new LabelData(GameInitializer.NAMESPACE + ".inventory.ColonyCreationDate", UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Sentence)),
                                                     new Label(new LabelData(cs.CreationDate.ToString())), 30, 0.75f));
             }
+        }
+
+        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnCreatedColony, GameInitializer.NAMESPACE + ".Entities.ColonyState.OnLoadingColony")]
+        public static void OnCreatedColony(Colony c)
+        {
+            if (!_colonyStates.ContainsKey(c))
+                _colonyStates.Add(c, new ColonyState(c));
         }
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnLoadingColony, GameInitializer.NAMESPACE + ".Entities.ColonyState.OnLoadingColony")]
