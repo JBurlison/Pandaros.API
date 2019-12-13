@@ -23,7 +23,7 @@ namespace Pandaros.API
           public const string DIAMONDPROCESSING = "pipliz.baseresearch.diamondprocessing";
           public const string COFFEEBEANS = "pipliz.baseresearch.coffeebeans";
           public const string NEWWORLDMEAL = "pipliz.baseresearch.newworldmeal";
-          public const string SPINNINGWHEEL_NEWWORLD = "pipliz.baseresearch.spinningwheel.newworld";
+          public const string SPINNINGWHEEL_FNEWWORLD = "pipliz.baseresearch.spinningwheel.newworld";
           public const string COTTONTOWEL = "pipliz.baseresearch.cottontowel";
           public const string FUR = "pipliz.baseresearch.fur";
           public const string WINTERCOAT = "pipliz.baseresearch.wintercoat";
@@ -162,6 +162,7 @@ namespace Pandaros.API
           public const string BEEKEEPER = "pipliz.beekeeper";
           public const string WATERGATHERER = "pipliz.watergatherer";
           public const string WATERPUMP = "pipliz.waterpump";
+          public const string FISHFARMER = "pipliz.fishfarmer";
           public const string FISHERMAN = "pipliz.fisherman";
           public const string CABBAGEFARMER = "pipliz.cabbagefarmer";
           public const string COOK = "pipliz.cook";
@@ -344,6 +345,7 @@ namespace Pandaros.API
           public static readonly ItemId FEATHER = ItemId.GetItemId("feather");
           public static readonly ItemId FIREWOOD = ItemId.GetItemId("firewood");
           public static readonly ItemId FISHMEAL = ItemId.GetItemId("fishmeal");
+          public static readonly ItemId FISHTANK = ItemId.GetItemId("fishtank");
           public static readonly ItemId FLAX = ItemId.GetItemId("flax");
           public static readonly ItemId FLAXSTAGE1 = ItemId.GetItemId("flaxstage1");
           public static readonly ItemId FLAXSTAGE2 = ItemId.GetItemId("flaxstage2");

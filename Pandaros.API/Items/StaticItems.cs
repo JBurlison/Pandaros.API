@@ -4,6 +4,22 @@ using System.Linq;
 
 namespace Pandaros.API.Items
 {
+    public class StaticItemLostCheck : Extender.IOnTimedUpdate
+    {
+        public double NextUpdateTimeMin => 10;
+
+        public double NextUpdateTimeMax => 30;
+
+        public double NextUpdateTime { get; set; }
+
+        public void OnTimedUpdate()
+        {
+            foreach (var p in Players.PlayerDatabase.Values)
+                if (p.IsConnected())
+                    StaticItems.AddStaticItemToStockpile(p);
+        }
+    }
+
     [ModLoader.ModManager]
     public static class StaticItems
     {
@@ -45,9 +61,9 @@ namespace Pandaros.API.Items
 
                             if (!string.IsNullOrEmpty(item.RequiredScience))
                             {
-                                var sk = c.ScienceData.CompletedCycles.FirstOrDefault(kvp => kvp.Key.Researchable.GetKey() == item.RequiredScience).Key;
+                                var sk = c.ScienceData.CompletedScience.FirstOrDefault(kvp => kvp.Researchable.GetKey() == item.RequiredScience);
 
-                                if (sk.Researchable == null || !sk.Researchable.AreConditionsMet(c.ScienceData))
+                                if (sk.Researchable == null)
                                     canAdd = false;
                             }
 
