@@ -7,6 +7,7 @@
     "enabled": true,
     "marksgamemodded": true,
     "compatibleversions": [
+      "0.7.2",
       "0.7.1"
     ],
     "jsonFiles": [
@@ -19,6 +20,12 @@
     "website": "https://github.com/JBurlison/Pandaros.API/wiki/",
     "about": "Pandaros' API adds a slew of API features that the settlers mod is built upon, Comes with Colony management/job assignment and Player Magic items tool!",
     "patchnotes": [
+      {
+        "version": "0.1.8.3",
+        "notes": [
+          "7.2 Support"
+        ]
+      },
       {
         "version": "0.1.8.2",
         "notes": [

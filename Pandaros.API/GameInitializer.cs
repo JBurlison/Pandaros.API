@@ -180,7 +180,7 @@ namespace Pandaros.API
                 foreach (string d in Directory.GetDirectories(sDir))
                 {
                     foreach (string f in Directory.GetFiles(d, searchPattern))
-                        found.Add(f);
+                        found.Add(f.Replace("\\", "/"));
                   
                     DirSearch(d, searchPattern, found);
                 }
@@ -264,7 +264,7 @@ namespace Pandaros.API
                                             retval.Add(info.Key, new List<string>());
 
                                         retval[info.Key].Add(itemsPath);
-                                        APILogger.LogToFile("Getting json configurations {0} from file {1}", fileType, info.Key);
+                                        APILogger.LogToFile("Getting json configurations {0} from file {1} Path {2}", fileType, info.Key, itemsPath);
                                     }
                                     else
                                     {
