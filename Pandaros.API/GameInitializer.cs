@@ -31,7 +31,7 @@ namespace Pandaros.API
         public static string GAMEDATA_FOLDER = @"gamedata/";
         public static string GAME_ROOT = @"";
         public static string SAVE_LOC = "";
-        public static readonly Version MOD_VER = new Version(0, 1, 8, 2);
+        public static readonly Version MOD_VER = new Version(0, 1, 8, 4);
         public static bool RUNNING { get; private set; }
         public static bool WorldLoaded { get; private set; }
         public static Colony StubColony { get; private set; }

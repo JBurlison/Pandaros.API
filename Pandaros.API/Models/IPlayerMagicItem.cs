@@ -10,10 +10,9 @@ namespace Pandaros.API.Models
         float JumpPower { get; }
         float FlySpeed { get; }
         float MoveSpeed { get; }
-        float LightRange { get; }
-        string LightColor { get; }
         float FallDamage { get; }
         float FallDamagePerUnit { get; }
         float BuildDistance { get; }
+        float Gravity { get; }
     }
 }

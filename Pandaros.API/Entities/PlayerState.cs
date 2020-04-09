@@ -165,17 +165,10 @@ namespace Pandaros.API.Entities
 
         private void AddMagicEffect(IPlayerMagicItem playerMagicItem)
         {
-            if (!string.IsNullOrEmpty(playerMagicItem.LightColor) && UnityEngine.ColorUtility.TryParseHtmlString(playerMagicItem.LightColor, out var color))
-            {
-                _playerVariables.SetAs("LightColorR", color.r);
-                _playerVariables.SetAs("LightColorG", color.g);
-                _playerVariables.SetAs("LightColorB", color.b);
-            }
-
             _playerVariables.SetAs("MovePower", _playerVariables.GetAs<float>("MovePower") + playerMagicItem.MovementSpeed);
             _playerVariables.SetAs("JumpPower", _playerVariables.GetAs<float>("JumpPower") + playerMagicItem.JumpPower);
             _playerVariables.SetAs("FlySpeedBase", _playerVariables.GetAs<float>("FlySpeedBase") + playerMagicItem.FlySpeed);
-            _playerVariables.SetAs("LightRange", _playerVariables.GetAs<float>("LightRange") + playerMagicItem.MovementSpeed);
+            _playerVariables.SetAs("Gravity", _playerVariables.GetAs<float>("Gravity") + playerMagicItem.Gravity);
 
             var fallDmg = _playerVariables.GetAs<float>("FallDamageBaseDamage") + playerMagicItem.FallDamage;
 

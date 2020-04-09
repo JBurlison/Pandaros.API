@@ -44,6 +44,8 @@ namespace Pandaros.API.Models
 
         public virtual float Luck { get; set; }
 
+        public virtual float Gravity { get; set; }
+
         public virtual void Update()
         {
             
