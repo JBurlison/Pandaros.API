@@ -35,6 +35,7 @@ namespace Pandaros.API.Models
         int? maxStackSize { get; set; }
         float? luxuryHours { get; set; }
         string mesh { get; set; }
+        int lightingTransparency { get; set; }
         SerializableVector3 meshRotationEuler { get; set; }
         SerializableVector3 meshOffset { get; set; }
         SerializableVector3 meshScale { get; set; }

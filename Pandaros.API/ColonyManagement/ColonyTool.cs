@@ -347,7 +347,9 @@ namespace Pandaros.API.ColonyManagement
                     }
                 }
 
-            return jobCounts;
+            var l = jobCounts.OrderBy(key => key.Key);
+
+            return l.ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
         }
     }
 }

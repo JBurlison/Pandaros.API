@@ -71,6 +71,7 @@ namespace Pandaros.API.Models
         public virtual ConnectedBlock ConnectedBlock { get; set; }
         public virtual TrainConfiguration TrainConfiguration { get; set; }
         public virtual TrainStationSettings TrainStationSettings { get; set; }
+        public int lightingTransparency { get; set; } = 255;
 
         public override string ToString()
         {

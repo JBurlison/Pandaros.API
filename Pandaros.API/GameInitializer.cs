@@ -31,7 +31,7 @@ namespace Pandaros.API
         public static string GAMEDATA_FOLDER = @"gamedata/";
         public static string GAME_ROOT = @"";
         public static string SAVE_LOC = "";
-        public static readonly Version MOD_VER = new Version(0, 1, 8, 4);
+        public static readonly Version MOD_VER = new Version(0, 1, 8, 5);
         public static bool RUNNING { get; private set; }
         public static bool WorldLoaded { get; private set; }
         public static Colony StubColony { get; private set; }
@@ -74,11 +74,8 @@ namespace Pandaros.API
             {
                 var modJson = JSON.Deserialize(info)[0];
 
-                if (modJson.TryGetAs("enabled", out bool isEnabled) && isEnabled)
-                {
-                    APILogger.Log("ModInfo Found: {0}", info);
-                    AllModInfos[new FileInfo(info).Directory.FullName] = modJson;
-                }
+                APILogger.Log("ModInfo Found: {0}", info);
+                AllModInfos[new FileInfo(info).Directory.FullName] = modJson;
             }
 
             GenerateBuiltinBlocks();
