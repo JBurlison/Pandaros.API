@@ -15,6 +15,7 @@ namespace Pandaros.API.Monsters
         private static Queue<IPandaZombie> _spawnQueue = new Queue<IPandaZombie>();
         private static PandaMonsterSpawner _pandaPathing = new PandaMonsterSpawner();
         private static double _updateTime = 0;
+        public static Dictionary<Colony, long> MonsterCount { get; set; } = new Dictionary<Colony, long>();
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnMonsterSpawned, GameInitializer.NAMESPACE + ".Monsters.PandaMonsterSpawner.OnMonsterSpawned")]
         public static void OnMonsterSpawned(IMonster monster)
@@ -30,6 +31,19 @@ namespace Pandaros.API.Monsters
 
             monster.CurrentHealth = monster.CurrentHealth + hpBonus;
             monster.TotalHealth = monster.CurrentHealth + hpBonus;
+
+            if (!MonsterCount.ContainsKey(monster.OriginalGoal))
+                MonsterCount.Add(monster.OriginalGoal, 1);
+            else
+                MonsterCount[monster.OriginalGoal] = MonsterCount[monster.OriginalGoal] + 1;
+
+        }
+
+        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnMonsterDied, GameInitializer.NAMESPACE + ".Monsters.PandaMonsterSpawner.MonsterDied")]
+        public void MonsterDied(IMonster monster)
+        {
+            if (MonsterCount.ContainsKey(monster.OriginalGoal))
+                MonsterCount[monster.OriginalGoal] = MonsterCount[monster.OriginalGoal] - 1;
         }
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnUpdate, GameInitializer.NAMESPACE + ".Managers.MonsterManager.Update")]

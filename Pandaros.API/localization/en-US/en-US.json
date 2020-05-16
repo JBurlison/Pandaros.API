@@ -13,8 +13,15 @@
           "PossibleCommands": "Possible commands: "
         },
         "Quests": {
+          "Quests": "Quests",
+          "NewQuestAvailable": "There is a new quest available! {0}",
           "CraftObjective": "{0} out of {1} crafted",
-          "ColonistCountObjective": "{0} out of {1} colonists"
+          "ColonistCountObjective": "{0} out of {1} colonists",
+          "ActiveQuests": "Active Quests",
+          "RequrementsNotMet": "Requirements Not Met",
+          "Objectives": "Objectives",
+          "Rewards": "Rewards",
+          "Done": "Complete"
         },
         "Settlers": {
           "SkillChance": "Additional Skill chance: {0}%"

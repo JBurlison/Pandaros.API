@@ -120,6 +120,9 @@ namespace Pandaros.API.Jobs.Roaming
 
         public static float GetActionsMaxEnergy(string actionName, Colony colony, string category)
         {
+            if (string.IsNullOrEmpty(actionName))
+                return DEFAULT_MAX;
+
             var cs = Entities.ColonyState.GetColonyState(colony);
 
             if (!_maxActionEnergy.ContainsKey(actionName))
@@ -136,6 +139,9 @@ namespace Pandaros.API.Jobs.Roaming
 
         public static void SetActionsMaxEnergy(string actionName, Colony colony, string category, float maxLoad)
         {
+            if (string.IsNullOrEmpty(actionName))
+                return;
+
             var cs = Entities.ColonyState.GetColonyState(colony);
 
             if (!_maxActionEnergy.ContainsKey(actionName))

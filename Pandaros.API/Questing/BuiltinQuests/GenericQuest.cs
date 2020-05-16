@@ -37,6 +37,11 @@ namespace Pandaros.API.Questing.BuiltinQuests
             return LocalizationHelper.LocalizeOrDefault(QuestTextSentenceKey, player);
         }
 
+        public string GetQuestTitle(Colony colony, Players.Player player)
+        {
+            return LocalizationHelper.LocalizeOrDefault(QuestKey, player);
+        }
+
         public void Load(JObject node, Colony colony)
         {
             

@@ -129,26 +129,9 @@ namespace Pandaros.API.ColonyManagement
         public static void OnNPCCraftedRecipe(IJob job, Recipe recipe, List<RecipeResult> results)
         {
             IncrimentSkill(job.NPC);
-
             var inv = ColonistInventory.Get(job.NPC);
             inv.IncrimentStat("Number of Crafts");
 
-            double weightSum = 0;
-            double roll = Random.Next() + inv.GetSkillModifier();
-            List<RecipeResult> bonusItems = new List<RecipeResult>();
-
-            for (int i = 0; i < results.Count; i++)
-            {
-                var item = results.RandomElement();
-                weightSum += 1;
-
-                if (roll > weightSum)
-                    bonusItems.Add(new RecipeResult(item.Type, item.Amount));
-
-                inv.IncrimentStat(ItemTypes.GetType(item.Type).Name, item.Amount);
-            }
-
-            results.AddRange(bonusItems);
         }
 
         public static void IncrimentSkill(NPCBase npc)
@@ -175,7 +158,10 @@ namespace Pandaros.API.ColonyManagement
                 itt = 1;
             }
             else
-                npc.CustomData.SetAs(KNOWN_ITTERATIONS, itt + 1);
+            {
+                itt++;
+                npc.CustomData.SetAs(KNOWN_ITTERATIONS, itt);
+            }
 
             if (!npc.CustomData.TryGetAs(GameInitializer.ALL_SKILLS, out allSkill))
             {

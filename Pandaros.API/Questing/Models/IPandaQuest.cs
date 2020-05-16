@@ -13,7 +13,7 @@ namespace Pandaros.API.Questing.Models
         Dictionary<string, IPandaQuestObjective> QuestObjectives { get; set; }
         List<IPandaQuestReward> QuestRewards { get; set; }
         List<IPandaQuestPrerequisite> QuestPrerequisites { get; set; }
-
+        string GetQuestTitle(Colony colony, Players.Player player);
         string GetQuestText(Colony colony, Players.Player player);
         bool CanRepeat(Colony colony);
         void QuestComplete(Colony colony);

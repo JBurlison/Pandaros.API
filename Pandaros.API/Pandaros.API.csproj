@@ -117,6 +117,7 @@
     <Compile Include="Extender\Providers\OnConstructInventoryManageColonyUIProvider.cs" />
     <Compile Include="Extender\Providers\OnLoadingColonyProvider.cs" />
     <Compile Include="Extender\Providers\OnSavingColonyProvider.cs" />
+    <Compile Include="Extender\Providers\PandaQauestProvider.cs" />
     <Compile Include="Extender\Providers\PandaZombieProvider.cs" />
     <Compile Include="Extender\Providers\RecipeProvider.cs" />
     <Compile Include="Extender\Providers\ResearchProvider.cs" />

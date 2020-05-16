@@ -63,6 +63,7 @@ namespace Pandaros.API.Transportation
                 _energy = transportSave.energy;
                 Delay = TrainType.TrainConfiguration.MoveTimePerBlockMs;
                 ManaCostPerBlock = TrainType.TrainConfiguration.EnergyCostPerBlock;
+                ChunkQueue.QueueBannerBox(TrackPosition.Add(-30, -30, -30).ToChunk(), TrackPosition.Add(30, 30, 30).ToChunk());
 
                 if (!string.IsNullOrEmpty(transportSave.player))
                 {

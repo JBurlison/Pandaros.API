@@ -11,7 +11,7 @@ namespace Pandaros.API.Questing.Models
     {
         public int ColonyId { get; set; }
         public Dictionary<string, QuestingSave> InProgressQuests { get; set; }
-        public List<string> CompletedQuests { get; set; }
+        public HashSet<string> CompletedQuests { get; set; }
     }
 
     public class QuestingSave
