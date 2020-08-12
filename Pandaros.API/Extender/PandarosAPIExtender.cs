@@ -176,6 +176,7 @@ namespace Pandaros.API.Extender
         }
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnAssemblyLoaded, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnConstructInventoryManageColonyUI")]
+        [ModLoader.ModCallbackDependsOn("initialize_network_callbacks")]
         public static void Initialize(string file)
         {
             NetworkMenuManager.OnConstructInventoryManageColonyUI.AddCallback(OnConstructInventoryManageColonyUI, new ModLoader.ModCallbackDescription(GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnConstructInventoryManageColonyUI.Content"));

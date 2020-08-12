@@ -67,7 +67,7 @@ namespace Pandaros.API.Entities
 
             if (cs != null)
             {
-                networkMenu.Items.Add(new HorizontalSplit(new Label(new LabelData(GameInitializer.NAMESPACE + ".inventory.ColonyCreationDate", UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Sentence)),
+                table.Item1.Rows.Add(new HorizontalSplit(new Label(new LabelData(GameInitializer.NAMESPACE + ".inventory.ColonyCreationDate", UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Sentence)),
                                                     new Label(new LabelData(cs.CreationDate.ToString())), 30, 0.75f));
             }
         }

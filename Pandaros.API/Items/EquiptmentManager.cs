@@ -17,7 +17,7 @@ namespace Pandaros.API.Items
 
         public void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu, (Table, Table) table)
         {
-            networkMenu.Items.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".PlayerDetails", new LabelData(_localizationHelper.GetLocalizationKey("PlayerDetails"), UnityEngine.Color.black), 200));
+            networkMenu.Items.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".PlayerDetails", new LabelData(_localizationHelper.GetLocalizationKey("PlayerDetails")), 200));
         }
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnPlayerPushedNetworkUIButton, GameInitializer.NAMESPACE + ".Items.EquiptmentManager.PressButton")]

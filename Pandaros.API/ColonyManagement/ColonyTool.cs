@@ -56,7 +56,7 @@ namespace Pandaros.API.ColonyManagement
         public void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu menu, (Table, Table) table)
         {
             if (player.ActiveColony != null)
-                menu.Items.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".ColonyToolMainMenu", new LabelData(_localizationHelper.LocalizeOrDefault("ColonyManagement", player), UnityEngine.Color.black), 200));
+                table.Item1.Rows.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".ColonyToolMainMenu", new LabelData(_localizationHelper.LocalizeOrDefault("ColonyManagement", player)), 200));
         }
 
         static readonly Pandaros.API.localization.LocalizationHelper _localizationHelper = new localization.LocalizationHelper(GameInitializer.NAMESPACE, "colonytool");
