@@ -1,6 +1,9 @@
 ﻿using Chatting;
+using NetworkUI;
+using NetworkUI.Items;
 using Pandaros.API.ColonyManagement;
 using Pandaros.API.Entities;
+using Pandaros.API.Extender;
 using Pipliz;
 using Pipliz.JSON;
 using System;
@@ -144,19 +147,18 @@ namespace Pandaros.API
     }
 
     [ModLoader.ModManager]
-    public class GameDifficultyChatCommand : IChatCommand
+    public class GameDifficultyChatCommand : IChatCommand, IOnConstructInventoryManageColonyUI
     {
         private static string _Difficulty = GameInitializer.NAMESPACE + ".Difficulty";
         static localization.LocalizationHelper _localizationHelper = new localization.LocalizationHelper(GameInitializer.NAMESPACE, "GameDifficulty");
 
-        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnConstructWorldSettingsUI, GameInitializer.NAMESPACE + "Difficulty.AddSetting")]
-        public static void AddSetting(Players.Player player, NetworkUI.NetworkMenu menu)
+        public void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu, (Table, Table) table)
         {
             if (player.ActiveColony != null)
             {
-                menu.Items.Add(new NetworkUI.Items.DropDown("Pandaros.API Difficulty", _Difficulty, GameDifficulty.GameDifficulties.Keys.ToList()));
+                networkMenu.Items.Add(new NetworkUI.Items.DropDown("Pandaros.API Difficulty", _Difficulty, GameDifficulty.GameDifficulties.Keys.ToList()));
                 var ps = ColonyState.GetColonyState(player.ActiveColony);
-                menu.LocalStorage.SetAs(_Difficulty, ps.Difficulty.Rank);
+                networkMenu.LocalStorage.SetAs(_Difficulty, ps.Difficulty.Rank);
             }
         }
 

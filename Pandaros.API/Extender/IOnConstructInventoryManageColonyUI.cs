@@ -1,4 +1,5 @@
 ﻿using NetworkUI;
+using NetworkUI.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace Pandaros.API.Extender
 {
     public interface IOnConstructInventoryManageColonyUI
     {
-        void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu);
+        void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu, (Table, Table) table);
     }
 }

@@ -13,7 +13,7 @@ namespace Pandaros.API.Monsters
         private static string _Bosses = GameInitializer.NAMESPACE + ".Bosses";
         private static localization.LocalizationHelper _localizationHelper = new localization.LocalizationHelper(GameInitializer.NAMESPACE, "Bosses");
 
-        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnConstructWorldSettingsUI, GameInitializer.NAMESPACE + "Bosses.AddSetting")]
+        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnConstructManageColoniesSelectionUI, GameInitializer.NAMESPACE + "Bosses.AddSetting")]
         public static void AddSetting(Players.Player player, NetworkUI.NetworkMenu menu)
         {
             if (player.ActiveColony != null)

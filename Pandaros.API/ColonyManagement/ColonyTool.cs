@@ -53,7 +53,7 @@ namespace Pandaros.API.ColonyManagement
             "Max"
         };
 
-        public void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu menu)
+        public void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu menu, (Table, Table) table)
         {
             if (player.ActiveColony != null)
                 menu.Items.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".ColonyToolMainMenu", new LabelData(_localizationHelper.LocalizeOrDefault("ColonyManagement", player), UnityEngine.Color.black), 200));

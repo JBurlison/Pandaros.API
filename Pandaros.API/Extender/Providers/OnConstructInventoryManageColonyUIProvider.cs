@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetworkUI;
+using NetworkUI.Items;
 
 namespace Pandaros.API.Extender.Providers
 {
@@ -17,7 +18,7 @@ namespace Pandaros.API.Extender.Providers
 
         List<IOnConstructInventoryManageColonyUI> _onConstructInventoryManageColonyUIs = new List<IOnConstructInventoryManageColonyUI>();
 
-        public void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu)
+        public void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu, (Table, Table) table)
         {
             if (_onConstructInventoryManageColonyUIs.Count == 0)
                 foreach(var type in LoadedAssembalies)
@@ -26,7 +27,7 @@ namespace Pandaros.API.Extender.Providers
             foreach (var ui in _onConstructInventoryManageColonyUIs)
                 try
                 {
-                    ui.OnConstructInventoryManageColonyUI(player, networkMenu);
+                    ui.OnConstructInventoryManageColonyUI(player, networkMenu, table);
                 }
                 catch  (Exception ex)
                 {

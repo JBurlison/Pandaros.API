@@ -1,4 +1,5 @@
 ﻿using NetworkUI;
+using NetworkUI.Items;
 using Pipliz;
 using Pipliz.JSON;
 using System;
@@ -174,14 +175,19 @@ namespace Pandaros.API.Extender
                 }
         }
 
-        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnConstructInventoryManageColonyUI, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnConstructInventoryManageColonyUI")]
-        public static void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu)
+        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnAssemblyLoaded, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnConstructInventoryManageColonyUI")]
+        public static void Initialize(string file)
+        {
+            NetworkMenuManager.OnConstructInventoryManageColonyUI.AddCallback(OnConstructInventoryManageColonyUI, new ModLoader.ModCallbackDescription(GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnConstructInventoryManageColonyUI.Content"));
+        }
+
+        public static void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu, (Table, Table) table)
         {
             if (_settlersExtensions.TryGetValue(nameof(IOnConstructInventoryManageColonyUIExtender), out var pandarosExtentions))
                 foreach (var extension in pandarosExtentions.Select(ex => ex as IOnConstructInventoryManageColonyUIExtender))
                     try
                     {
-                        extension.OnConstructInventoryManageColonyUI(player, networkMenu);
+                        extension.OnConstructInventoryManageColonyUI(player, networkMenu, table);
                     }
                     catch (Exception ex)
                     {

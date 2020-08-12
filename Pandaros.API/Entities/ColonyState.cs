@@ -61,7 +61,7 @@ namespace Pandaros.API.Entities
             ColonyRef = c;
         }
 
-        public void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu)
+        public void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu, (Table, Table) table)
         {
             var cs = GetColonyState(player.ActiveColony);
 

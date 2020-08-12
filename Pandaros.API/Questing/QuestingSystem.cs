@@ -27,7 +27,7 @@ namespace Pandaros.API.Questing
 
         public double NextUpdateTime { get; set; }
 
-        public void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu)
+        public void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu, (Table, Table) table)
         {
             if (QuestPool.Count != 0 && player.ActiveColony != null)
                 networkMenu.Items.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenu", new LabelData(_localizationHelper.LocalizeOrDefault("Quests", player), UnityEngine.Color.black), 200));
