@@ -243,7 +243,7 @@ namespace Pandaros.API.ColonyManagement
                 if (firedCount == int.MaxValue)
                     count = "all";
 
-                menu.Items.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".KillFired", new LabelData($"{_localizationHelper.LocalizeOrDefault("Kill", player)} {count} {_localizationHelper.LocalizeOrDefault("Fired", player)} {firedName}", UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)));
+                menu.Items.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".KillFired", new LabelData($"{_localizationHelper.LocalizeOrDefault("Kill", player)} {count} {_localizationHelper.LocalizeOrDefault("Fired", player)} {firedName}", UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)));
             }
 
             menu.Items.Add(new Line());
@@ -254,23 +254,23 @@ namespace Pandaros.API.ColonyManagement
                 
                 player.ActiveColony.HappinessData.RecruitmentCostCalculator.GetCost(player.ActiveColony.HappinessData.CachedHappiness, player.ActiveColony, out float cost);
                 cost = UnityEngine.Mathf.Round(cost * 100f) * 0.01f;
-                menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.GetLocalizationKey("RecruitmentCost"), UnityEngine.Color.black)),
-                                                    new Label(new LabelData(Pipliz.Math.RoundToInt(2000f * cost).ToString(), UnityEngine.Color.black))));
+                menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.GetLocalizationKey("RecruitmentCost"), UnityEngine.Color.white)),
+                                                    new Label(new LabelData(Pipliz.Math.RoundToInt(2000f * cost).ToString(), UnityEngine.Color.white))));
                 
             }
 
 
             List<ValueTuple<IItem, int>> header = new List<ValueTuple<IItem, int>>();
 
-            header.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Job"), UnityEngine.Color.black)), 140));
+            header.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Job"), UnityEngine.Color.white)), 140));
 
             if (!fired)
-                header.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.black)), 140));
+                header.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.white)), 140));
 
-            header.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Working"), UnityEngine.Color.black)), 140));
-            header.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("NotWorking"), UnityEngine.Color.black)), 140));
-            header.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.black)), 140));
-            header.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.black)), 140));
+            header.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Working"), UnityEngine.Color.white)), 140));
+            header.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("NotWorking"), UnityEngine.Color.white)), 140));
+            header.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.white)), 140));
+            header.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.white)), 140));
 
             menu.Items.Add(new HorizontalRow(header));
             int jobCount = 0;
@@ -283,23 +283,23 @@ namespace Pandaros.API.ColonyManagement
                 jobCount++;
                 List<ValueTuple<IItem, int>> items = new List<ValueTuple<IItem, int>>();
 
-                items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault(jobKvp.Key.Replace(" ", ""), player), UnityEngine.Color.black)), 140));
+                items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault(jobKvp.Key.Replace(" ", ""), player), UnityEngine.Color.white)), 140));
 
                 if (!fired)
-                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".JobDetailsButton", new LabelData(_localizationHelper.GetLocalizationKey("Details"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 140));
+                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".JobDetailsButton", new LabelData(_localizationHelper.GetLocalizationKey("Details"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 140));
 
-                items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(jobKvp.Value.TakenCount.ToString(), UnityEngine.Color.black)), 140));
-                items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(jobKvp.Value.AvailableCount.ToString(), UnityEngine.Color.black)), 140));
+                items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(jobKvp.Value.TakenCount.ToString(), UnityEngine.Color.white)), 140));
+                items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(jobKvp.Value.AvailableCount.ToString(), UnityEngine.Color.white)), 140));
 
                 if (fired)
                 {
-                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".MoveFired", new LabelData(_localizationHelper.GetLocalizationKey("MoveFired"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft)), 140));
+                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".MoveFired", new LabelData(_localizationHelper.GetLocalizationKey("MoveFired"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft)), 140));
                 }
                 else
                 {
-                    items.Add(ValueTuple.Create<IItem, int>(new DropDown(new LabelData(_localizationHelper.GetLocalizationKey("Amount"), UnityEngine.Color.black), jobKvp.Key + ".Recruit", _recruitCount), 140));
-                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".RecruitButton", new LabelData(_localizationHelper.GetLocalizationKey("Recruit"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 140));
-                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".FireButton", new LabelData(_localizationHelper.GetLocalizationKey("Fire"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 140));
+                    items.Add(ValueTuple.Create<IItem, int>(new DropDown(new LabelData(_localizationHelper.GetLocalizationKey("Amount"), UnityEngine.Color.white), jobKvp.Key + ".Recruit", _recruitCount), 140));
+                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".RecruitButton", new LabelData(_localizationHelper.GetLocalizationKey("Recruit"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 140));
+                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".FireButton", new LabelData(_localizationHelper.GetLocalizationKey("Fire"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 140));
                     
                 }
 
@@ -309,7 +309,7 @@ namespace Pandaros.API.ColonyManagement
             }
 
             if (jobCount == 0)
-                menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("NoJobs", player), UnityEngine.Color.black)));
+                menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("NoJobs", player), UnityEngine.Color.white)));
 
             return menu;
         }

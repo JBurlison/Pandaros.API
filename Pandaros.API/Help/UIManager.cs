@@ -163,11 +163,11 @@ namespace Pandaros.API.Help
                                 i++;
 
                                 node.TryGetAsOrDefault("version", out string version, "Undefined");
-                                menuItem.Add(new Label(new LabelData("Version " + version, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 24, LabelData.ELocalizationType.None)));
+                                menuItem.Add(new Label(new LabelData("Version " + version, UnityEngine.TextAnchor.MiddleLeft, 24, LabelData.ELocalizationType.None)));
 
                                 if (node.TryGetAs<JSONNode>("notes", out var versionNotesJson))
                                     foreach (var note in versionNotesJson.LoopArray())
-                                        menuItem.Add(new Label(new LabelData("    * " + note.ToString().Replace("\"", ""), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 14, LabelData.ELocalizationType.None)));
+                                        menuItem.Add(new Label(new LabelData("    * " + note.ToString().Replace("\"", ""), UnityEngine.TextAnchor.MiddleLeft, 14, LabelData.ELocalizationType.None)));
 
                                 if (i > 10)
                                     break;
@@ -259,7 +259,7 @@ namespace Pandaros.API.Help
 
                         if (Localization.TryGetType(player.LastKnownLocale, index, out string localeName) && Localization.TryGetTypeUse(player.LastKnownLocale, index, out var description))
                         {
-                            menuItem = new List<IItem>() { new HorizontalSplit(new ItemIcon(index), new Label(new LabelData(localeName + Environment.NewLine + description + extendedDetail, UnityEngine.Color.black)), 30, .3f).ApplyPosition(item) };
+                            menuItem = new List<IItem>() { new HorizontalSplit(new ItemIcon(index), new Label(new LabelData(localeName + Environment.NewLine + description + extendedDetail)), 30, .3f).ApplyPosition(item) };
                             found = true;
                         }
                     }
@@ -500,14 +500,14 @@ namespace Pandaros.API.Help
         {
             List<IItem> menuItems = new List<IItem>();
 
-            menuItems.Add(new Label(new LabelData(recipe.Name, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter, 30, LabelData.ELocalizationType.Type)).ApplyPosition(item));
-            menuItems.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Requirements"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 24)).ApplyPosition(item));
+            menuItems.Add(new Label(new LabelData(recipe.Name, UnityEngine.TextAnchor.MiddleCenter, 30, LabelData.ELocalizationType.Type)).ApplyPosition(item));
+            menuItems.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Requirements"), UnityEngine.TextAnchor.MiddleLeft, 24)).ApplyPosition(item));
 
             List<ValueTuple<IItem, int>> headerItems = new List<ValueTuple<IItem, int>>();
 
-            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.black)), 70));
-            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Item"), UnityEngine.Color.black)), 150));
-            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Amount"), UnityEngine.Color.black)), 100));
+            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("")), 70));
+            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Item"))), 150));
+            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Amount"))), 100));
 
             menuItems.Add(new HorizontalRow(headerItems).ApplyPosition(item));
 
@@ -522,8 +522,8 @@ namespace Pandaros.API.Help
                 if (Localization.TryGetType(player.LastKnownLocale, req.Type, out string localeReqName))
                     reqName = localeReqName;
 
-                Label labelName = new Label(new LabelData(reqName, UnityEngine.Color.black));
-                Label labelAmount = new Label(new LabelData(req.Amount.ToString(), UnityEngine.Color.black));
+                Label labelName = new Label(new LabelData(reqName));
+                Label labelAmount = new Label(new LabelData(req.Amount.ToString()));
 
                 List<ValueTuple<IItem, int>> items = new List<ValueTuple<IItem, int>>();
                 items.Add(ValueTuple.Create<IItem, int>(icon, 70));
@@ -533,13 +533,13 @@ namespace Pandaros.API.Help
                 menuItems.Add(new HorizontalRow(items).ApplyPosition(item));
             }
 
-            menuItems.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Results"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 24)).ApplyPosition(item));
+            menuItems.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Results"), UnityEngine.TextAnchor.MiddleLeft, 24)).ApplyPosition(item));
 
             headerItems = new List<ValueTuple<IItem, int>>();
-            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.black)), 70));
-            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Item"), UnityEngine.Color.black)), 150));
-            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Amount"), UnityEngine.Color.black)), 100));
-            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Chance"), UnityEngine.Color.black)), 100));
+            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("")), 70));
+            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Item"))), 150));
+            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Amount"))), 100));
+            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Chance"))), 100));
 
             menuItems.Add(new HorizontalRow(headerItems).ApplyPosition(item));
 
@@ -551,9 +551,9 @@ namespace Pandaros.API.Help
                 if (Localization.TryGetType(player.LastKnownLocale, req.Type, out string localeReqName))
                     reqName = localeReqName;
 
-                Label labelName = new Label(new LabelData(reqName, UnityEngine.Color.black));
-                Label labelAmount = new Label(new LabelData(req.Amount.ToString(), UnityEngine.Color.black));
-                Label chance = new Label(new LabelData(req.Chance * 100 + "%", UnityEngine.Color.black));
+                Label labelName = new Label(new LabelData(reqName));
+                Label labelAmount = new Label(new LabelData(req.Amount.ToString()));
+                Label chance = new Label(new LabelData(req.Chance * 100 + "%"));
                 List<ValueTuple<IItem, int>> items = new List<ValueTuple<IItem, int>>();
                 items.Add(ValueTuple.Create<IItem, int>(icon, 70));
                 items.Add(ValueTuple.Create<IItem, int>(labelName, 150));
@@ -563,10 +563,10 @@ namespace Pandaros.API.Help
                 menuItems.Add(new HorizontalRow(items).ApplyPosition(item));
 
                 if (Localization.TryGetTypeUse(player.LastKnownLocale, req.Type, out var description))
-                    menuItems.Add(new Label(new LabelData(description, UnityEngine.Color.black)).ApplyPosition(item));
+                    menuItems.Add(new Label(new LabelData(description)).ApplyPosition(item));
 
                 if (Localization.TryGetSentence(player.LastKnownLocale, _localizationHelper.GetLocalizationKey("ItemDetails." + ItemId.GetItemId(req.Type).Name), out var extendedDetail))
-                    menuItems.Add(new Label(new LabelData(extendedDetail, UnityEngine.Color.black)).ApplyPosition(item));
+                    menuItems.Add(new Label(new LabelData(extendedDetail)).ApplyPosition(item));
             }
 
             menuItems.Add(new Line(UnityEngine.Color.black, 1));

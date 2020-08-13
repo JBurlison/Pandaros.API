@@ -44,7 +44,7 @@ namespace Pandaros.API.Questing
             menu.Width = 1000;
             menu.Height = 600;
             menu.ForceClosePopups = true;
-            menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("ActiveQuests", data.Player), UnityEngine.Color.black, UnityEngine.TextAnchor.LowerLeft, 30)));
+            menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("ActiveQuests", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
 
             if (!ActiveQuests.ContainsKey(data.Player.ActiveColony))
                 ActiveQuests.Add(data.Player.ActiveColony, new HashSet<string>());
@@ -54,26 +54,26 @@ namespace Pandaros.API.Questing
                 if (QuestPool.TryGetValue(questKey, out var quest))
                 {
                     menu.Items.Add(new Line());
-                    menu.Items.Add(new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.black, UnityEngine.TextAnchor.LowerLeft, 26)));
-                    menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.black)));
-                    menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Objectives", data.Player), UnityEngine.Color.black, UnityEngine.TextAnchor.LowerLeft, 20)));
+                    menu.Items.Add(new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)));
+                    menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
+                    menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Objectives", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
                     
                     foreach (var req in quest.QuestObjectives)
                     {
                         var questObj = new List<ValueTuple<IItem, int>>();
-                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.Value.GetObjectiveProgressText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.black)), 700));
-                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.Value.GetProgress(quest, data.Player.ActiveColony) * 100 + "%", UnityEngine.Color.black)), 200));
+                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.Value.GetObjectiveProgressText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 700));
+                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.Value.GetProgress(quest, data.Player.ActiveColony) * 100 + "%", UnityEngine.Color.white)), 200));
                         menu.Items.Add(new HorizontalRow(questObj));
                     }
 
-                    menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.black, UnityEngine.TextAnchor.LowerLeft, 20)));
+                    menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
 
                     foreach (var reward in quest.QuestRewards)
-                        menu.Items.Add(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.black)));
+                        menu.Items.Add(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
                 }
             }
 
-            menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("RequrementsNotMet", data.Player), UnityEngine.Color.black, UnityEngine.TextAnchor.LowerLeft, 30)));
+            menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("RequrementsNotMet", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
 
             foreach (var qpq in QuestPool.OrderBy(key => key.Key))
             {
@@ -82,21 +82,21 @@ namespace Pandaros.API.Questing
                     var quest = qpq.Value;
 
                     menu.Items.Add(new Line());
-                    menu.Items.Add(new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.black, UnityEngine.TextAnchor.LowerLeft, 26)));
-                    menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.black)));
+                    menu.Items.Add(new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)));
+                    menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
 
                     foreach (var req in quest.QuestPrerequisites)
                     {
                         var questObj = new List<ValueTuple<IItem, int>>();
-                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.GetPrerequisiteText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.black)), 700));
-                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Done", data.Player) + ": " + req.MeetsPrerequisite(quest, data.Player.ActiveColony), UnityEngine.Color.black)), 200));
+                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.GetPrerequisiteText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 700));
+                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Done", data.Player) + ": " + req.MeetsPrerequisite(quest, data.Player.ActiveColony), UnityEngine.Color.white)), 200));
                         menu.Items.Add(new HorizontalRow(questObj));
                     }
 
-                    menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.black, UnityEngine.TextAnchor.LowerLeft, 20)));
+                    menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
 
                     foreach (var reward in quest.QuestRewards)
-                        menu.Items.Add(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.black)));
+                        menu.Items.Add(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
                 }
             }
         }

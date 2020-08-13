@@ -47,9 +47,9 @@ namespace Pandaros.API.Items
                         {
                             List<ValueTuple<IItem, int>> items = new List<ValueTuple<IItem, int>>();
                             items.Add(ValueTuple.Create<IItem, int>(new ItemIcon(itemType.ItemIndex), 250));
-                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(magicItem.name, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 250));
-                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Stockpile", data.Player) + ": " + data.Player.ActiveColony.Stockpile.Items[itemType.ItemIndex].ToString(), UnityEngine.Color.black)), 250));
-                            items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(id + itemType.ItemIndex + ".AddPlayerSelectedEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Select"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 250));
+                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(magicItem.name, UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 250));
+                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Stockpile", data.Player) + ": " + data.Player.ActiveColony.Stockpile.Items[itemType.ItemIndex].ToString(), UnityEngine.Color.white)), 250));
+                            items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(id + itemType.ItemIndex + ".AddPlayerSelectedEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Select"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 250));
                             menu.Items.Add(new HorizontalRow(items));
                         }
                     }
@@ -62,9 +62,9 @@ namespace Pandaros.API.Items
                         {
                             List<ValueTuple<IItem, int>> items = new List<ValueTuple<IItem, int>>();
                             items.Add(ValueTuple.Create<IItem, int>(new ItemIcon(kvp.Key), 250));
-                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(armItem.name, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 250));
-                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Stockpile", data.Player) + ": " + kvp.Value.ToString(), UnityEngine.Color.black)), 250));
-                            items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(kvp.Key + ".AddPlayerSelectedEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Select"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 250));
+                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(armItem.name, UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 250));
+                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Stockpile", data.Player) + ": " + kvp.Value.ToString(), UnityEngine.Color.white)), 250));
+                            items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(kvp.Key + ".AddPlayerSelectedEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Select"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 250));
                             menu.Items.Add(new HorizontalRow(items));
                         }
                     }
@@ -168,11 +168,11 @@ namespace Pandaros.API.Items
                         var firstInv = Entities.ColonistInventory.Get(firstGuy.NPC);
                         List<ValueTuple<IItem, int>> headerItems = new List<ValueTuple<IItem, int>>();
 
-                        headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Name"), UnityEngine.Color.black)), 100));
-                        headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Weapon"), UnityEngine.Color.black)), 100));
+                        headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Name"), UnityEngine.Color.white)), 100));
+                        headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Weapon"), UnityEngine.Color.white)), 100));
 
                         foreach (var a in firstInv.Armor)
-                            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey(a.Key.ToString()), UnityEngine.Color.black)), 100));
+                            headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey(a.Key.ToString()), UnityEngine.Color.white)), 100));
 
                         menu.Items.Add(new HorizontalRow(headerItems));
 
@@ -180,18 +180,18 @@ namespace Pandaros.API.Items
                         {
                             var inv = Entities.ColonistInventory.Get(job.NPC);
                             List<ValueTuple<IItem, int>> items = new List<ValueTuple<IItem, int>>();
-                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(inv.ColonistsName, UnityEngine.Color.black)), 100));
+                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(inv.ColonistsName, UnityEngine.Color.white)), 100));
                             items.Add(ValueTuple.Create<IItem, int>(new ItemIcon(inv.Weapon.Id), 100));
 
                             foreach (var armor in inv.Armor)
                                 items.Add(ValueTuple.Create<IItem, int>(new ItemIcon(armor.Value.Id), 100));
 
-                            items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + "." + job.NPC.ID + ".EquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Details"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 100));
+                            items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + "." + job.NPC.ID + ".EquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Details"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 100));
                             menu.Items.Add(new HorizontalRow(items));
                         }
 
                         menu.Items.Add(new Line());
-                        menu.Items.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".ColonyToolMainMenu", new LabelData(_localizationHelper.GetLocalizationKey("Back"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)));
+                        menu.Items.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".ColonyToolMainMenu", new LabelData(_localizationHelper.GetLocalizationKey("Back"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)));
 
                         NetworkMenuManager.SendServerPopup(data.Player, menu);
                         return;
@@ -237,9 +237,9 @@ namespace Pandaros.API.Items
                                         {
                                             List<ValueTuple<IItem, int>> items = new List<ValueTuple<IItem, int>>();
                                             items.Add(ValueTuple.Create<IItem, int>(new ItemIcon(kvp.Key), 250));
-                                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(wepItem.name, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 250));
-                                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Stockpile", data.Player) + ": " + kvp.Value.ToString(), UnityEngine.Color.black)), 250));
-                                            items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(newButtonID + "." + kvp.Key + ".AddSelectedEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Select"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 250));
+                                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(wepItem.name, UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 250));
+                                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Stockpile", data.Player) + ": " + kvp.Value.ToString(), UnityEngine.Color.white)), 250));
+                                            items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(newButtonID + "." + kvp.Key + ".AddSelectedEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Select"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 250));
                                             menu.Items.Add(new HorizontalRow(items));
                                         }
                                     }
@@ -252,9 +252,9 @@ namespace Pandaros.API.Items
                                         {
                                             List<ValueTuple<IItem, int>> items = new List<ValueTuple<IItem, int>>();
                                             items.Add(ValueTuple.Create<IItem, int>(new ItemIcon(kvp.Key), 250));
-                                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(armItem.name, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 250));
-                                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Stockpile", data.Player) + ": " + kvp.Value.ToString(), UnityEngine.Color.black)), 250));
-                                            items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(newButtonID + "." + kvp.Key + ".AddSelectedEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Select"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 250));
+                                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(armItem.name, UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 250));
+                                            items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Stockpile", data.Player) + ": " + kvp.Value.ToString(), UnityEngine.Color.white)), 250));
+                                            items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(newButtonID + "." + kvp.Key + ".AddSelectedEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Select"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 250));
                                             menu.Items.Add(new HorizontalRow(items));
                                         }
                                     }
@@ -376,27 +376,27 @@ namespace Pandaros.API.Items
 
             var ps = PlayerState.GetPlayerState(data.Player);
 
-            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Stats"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 24)));
-            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("JoinDate", data.Player) + ":", UnityEngine.Color.black)),
-                                            new Label(new LabelData(ps.JoinDate.ToString(), UnityEngine.Color.black))));
+            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Stats"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 24)));
+            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("JoinDate", data.Player) + ":", UnityEngine.Color.white)),
+                                            new Label(new LabelData(ps.JoinDate.ToString(), UnityEngine.Color.white))));
 
-            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.GetLocalizationKey("SkillProcChance"), UnityEngine.Color.black)),
-                                                new Label(new LabelData((ps.GetSkillModifier() * 100) + "%", UnityEngine.Color.black))));
-            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("SkillProcChanceDesc"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 13)));
+            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.GetLocalizationKey("SkillProcChance"), UnityEngine.Color.white)),
+                                                new Label(new LabelData((ps.GetSkillModifier() * 100) + "%", UnityEngine.Color.white))));
+            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("SkillProcChanceDesc"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 13)));
 
-            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("BlocksPlaced", data.Player) + ":", UnityEngine.Color.black)),
-                                            new Label(new LabelData(ps.ItemsPlaced.Sum(kvp => kvp.Value).ToString(), UnityEngine.Color.black))));
-            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("BlocksRemoved", data.Player) + ":", UnityEngine.Color.black)),
-                                            new Label(new LabelData(ps.ItemsRemoved.Sum(kvp => kvp.Value).ToString(), UnityEngine.Color.black))));
+            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("BlocksPlaced", data.Player) + ":", UnityEngine.Color.white)),
+                                            new Label(new LabelData(ps.ItemsPlaced.Sum(kvp => kvp.Value).ToString(), UnityEngine.Color.white))));
+            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("BlocksRemoved", data.Player) + ":", UnityEngine.Color.white)),
+                                            new Label(new LabelData(ps.ItemsRemoved.Sum(kvp => kvp.Value).ToString(), UnityEngine.Color.white))));
 
             foreach (var statItem in ps.Stats)
             {
                 if (ItemTypes.IndexLookup.TryGetIndex(statItem.Key, out var itemIndex))
-                    menu.Items.Add(new HorizontalSplit(new Label(new LabelData(statItem.Key, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)),
-                                                new Label(new LabelData(statItem.Value.ToString(), UnityEngine.Color.black))));
+                    menu.Items.Add(new HorizontalSplit(new Label(new LabelData(statItem.Key, UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)),
+                                                new Label(new LabelData(statItem.Value.ToString(), UnityEngine.Color.white))));
                 else
-                    menu.Items.Add(new HorizontalSplit(new Label(new LabelData(statItem.Key, UnityEngine.Color.black)),
-                                                new Label(new LabelData(statItem.Value.ToString(), UnityEngine.Color.black))));
+                    menu.Items.Add(new HorizontalSplit(new Label(new LabelData(statItem.Key, UnityEngine.Color.white)),
+                                                new Label(new LabelData(statItem.Value.ToString(), UnityEngine.Color.white))));
             }
 
             var totalArmor = 0f;
@@ -407,34 +407,34 @@ namespace Pandaros.API.Items
                     totalArmor += armorItem.ArmorRating;
             }
 
-            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("DamageReduction", data.Player) + ":", UnityEngine.Color.black)),
-                                            new Label(new LabelData((totalArmor * 100) + "%", UnityEngine.Color.black))));
+            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("DamageReduction", data.Player) + ":", UnityEngine.Color.white)),
+                                            new Label(new LabelData((totalArmor * 100) + "%", UnityEngine.Color.white))));
 
             menu.Items.Add(new Line(UnityEngine.Color.black));
-            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Equiptment"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 24)));
+            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Equiptment"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 24)));
 
             foreach (var armor in ps.Armor)
             {
                 List<ValueTuple<IItem, int>> items = new List<ValueTuple<IItem, int>>();
-                items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(armor.Key.ToString(), UnityEngine.Color.black)), 200));
+                items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(armor.Key.ToString(), UnityEngine.Color.white)), 200));
                 items.Add(ValueTuple.Create<IItem, int>(new ItemIcon(armor.Value.Id), 200));
 
                 if (Armor.ArmorFactory.ArmorLookup.TryGetValue(armor.Value.Id, out var arm))
                 {
-                    items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(arm.name, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 200));
+                    items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(arm.name, UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 200));
 
                     if (ps.Player.IsConnected())
                     {
-                        items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(armor.Key + ".AddPlayerEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Swap"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 200));
-                        items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(armor.Key + ".RemovePlayerEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Remove"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 200));
+                        items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(armor.Key + ".AddPlayerEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Swap"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 200));
+                        items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(armor.Key + ".RemovePlayerEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Remove"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 200));
                     }
                 }
                 else
                 {
-                    items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.black)), 200));
+                    items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.white)), 200));
 
                     if (ps.Player.IsConnected())
-                        items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(armor.Key + ".AddPlayerEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Add"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 200));
+                        items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(armor.Key + ".AddPlayerEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Add"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 200));
                 }
 
                 menu.Items.Add(new HorizontalRow(items));
@@ -443,20 +443,20 @@ namespace Pandaros.API.Items
             for (int i = 0; i < ps.MaxMagicItems; i++)
             {
                 List<ValueTuple<IItem, int>> items = new List<ValueTuple<IItem, int>>();
-                items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("MagicItemLabel"), UnityEngine.Color.black)), 200));
+                items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("MagicItemLabel"), UnityEngine.Color.white)), 200));
 
                 if (ps.MagicItems[i] != null)
                 {
                     items.Add(ValueTuple.Create<IItem, int>(new ItemIcon(ps.MagicItems[i].name), 200));
-                    items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(ps.MagicItems[i].name, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 200));
-                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback("MagicItem." + i + ".AddPlayerEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Swap"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 200));
-                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback("MagicItem." + i + ".RemovePlayerEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Remove"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 200));
+                    items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(ps.MagicItems[i].name, UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 200));
+                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback("MagicItem." + i + ".AddPlayerEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Swap"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 200));
+                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback("MagicItem." + i + ".RemovePlayerEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Remove"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 200));
                 }
                 else
                 {
                     items.Add(ValueTuple.Create<IItem, int>(new ItemIcon(ColonyBuiltIn.ItemTypes.AIR.Id), 200));
-                    items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.black)), 200));
-                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback("MagicItem." + i + ".AddPlayerEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Add"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 200));
+                    items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.white)), 200));
+                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback("MagicItem." + i + ".AddPlayerEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Add"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 200));
                 }
 
                 menu.Items.Add(new HorizontalRow(items));
@@ -475,66 +475,66 @@ namespace Pandaros.API.Items
             menu.Height = 600;
 
             menu.Items.Add(new Line(UnityEngine.Color.black));
-            menu.Items.Add(new ButtonCallback(jobKvp.Key + ".JobDetailsButton", new LabelData(_localizationHelper.GetLocalizationKey("Back"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)));
+            menu.Items.Add(new ButtonCallback(jobKvp.Key + ".JobDetailsButton", new LabelData(_localizationHelper.GetLocalizationKey("Back"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)));
             menu.Items.Add(new Line(UnityEngine.Color.black));
 
-            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Stats"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 24)));
-            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.GetLocalizationKey("SkillProcChance"), UnityEngine.Color.black)),
-                                                new Label(new LabelData((inv.GetSkillModifier() * 100) + "%", UnityEngine.Color.black))));
-            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("SkillProcChanceDesc"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 13)));
+            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Stats"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 24)));
+            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.GetLocalizationKey("SkillProcChance"), UnityEngine.Color.white)),
+                                                new Label(new LabelData((inv.GetSkillModifier() * 100) + "%", UnityEngine.Color.white))));
+            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("SkillProcChanceDesc"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 13)));
             ColonistManager.GetSkillInformation(job.NPC, out var nextLevel, out var itt, out var allSkill);
-            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.GetLocalizationKey("ToNextSkillUp"), UnityEngine.Color.black)),
-                                                new Label(new LabelData((nextLevel - itt).ToString(), UnityEngine.Color.black))));
+            menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.GetLocalizationKey("ToNextSkillUp"), UnityEngine.Color.white)),
+                                                new Label(new LabelData((nextLevel - itt).ToString(), UnityEngine.Color.white))));
 
             foreach (var statItem in inv.Stats)
             {
                 if (ItemTypes.IndexLookup.TryGetIndex(statItem.Key, out var itemIndex))
-                    menu.Items.Add(new HorizontalSplit(new Label(new LabelData(statItem.Key, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)),
-                                                new Label(new LabelData(statItem.Value.ToString(), UnityEngine.Color.black))));
+                    menu.Items.Add(new HorizontalSplit(new Label(new LabelData(statItem.Key, UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)),
+                                                new Label(new LabelData(statItem.Value.ToString(), UnityEngine.Color.white))));
                 else
-                    menu.Items.Add(new HorizontalSplit(new Label(new LabelData(statItem.Key, UnityEngine.Color.black)),
-                                                new Label(new LabelData(statItem.Value.ToString(), UnityEngine.Color.black))));
+                    menu.Items.Add(new HorizontalSplit(new Label(new LabelData(statItem.Key, UnityEngine.Color.white)),
+                                                new Label(new LabelData(statItem.Value.ToString(), UnityEngine.Color.white))));
             }
 
             menu.Items.Add(new Line(UnityEngine.Color.black));
-            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("BonusProcs"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 20)));
+            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("BonusProcs"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 20)));
 
             var procItemsHeader = new List<ValueTuple<IItem, int>>();
-            procItemsHeader.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Item"), UnityEngine.Color.black)), 150));
-            procItemsHeader.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.black)), 150));
-            procItemsHeader.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Count"), UnityEngine.Color.black)), 150));
+            procItemsHeader.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Item"), UnityEngine.Color.white)), 150));
+            procItemsHeader.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.white)), 150));
+            procItemsHeader.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Count"), UnityEngine.Color.white)), 150));
             menu.Items.Add(new HorizontalRow(procItemsHeader));
 
             if (inv.BonusProcs.Count == 0)
             {
-                menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("NoneYet"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 20)));
+                menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("NoneYet"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 20)));
             }
 
             foreach (var proc in inv.BonusProcs)
             {
                 var procItems = new List<ValueTuple<IItem, int>>();
                 procItems.Add(ValueTuple.Create<IItem, int>(new ItemIcon(proc.Key), 150));
-                procItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(ItemTypes.GetType(proc.Key).Name, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 150));
-                procItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("x " +proc.Value, UnityEngine.Color.black)), 150));
+                procItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(ItemTypes.GetType(proc.Key).Name, UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 150));
+                procItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("x " +proc.Value, UnityEngine.Color.white)), 150));
                 menu.Items.Add(new HorizontalRow(procItems));
             }
 
             menu.Items.Add(new Line(UnityEngine.Color.black));
-            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Equiptment"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 24)));
+            menu.Items.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Equiptment"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 24)));
             List<ValueTuple<IItem, int>> wep = new List<ValueTuple<IItem, int>>();
-            wep.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Weapon"), UnityEngine.Color.black)), 200));
+            wep.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Weapon"), UnityEngine.Color.white)), 200));
             wep.Add(ValueTuple.Create<IItem, int>(new ItemIcon(inv.Weapon.Id), 200));
 
             if (Weapons.WeaponFactory.WeaponLookup.TryGetValue(inv.Weapon.Id, out var wepItem))
             {
-                wep.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(wepItem.name, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 200));
-                wep.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".wep." + job.NPC.ID + ".AddEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Swap"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 200));
-                wep.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".wep." + job.NPC.ID + ".RemoveEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Remove"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 200));
+                wep.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(wepItem.name, UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 200));
+                wep.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".wep." + job.NPC.ID + ".AddEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Swap"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 200));
+                wep.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".wep." + job.NPC.ID + ".RemoveEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Remove"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 200));
             }
             else
             {
-                wep.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.black)), 200));
-                wep.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".wep." + job.NPC.ID + ".AddEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Add"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 200));
+                wep.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.white)), 200));
+                wep.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + ".wep." + job.NPC.ID + ".AddEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Add"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 200));
             }
 
             menu.Items.Add(new HorizontalRow(wep));
@@ -542,19 +542,19 @@ namespace Pandaros.API.Items
             foreach (var armor in inv.Armor)
             {
                 List<ValueTuple<IItem, int>> items = new List<ValueTuple<IItem, int>>();
-                items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey(armor.Key.ToString()), UnityEngine.Color.black)), 200));
+                items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.GetLocalizationKey(armor.Key.ToString()), UnityEngine.Color.white)), 200));
                 items.Add(ValueTuple.Create<IItem, int>(new ItemIcon(armor.Value.Id), 200));
 
                 if (Armor.ArmorFactory.ArmorLookup.TryGetValue(armor.Value.Id, out var arm))
                 {
-                    items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(arm.name, UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 200));
-                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + "." + armor.Key + ".arm." + job.NPC.ID + ".AddEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Swap"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 200));
-                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + "." + armor.Key + ".arm." + job.NPC.ID + ".RemoveEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Remove"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 200));
+                    items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(arm.name, UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Type)), 200));
+                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + "." + armor.Key + ".arm." + job.NPC.ID + ".AddEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Swap"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 200));
+                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + "." + armor.Key + ".arm." + job.NPC.ID + ".RemoveEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Remove"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 200));
                 }
                 else
                 {
-                    items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.black)), 200));
-                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + "." + armor.Key + ".arm." + job.NPC.ID + ".AddEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Add"), UnityEngine.Color.black, UnityEngine.TextAnchor.MiddleCenter)), 200));
+                    items.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("", UnityEngine.Color.white)), 200));
+                    items.Add(ValueTuple.Create<IItem, int>(new ButtonCallback(jobKvp.Key + "." + armor.Key + ".arm." + job.NPC.ID + ".AddEquiptmentButton", new LabelData(_localizationHelper.GetLocalizationKey("Add"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter)), 200));
                 }
 
                 menu.Items.Add(new HorizontalRow(items));
