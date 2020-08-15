@@ -17,6 +17,7 @@ namespace Pandaros.API.Research
         int BaseIterationCount { get; }
         bool AddLevelToName { get; }       
         void ResearchComplete(object sender, ResearchCompleteEventArgs e);
+        void BeforeRegister();
         void OnRegister();
     }
 }

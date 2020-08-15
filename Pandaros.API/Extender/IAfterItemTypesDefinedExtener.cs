@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pandaros.API.Extender
 {
-    public interface IAfterItemTypesDefined
+    public interface IAfterItemTypesDefinedExtender : IPandarosExtention
     {
         void AfterItemTypesDefined();
     }

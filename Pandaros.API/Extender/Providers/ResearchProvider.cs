@@ -34,9 +34,11 @@ namespace Pandaros.API.Extender.Providers
                         }
 
                     sb.Append(pandaResearch.name + ", ");
+                    pandaResearch.BeforeRegister();
+                    research.Register();
                     pandaResearch.OnRegister();
                     i++;
-
+                    
                     if (i > 5)
                     {
                         i = 0;

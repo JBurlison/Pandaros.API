@@ -58,7 +58,7 @@ namespace Pandaros.API.Research
                 if (pandaResearch.Unlocks != null && (pandaResearch.Unlocks.TryGetValue(currentLevel, out listUnlocks) || pandaResearch.Unlocks.TryGetValue(0, out listUnlocks)))
                     RecipeUnlocks.AddRange(listUnlocks);
 
-                Register(currentLevel, pandaResearch.name);
+                APILogger.LogToFile($"PandaResearch Added: {pandaResearch.name} Level {currentLevel}");
             }
             catch (NullReferenceException nullRef)
             {
@@ -146,10 +146,9 @@ namespace Pandaros.API.Research
                     Dependencies.Add(dep);
         }
 
-        private void Register(int currentLevel, string name)
+        public void Register()
         {
             ServerManager.ScienceManager.RegisterResearchable(this);
-            APILogger.LogToFile($"PandaResearch Added: {name} Level {currentLevel}");
         }
 
     }

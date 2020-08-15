@@ -29,6 +29,11 @@ namespace Pandaros.API.Research
 
         public virtual bool AddLevelToName { get; } = true;
 
+        public virtual void BeforeRegister()
+        {
+
+        }
+
         public virtual void OnRegister()
         {
             

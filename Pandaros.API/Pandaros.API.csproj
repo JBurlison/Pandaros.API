@@ -95,6 +95,7 @@
     <Compile Include="EventedDictionary.cs" />
     <Compile Include="Extender\IAddItemTypes.cs" />
     <Compile Include="Extender\IAfterItemTypesDefined.cs" />
+    <Compile Include="Extender\IAfterItemTypesDefinedExtener.cs" />
     <Compile Include="Extender\IAfterModsLoaded.cs" />
     <Compile Include="Extender\IAfterModsLoadedExtention.cs" />
     <Compile Include="Extender\IAfterSelectedWorld.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="Extender\Providers\PandaZombieProvider.cs" />
     <Compile Include="Extender\Providers\RecipeProvider.cs" />
     <Compile Include="Extender\Providers\ResearchProvider.cs" />
+    <Compile Include="Extender\Providers\AfterItemTypesDefinedProvider.cs" />
     <Compile Include="Extender\Providers\RoamingJobObjectiveProvider.cs" />
     <Compile Include="Extender\Providers\SimpleRestProvider.cs" />
     <Compile Include="Extender\Providers\TextureMappingProvider.cs" />

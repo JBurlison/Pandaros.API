@@ -500,8 +500,8 @@ namespace Pandaros.API.Help
         {
             List<IItem> menuItems = new List<IItem>();
 
-            menuItems.Add(new Label(new LabelData(recipe.Name, UnityEngine.TextAnchor.MiddleCenter, 30, LabelData.ELocalizationType.Type)).ApplyPosition(item));
-            menuItems.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Requirements"), UnityEngine.TextAnchor.MiddleLeft, 24)).ApplyPosition(item));
+            menuItems.Add(new Label(new LabelData(recipe.Name, UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleCenter, 30, LabelData.ELocalizationType.Type)).ApplyPosition(item));
+            menuItems.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Requirements"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 24)).ApplyPosition(item));
 
             List<ValueTuple<IItem, int>> headerItems = new List<ValueTuple<IItem, int>>();
 
@@ -533,7 +533,7 @@ namespace Pandaros.API.Help
                 menuItems.Add(new HorizontalRow(items).ApplyPosition(item));
             }
 
-            menuItems.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Results"), UnityEngine.TextAnchor.MiddleLeft, 24)).ApplyPosition(item));
+            menuItems.Add(new Label(new LabelData(_localizationHelper.GetLocalizationKey("Results"), UnityEngine.Color.white, UnityEngine.TextAnchor.MiddleLeft, 24)).ApplyPosition(item));
 
             headerItems = new List<ValueTuple<IItem, int>>();
             headerItems.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData("")), 70));
