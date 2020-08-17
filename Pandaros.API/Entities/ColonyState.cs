@@ -6,6 +6,7 @@ using Pipliz.JSON;
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Pipliz;
 
 namespace Pandaros.API.Entities
 {
@@ -34,6 +35,7 @@ namespace Pandaros.API.Entities
         public Dictionary<ushort, int> ItemsRemoved { get; set; } = new Dictionary<ushort, int>();
         public Dictionary<ushort, int> ItemsInWorld { get; set; } = new Dictionary<ushort, int>();
         public Dictionary<string, double> Stats { get; set; } = new Dictionary<string, double>();
+        public Dictionary<string, Vector3Int> Positions { get; set; } = new Dictionary<string, Vector3Int>();
         public DateTime CreationDate { get; set; } = DateTime.Now;
         public string DifficultyStr
         {
@@ -103,6 +105,10 @@ namespace Pandaros.API.Entities
                     foreach (var skill in itterations.LoopObject())
                         _colonyStates[c].Stats[skill.Key] = skill.Value.GetAs<double>();
 
+                if (stateNode.TryGetAs(nameof(Positions), out JSONNode positions))
+                    foreach (var aNode in positions.LoopObject())
+                        _colonyStates[c].Positions.Add(aNode.Key, (Vector3Int)aNode.Value);
+
                 if (stateNode.TryGetAs("Difficulty", out string diff))
                     _colonyStates[c].DifficultyStr = diff;
 
@@ -131,6 +137,7 @@ namespace Pandaros.API.Entities
                 var ItemsPlacedNode = new JSONNode();
                 var ItemsRemovedNode = new JSONNode();
                 var ItemsInWorldNode = new JSONNode();
+                var positionsNode = new JSONNode();
                 var node = new JSONNode();
 
                 node.SetAs("Difficulty", _colonyStates[c].DifficultyStr);
@@ -148,6 +155,9 @@ namespace Pandaros.API.Entities
                 foreach (var kvp in _colonyStates[c].ItemsInWorld)
                     ItemsInWorldNode.SetAs(kvp.Key.ToString(), kvp.Value);
 
+                foreach (var kvp in _colonyStates[c].Positions)
+                    positionsNode.SetAs(kvp.Key.ToString(), (JSONNode)kvp.Value);
+
                 var statsNode = new JSONNode();
 
                 foreach (var job in _colonyStates[c].Stats)
@@ -157,6 +167,7 @@ namespace Pandaros.API.Entities
                 node.SetAs(nameof(ItemsPlaced), ItemsPlacedNode);
                 node.SetAs(nameof(ItemsRemoved), ItemsRemovedNode);
                 node.SetAs(nameof(ItemsInWorld), ItemsInWorldNode);
+                node.SetAs(nameof(Positions), positionsNode);
                 node.SetAs(nameof(CreationDate), _colonyStates[c].CreationDate);
 
                 n.SetAs(GameInitializer.NAMESPACE + ".ColonyState", node);

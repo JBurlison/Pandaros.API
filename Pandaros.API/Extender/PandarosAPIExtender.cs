@@ -15,6 +15,36 @@ namespace Pandaros.API.Extender
         private static Dictionary<string, List<IPandarosExtention>> _settlersExtensions = new Dictionary<string, List<IPandarosExtention>>();
         private static List<IOnTimedUpdate> _timedUpdate = new List<IOnTimedUpdate>();
 
+        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnSendAreaHighlights, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnSendAreaHighlights")]
+        public static void OnSendAreaHighlights(Players.Player player, List<AreaJobTracker.AreaHighlight> list, List<ushort> showWhileHoldingTypes)
+        {
+            if (_settlersExtensions.TryGetValue(nameof(IOnSendAreaHighlightsExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IOnSendAreaHighlightsExtender))
+                    try
+                    {
+                        extension.OnSendAreaHighlights(player, list, showWhileHoldingTypes);
+                    }
+                    catch (Exception ex)
+                    {
+                        APILogger.LogError(ex);
+                    }
+        }
+
+        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnTryChangeBlock, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnTryChangeBlock")]
+        public static void OnTryChangeBlock(ModLoader.OnTryChangeBlockData tryChangeBlockData)
+        {
+            if (_settlersExtensions.TryGetValue(nameof(IOnTryChangeBlockExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IOnTryChangeBlockExtender))
+                    try
+                    {
+                        extension.OnTryChangeBlock(tryChangeBlockData);
+                    }
+                    catch (Exception ex)
+                    {
+                        APILogger.LogError(ex);
+                    }
+        }
+
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnUpdate, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnUpdate")]
         public static void OnUpdate()
         {
@@ -85,13 +115,13 @@ namespace Pandaros.API.Extender
             if (_settlersExtensions.TryGetValue(nameof(IAfterWorldLoadExtender), out var pandarosExtentions))
                 foreach (var extension in pandarosExtentions.Select(ex => ex as IAfterWorldLoadExtender))
                     try
-                {
-                    extension.AfterWorldLoad();
-                }
-                catch (Exception ex)
-                {
-                    APILogger.LogError(ex);
-                }
+                    {
+                        extension.AfterWorldLoad();
+                    }
+                    catch (Exception ex)
+                    {
+                        APILogger.LogError(ex);
+                    }
         }
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.AfterModsLoaded, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.AfterModsLoaded")]

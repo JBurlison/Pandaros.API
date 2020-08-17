@@ -47,6 +47,7 @@ namespace Pandaros.API.Entities
         public Dictionary<ushort, int> ItemsInWorld { get; set; } = new Dictionary<ushort, int>();
         public Dictionary<string, double> Stats { get; set; } = new Dictionary<string, double>();
         public Dictionary<string, bool> Tutorials { get; set; } = new Dictionary<string, bool>();
+        public Dictionary<string, Vector3Int> Positions { get; set; } = new Dictionary<string, Vector3Int>();
         public ItemState Weapon { get; set; } = new ItemState();
         public int BuildersWandCharge { get; set; } = 750;
         public int BuildersWandMaxCharge { get; set; }
@@ -307,6 +308,10 @@ namespace Pandaros.API.Entities
                     foreach (var aNode in tutorials.LoopObject())
                         _playerStates[p].Tutorials.Add(aNode.Key, aNode.Value.GetAs<bool>());
 
+                if (stateNode.TryGetAs(nameof(Positions), out JSONNode positions))
+                    foreach (var aNode in positions.LoopObject())
+                        _playerStates[p].Positions.Add(aNode.Key, (Vector3Int)aNode.Value);
+
                 if (stateNode.TryGetAs(nameof(ItemsRemoved), out JSONNode ItemsRemovedNode))
                     foreach (var aNode in ItemsRemovedNode.LoopObject())
                         _playerStates[p].ItemsRemoved.Add(ushort.Parse(aNode.Key), aNode.Value.GetAs<int>());
@@ -379,6 +384,7 @@ namespace Pandaros.API.Entities
                 var ItemsInWorldNode    = new JSONNode();
                 var backpackNode        = new JSONNode();
                 var tutorialsNode = new JSONNode();
+                var positionsNode = new JSONNode();
                 var flagsPlaced         = new JSONNode(NodeType.Array);
                 var buildersWandPreview = new JSONNode(NodeType.Array);
                 var equiptMagicItems    = new JSONNode(NodeType.Array);
@@ -389,6 +395,9 @@ namespace Pandaros.API.Entities
 
                 foreach (var kvp in _playerStates[p].ItemsPlaced)
                     ItemsPlacedNode.SetAs(kvp.Key.ToString(), kvp.Value);
+
+                foreach (var kvp in _playerStates[p].Positions)
+                    positionsNode.SetAs(kvp.Key.ToString(), (JSONNode)kvp.Value);
 
                 foreach (var kvp in _playerStates[p].ItemsRemoved)
                     ItemsRemovedNode.SetAs(kvp.Key.ToString(), kvp.Value);
@@ -429,6 +438,7 @@ namespace Pandaros.API.Entities
                 node.SetAs(nameof(ItemsRemoved), ItemsRemovedNode);
                 node.SetAs(nameof(ItemsInWorld), ItemsInWorldNode);
                 node.SetAs(nameof(Tutorials), tutorialsNode);
+                node.SetAs(nameof(Positions), positionsNode);
                 node.SetAs(nameof(Backpack), backpackNode);
                 node.SetAs(nameof(MagicItems), equiptMagicItems);
                 node.SetAs(nameof(JoinDate), _playerStates[p].JoinDate);
