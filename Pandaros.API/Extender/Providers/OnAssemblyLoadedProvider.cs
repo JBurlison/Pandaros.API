@@ -5,22 +5,22 @@ using System.Text;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class OnTryChangeBlockProvider : IOnTryChangeBlockExtender
-    { 
+    public class OnAssemblyLoadedProvider : IOnAssemblyLoadedExtender
+    {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 
-        public string InterfaceName => nameof(IOnTryChangeBlock);
+        public string InterfaceName => nameof(IOnAssemblyLoaded);
         public Type ClassType => null;
 
-        public void OnTryChangeBlock(ModLoader.OnTryChangeBlockData tryChangeBlockData)
+        public void OnAssemblyLoaded(string path)
         {
-            foreach (var s in LoadedAssembalies)
+            foreach(var s in LoadedAssembalies)
             {
-                if (Activator.CreateInstance(s) is IOnTryChangeBlock afterItemTypes)
+                if (Activator.CreateInstance(s) is IOnAssemblyLoaded afterItemTypes)
                 {
                     try
                     {
-                        afterItemTypes.OnTryChangeBlock(tryChangeBlockData);
+                        afterItemTypes.OnAssemblyLoaded(path);
                     }
                     catch (Exception ex)
                     {

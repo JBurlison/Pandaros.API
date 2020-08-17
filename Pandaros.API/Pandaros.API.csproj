@@ -114,7 +114,8 @@
     <Compile Include="Extender\IPandaController.cs" />
     <Compile Include="Extender\IPandarosExtention.cs" />
     <Compile Include="Extender\IOnSavingColonyExtnder.cs" />
-    <Compile Include="Extender\Providers\IOnTryChangeBlockProvider.cs" />
+    <Compile Include="Extender\Providers\OnAssemblyLoadedProvider.cs" />
+    <Compile Include="Extender\Providers\OnTryChangeBlockProvider.cs" />
     <Compile Include="Extender\Providers\OnSendAreaHighlightsProvider.cs" />
     <Compile Include="Extender\Providers\AfterWorldSelectedProvider.cs" />
     <Compile Include="Extender\Providers\AfterModsLoadedProvider.cs" />

@@ -9,25 +9,27 @@ namespace Pandaros.API.Extender.Providers
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 
+        List<IOnSendAreaHighlights> _activatedInstances = new List<IOnSendAreaHighlights>();
+
         public string InterfaceName => nameof(IOnSendAreaHighlights);
         public Type ClassType => null;
 
         public void OnSendAreaHighlights(Players.Player player, List<AreaJobTracker.AreaHighlight> list, List<ushort> showWhileHoldingTypes)
         {
-            foreach (var s in LoadedAssembalies)
-            {
-                if (Activator.CreateInstance(s) is IOnSendAreaHighlights afterItemTypes)
-                {
+            if (_activatedInstances.Count == 0 && LoadedAssembalies.Count != 0)
+                foreach (var s in LoadedAssembalies)
+                    if (Activator.CreateInstance(s) is IOnSendAreaHighlights cb)
+                        _activatedInstances.Add(cb);
+
+            foreach (var cb in _activatedInstances)
                     try
                     {
-                        afterItemTypes.OnSendAreaHighlights(player, list, showWhileHoldingTypes);
+                    cb.OnSendAreaHighlights(player, list, showWhileHoldingTypes);
                     }
                     catch (Exception ex)
                     {
                         APILogger.LogError(ex);
                     }
-                }
-            }
         }
     }
 }
