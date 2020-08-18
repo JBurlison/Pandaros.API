@@ -100,6 +100,7 @@
     <Compile Include="Extender\IAfterModsLoadedExtention.cs" />
     <Compile Include="Extender\IAfterSelectedWorld.cs" />
     <Compile Include="Extender\IAfterSelectedWorldExtender.cs" />
+    <Compile Include="Extender\IAfterWorldLoad.cs" />
     <Compile Include="Extender\IAfterWorldLoadExtentender.cs" />
     <Compile Include="Extender\IOnAddResearchables.cs" />
     <Compile Include="Extender\IOnColonyCreated.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Extender\IPandaController.cs" />
     <Compile Include="Extender\IPandarosExtention.cs" />
     <Compile Include="Extender\IOnSavingColonyExtnder.cs" />
+    <Compile Include="Extender\Providers\AfterWorldLoadProvider.cs" />
     <Compile Include="Extender\Providers\OnTryChangeBlockProvider.cs" />
     <Compile Include="Extender\Providers\OnSendAreaHighlightsProvider.cs" />
     <Compile Include="Extender\Providers\AfterWorldSelectedProvider.cs" />
