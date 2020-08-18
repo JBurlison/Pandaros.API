@@ -128,6 +128,11 @@ namespace Pandaros.API.Models
             return itemId.Name;
         }
 
+        public static implicit operator ItemTypes.ItemType(ItemId itemId)
+        {
+            return ItemTypes.GetType(itemId.Name);
+        }
+
         public static implicit operator ushort(ItemId itemId)
         {
             return itemId.Id;
@@ -141,6 +146,11 @@ namespace Pandaros.API.Models
         public static implicit operator ItemId(string name)
         {
             return GetItemId(name);
+        }
+
+        public static implicit operator ItemId(ItemTypes.ItemType itemType)
+        {
+            return GetItemId(itemType.Name);
         }
 
         public override string ToString()

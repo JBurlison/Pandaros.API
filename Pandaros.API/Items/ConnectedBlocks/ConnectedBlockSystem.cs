@@ -97,7 +97,7 @@ namespace Pandaros.API.Items
                 existingBlock.ConnectedBlock.BlockType == blockType)
             {
                 if (calculationType != null && TryGetChangedBlockTypeAtPosition(pos, blockType, calculationType, out var newBlock) && newBlock.ConnectedBlock.AutoChange)
-                     ServerManager.TryChangeBlock(pos, ItemId.GetItemId(newBlock.name));
+                     ServerManager.TryChangeBlock(pos, (ushort)ItemId.GetItemId(newBlock.name));
             }
         }
 
