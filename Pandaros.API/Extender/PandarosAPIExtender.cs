@@ -45,6 +45,21 @@ namespace Pandaros.API.Extender
                     }
         }
 
+        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnChangedBlock, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnChangedBlock")]
+        public static void OnChangedBlock(ModLoader.OnTryChangeBlockData tryChangeBlockData)
+        {
+            if (_settlersExtensions.TryGetValue(nameof(IOnChangedBlockExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IOnChangedBlockExtender))
+                    try
+                    {
+                        extension.OnChangedBlock(tryChangeBlockData);
+                    }
+                    catch (Exception ex)
+                    {
+                        APILogger.LogError(ex);
+                    }
+        }
+
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnUpdate, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnUpdate")]
         public static void OnUpdate()
         {
