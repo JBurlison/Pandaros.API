@@ -292,5 +292,10 @@ namespace Pandaros.API
         {
             return array[Pipliz.Random.Next(array.Length)];
         }
+
+        public static Vector3Int Add(this Vector3Int source, Vector3Int add)
+        {
+            return source.Add(add.x, add.y, add.z);
+        }
     }
 }
