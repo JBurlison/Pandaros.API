@@ -124,12 +124,12 @@ namespace Pandaros.API
 
         public static rT GetFieldValue<rT, oT>(this object o, string fieldName)
         {
-            return (rT) typeof(oT).GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).GetValue(o);
+            return (rT) typeof(oT).GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(o);
         }
 
         public static void SetFieldValue<oT>(this object o, string fieldName, object fieldValue)
         {
-            typeof(oT).GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).SetValue(o, fieldValue);
+            typeof(oT).GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)?.SetValue(o, fieldValue);
         }
 
         public static byte[] ToUTF8SerializedJson(this object o)
