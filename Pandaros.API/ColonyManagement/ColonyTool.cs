@@ -1,4 +1,5 @@
 ﻿using Jobs;
+using ModLoaderInterfaces;
 using NetworkUI;
 using NetworkUI.Items;
 using NPC;

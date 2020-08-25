@@ -76,9 +76,9 @@ namespace Pandaros.API.Items.Weapons
                     };
 
                 if (Players.LastPunches.TryGetValue(player, out var num) &&
-                    millisecondsSinceStart - num < Players.PlayerPunchCooldownMS) return;
+                    num.TimeSinceThis < Players.PlayerPunchCooldownMS) return;
 
-                Players.LastPunches[player]  = millisecondsSinceStart;
+                Players.LastPunches[player]  = ServerTimeStamp.Now;
                 playerClickData.ConsumedType = PlayerClickedData.EConsumedType.UsedByMod;
                 var rayCastHit = click.GetNPCHit();
 

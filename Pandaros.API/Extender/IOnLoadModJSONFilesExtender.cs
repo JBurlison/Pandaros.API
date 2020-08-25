@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Pandaros.API.Extender
 {
-    public interface IAfterModsLoaded
+    public interface IOnLoadModJSONFilesExtender : IPandarosExtention
     {
-        void AfterModsLoaded(List<ModLoader.ModDescription> list);
+        void OnLoadModJSONFiles(List<ModLoader.LoadModJSONFileContext> contexts);
     }
 }

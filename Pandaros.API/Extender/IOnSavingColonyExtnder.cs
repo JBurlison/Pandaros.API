@@ -11,9 +11,4 @@ namespace Pandaros.API.Extender
     {
         void OnSavingColony(Colony c, JSONNode n);
     }
-
-    public interface IOnSavingColony
-    {
-        void OnSavingColony(Colony c, JSONNode n);
-    }
 }

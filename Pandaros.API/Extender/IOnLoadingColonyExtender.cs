@@ -11,9 +11,4 @@ namespace Pandaros.API.Extender
     {
         void OnLoadingColony(Colony c, JSONNode n);
     }
-
-    public interface IOnLoadingColony
-    {
-        void OnLoadingColony(Colony c, JSONNode n);
-    }
 }

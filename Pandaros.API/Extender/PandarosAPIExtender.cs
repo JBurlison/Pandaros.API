@@ -10,10 +10,25 @@ using System.Reflection;
 namespace Pandaros.API.Extender
 {
     [ModLoader.ModManager]
-    public static class PandarosAPIExtender
+    public class PandarosAPIExtender : ModLoaderInterfaces.IOnLoadModJSONFiles
     {
         private static Dictionary<string, List<IPandarosExtention>> _settlersExtensions = new Dictionary<string, List<IPandarosExtention>>();
         private static List<IOnTimedUpdate> _timedUpdate = new List<IOnTimedUpdate>();
+
+        [ModLoader.ModCallback(GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnLoadModJSONFiles")]
+        public void OnLoadModJSONFiles(List<ModLoader.LoadModJSONFileContext> contexts)
+        {
+            if (_settlersExtensions.TryGetValue(nameof(IOnLoadModJSONFilesExtender), out var pandarosExtentions))
+                foreach (var extension in pandarosExtentions.Select(ex => ex as IOnLoadModJSONFilesExtender))
+                    try
+                    {
+                        extension.OnLoadModJSONFiles(contexts);
+                    }
+                    catch (Exception ex)
+                    {
+                        APILogger.LogError(ex);
+                    }
+        }
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnSendAreaHighlights, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnSendAreaHighlights")]
         public static void OnSendAreaHighlights(Players.Player player, List<AreaJobTracker.AreaHighlight> list, List<ushort> showWhileHoldingTypes)
@@ -290,6 +305,31 @@ namespace Pandaros.API.Extender
                 {
                     // Do not log it is not the correct type.
                 }
+
+            foreach (var iface in _settlersExtensions.Keys)
+            {
+                var impl = _settlersExtensions[iface];
+
+                foreach (var t in impl)
+                {
+                    List<(double, Type)> pri = new List<(double, Type)>();
+
+                    foreach (var subType in t.LoadedAssembalies)
+                    {
+                        var at = subType.GetCustomAttribute(typeof(LoadPriorityAttribute)) as LoadPriorityAttribute;
+
+                        if (at != null)
+                        {
+                            pri.Add((at.Priority, subType));
+                        }
+                        else
+                            pri.Add((0, subType));
+                    }
+
+                    t.LoadedAssembalies.Clear();
+                    t.LoadedAssembalies.AddRange(pri.OrderBy(o => o.Item1).Select(o => o.Item2).ToList());
+                }
+            }
         }
 
         private static void LoadExtenstions(List<ModLoader.ModDescription> list)
@@ -337,6 +377,27 @@ namespace Pandaros.API.Extender
                 {
                     // Do not log it is not the correct type.
                 }
+
+           
+            foreach (var iface in new List<string>(_settlersExtensions.Keys))
+            {
+                var impl = _settlersExtensions[iface];
+                List<(double, IPandarosExtention)> pri = new List<(double, IPandarosExtention)>();
+
+                foreach (var t in impl)
+                {
+                    var at = t.GetType().GetCustomAttribute(typeof(LoadPriorityAttribute)) as LoadPriorityAttribute;
+
+                    if (at != null)
+                    {
+                        pri.Add((at.Priority, t));
+                    }
+                    else
+                        pri.Add((0, t));
+                }
+
+                _settlersExtensions[iface] = pri.OrderBy(o => o.Item1).Select(o => o.Item2).ToList();
+            }
         }
     }
 }

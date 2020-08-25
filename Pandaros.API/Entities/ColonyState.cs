@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Pipliz;
+using ModLoaderInterfaces;
 
 namespace Pandaros.API.Entities
 {

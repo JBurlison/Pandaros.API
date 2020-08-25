@@ -1,4 +1,5 @@
-﻿using NetworkUI;
+﻿using ModLoaderInterfaces;
+using NetworkUI;
 using NetworkUI.Items;
 using Pandaros.API.ColonyManagement;
 using Pandaros.API.Entities;
@@ -10,7 +11,7 @@ using System.Linq;
 namespace Pandaros.API.Items
 {
     [ModLoader.ModManager]
-    public class EquiptmentManager : Extender.IOnConstructInventoryManageColonyUI
+    public class EquiptmentManager : IOnConstructInventoryManageColonyUI
     {
         static readonly Pandaros.API.localization.LocalizationHelper _localizationHelper = new localization.LocalizationHelper(GameInitializer.NAMESPACE, "colonytool");
 

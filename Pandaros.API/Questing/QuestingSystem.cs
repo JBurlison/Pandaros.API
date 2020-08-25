@@ -10,6 +10,7 @@ using Pipliz.JSON;
 using System.IO;
 using Newtonsoft.Json;
 using NetworkUI.Items;
+using ModLoaderInterfaces;
 
 namespace Pandaros.API.Questing
 {
