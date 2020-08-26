@@ -8,9 +8,9 @@ namespace Pandaros.API.Extender
 {
     public interface IOnTimedUpdate
     {
-        double NextUpdateTimeMin { get; }
-        double NextUpdateTimeMax { get; }
-        double NextUpdateTime { get; set; }
+        int NextUpdateTimeMin { get; }
+        int NextUpdateTimeMax { get; }
+        ServerTimeStamp NextUpdateTime { get; set; }
         void OnTimedUpdate();
     }
 }

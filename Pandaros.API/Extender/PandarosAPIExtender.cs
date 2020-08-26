@@ -81,10 +81,10 @@ namespace Pandaros.API.Extender
             foreach (var extension in _timedUpdate)
                 try
                 {
-                    if (extension.NextUpdateTime < Time.SecondsSinceStartDouble)
+                    if (extension.NextUpdateTime < ServerTimeStamp.Now)
                     {
-                        extension.OnTimedUpdate();
-                        extension.NextUpdateTime = Time.SecondsSinceStartDouble + Pipliz.Random.NextDouble(extension.NextUpdateTimeMin, extension.NextUpdateTimeMax);
+                        extension.OnTimedUpdate(); 
+                        extension.NextUpdateTime = ServerTimeStamp.Now.Add(Pipliz.Random.Next(extension.NextUpdateTimeMin, extension.NextUpdateTimeMax));
                     }
                 }
                 catch (Exception ex)
