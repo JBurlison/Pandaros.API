@@ -22,9 +22,9 @@ namespace Pandaros.API.Questing
         public static Dictionary<Colony, Dictionary<string, long>> NumberOfQuestsComplete { get; set; } = new Dictionary<Colony, Dictionary<string, long>>();
         public static Dictionary<Colony, HashSet<string>> ActiveQuests { get; set; } = new Dictionary<Colony, HashSet<string>>();
 
-        public int NextUpdateTimeMin => 2000;
+        public int NextUpdateTimeMinMs => 2000;
 
-        public int NextUpdateTimeMax => 4000;
+        public int NextUpdateTimeMaxMs => 4000;
 
         public ServerTimeStamp NextUpdateTime { get; set; }
 

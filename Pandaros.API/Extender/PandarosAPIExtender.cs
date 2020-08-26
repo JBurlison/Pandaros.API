@@ -84,7 +84,7 @@ namespace Pandaros.API.Extender
                     if (extension.NextUpdateTime < ServerTimeStamp.Now)
                     {
                         extension.OnTimedUpdate(); 
-                        extension.NextUpdateTime = ServerTimeStamp.Now.Add(Pipliz.Random.Next(extension.NextUpdateTimeMin, extension.NextUpdateTimeMax));
+                        extension.NextUpdateTime = ServerTimeStamp.Now.Add(Pipliz.Random.Next(extension.NextUpdateTimeMinMs, extension.NextUpdateTimeMaxMs));
                     }
                 }
                 catch (Exception ex)

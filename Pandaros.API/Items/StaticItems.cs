@@ -6,9 +6,9 @@ namespace Pandaros.API.Items
 {
     public class StaticItemLostCheck : Extender.IOnTimedUpdate
     {
-        public int NextUpdateTimeMin => 10000;
+        public int NextUpdateTimeMinMs => 10000;
 
-        public int NextUpdateTimeMax => 30000;
+        public int NextUpdateTimeMaxMs => 30000;
 
         public ServerTimeStamp NextUpdateTime { get; set; }
 
