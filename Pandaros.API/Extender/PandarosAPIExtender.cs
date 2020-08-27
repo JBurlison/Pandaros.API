@@ -174,6 +174,7 @@ namespace Pandaros.API.Extender
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.AfterItemTypesDefined, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.AfterItemTypesDefined")]
         [ModLoader.ModCallbackProvidesFor("pipliz.server.loadresearchables")]
+        [ModLoader.ModCallbackProvidesFor("pipliz.server.loadnpctypes")]
         public static void AfterItemTypesDefined()
         {
             if (_settlersExtensions.TryGetValue(nameof(IAfterItemTypesDefinedExtender), out var pandarosExtentions))
