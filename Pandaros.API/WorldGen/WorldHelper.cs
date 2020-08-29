@@ -1,4 +1,5 @@
-﻿using Pipliz;
+﻿using Pandaros.API.Models;
+using Pipliz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,25 @@ namespace Pandaros.API
             return retval;
         }
 
+        public static Vector3Int GetClosestPosition(this Vector3Int pos, List<SerializableVector3Int> locations)
+        {
+            var retVal = Vector3Int.invalidPos;
+            var currentMin = float.MaxValue;
+
+            foreach (var loc in locations)
+            {
+                var dis = UnityEngine.Vector3Int.Distance(pos, loc);
+
+                if (dis < currentMin)
+                {
+                    currentMin = dis;
+                    retVal = loc;
+                }
+            }
+
+            return retVal;
+        }
+
 
         public static Vector3Int GetClosestPosition(this Vector3Int pos, List<Vector3Int> locations)
         {
@@ -61,6 +81,20 @@ namespace Pandaros.API
             }
 
             return retVal;
+        }
+
+        public static List<Vector3Int> SortClosestPositions(this Vector3Int pos, IEnumerable<SerializableVector3Int> locations)
+        {
+            var retVal = new Dictionary<Vector3Int, float>();
+
+            foreach (var loc in locations)
+            {
+                var dis = UnityEngine.Vector3Int.Distance(pos, loc);
+
+                retVal[pos] = dis;
+            }
+
+            return retVal.OrderBy(kvp => kvp.Value).Select(kvp => kvp.Key).ToList();
         }
 
         public static List<Vector3Int> SortClosestPositions(this Vector3Int pos, IEnumerable<Vector3Int> locations)

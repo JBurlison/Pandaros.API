@@ -45,7 +45,17 @@ namespace Pandaros.API.Models
             return new Vector3Int(serializableVector3.x, serializableVector3.y, serializableVector3.z);
         }
 
+        public static implicit operator UnityEngine.Vector3Int(SerializableVector3Int serializableVector3)
+        {
+            return new Vector3Int(serializableVector3.x, serializableVector3.y, serializableVector3.z);
+        }
+
         public static implicit operator SerializableVector3Int(Vector3Int serializableVector3)
+        {
+            return new SerializableVector3Int(serializableVector3.x, serializableVector3.y, serializableVector3.z);
+        }
+
+        public static implicit operator SerializableVector3Int(UnityEngine.Vector3Int serializableVector3)
         {
             return new SerializableVector3Int(serializableVector3.x, serializableVector3.y, serializableVector3.z);
         }
