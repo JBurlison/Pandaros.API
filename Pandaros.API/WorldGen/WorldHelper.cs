@@ -91,7 +91,7 @@ namespace Pandaros.API
             {
                 var dis = UnityEngine.Vector3Int.Distance(pos, loc);
 
-                retVal[pos] = dis;
+                retVal[loc] = dis;
             }
 
             return retVal.OrderBy(kvp => kvp.Value).Select(kvp => kvp.Key).ToList();
@@ -105,7 +105,7 @@ namespace Pandaros.API
             {
                 var dis = UnityEngine.Vector3Int.Distance(pos, loc);
 
-                retVal[pos] = dis;
+                retVal[loc] = dis;
             }
 
             return retVal.OrderBy(kvp => kvp.Value).Select(kvp => kvp.Key).ToList();
