@@ -215,6 +215,7 @@
     <Compile Include="Models\HTTP\PandaHttp.cs" />
     <Compile Include="Models\PlayerMagicItem.cs" />
     <Compile Include="Models\RotationAxis.cs" />
+    <Compile Include="Models\SerializableVector3Int.cs" />
     <Compile Include="Models\SerializableVector3.cs" />
     <Compile Include="Models\SettlersState.cs" />
     <Compile Include="Models\TrainConfiguration.cs" />

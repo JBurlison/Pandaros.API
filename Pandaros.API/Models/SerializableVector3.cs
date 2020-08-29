@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Pandaros.API.Models
 {
-    public class SerializableVector3
+    public class SerializableVector3 : IEquatable<SerializableVector3>
     {
         public SerializableVector3() { }
 
@@ -67,5 +67,16 @@ namespace Pandaros.API.Models
         {
             return Quaternion.Euler(serializableVector3.x, serializableVector3.y, serializableVector3.z);
         }
+
+        public bool Equals(SerializableVector3 other)
+        {
+            return x == other.x && y == other.y && z == other.z;
+        }
+
+        public bool Equals(SerializableVector3 x, SerializableVector3 other)
+        {
+            return x.x == other.x && x.y == other.y && x.z == other.z;
+        }
+
     }
 }
