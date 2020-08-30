@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using Random = System.Random;
 
@@ -296,6 +297,37 @@ namespace Pandaros.API
         public static Vector3Int Add(this Vector3Int source, Vector3Int add)
         {
             return source.Add(add.x, add.y, add.z);
+        }
+
+        public static Vector3Int Parse(this Vector3Int source, string parse)
+        {
+            if (parse.Substring(0, 1) != "[")
+                throw new ArgumentException("String must be in [x:y:z] format. Given " + parse);
+
+            int end = parse.IndexOf(']');
+
+            if (end == -1)
+                throw new ArgumentException("String must be in [x:y:z] format. Given " + parse);
+
+            var elements = parse.Substring(1, parse.Length - 2).Split(new[] { ':' },StringSplitOptions.RemoveEmptyEntries);
+
+            if (elements.Length != 3)
+                throw new ArgumentException("String must be in [x:y:z] format. Given " + parse);
+
+            if (!int.TryParse(elements[0], out int x))
+                throw new ArgumentException("String mus be in [x:y:z] format. X must be a valid int. Given " + parse);
+
+            if (!int.TryParse(elements[1], out int y))
+                throw new ArgumentException("String mus be in [x:y:z] format. Y must be a valid int. Given " + parse);
+
+            if (!int.TryParse(elements[2], out int z))
+                throw new ArgumentException("String mus be in [x:y:z] format. Z must be a valid int. Given " + parse);
+
+            source.x = x;
+            source.y = y;
+            source.z = z;
+
+            return source;
         }
     }
 }

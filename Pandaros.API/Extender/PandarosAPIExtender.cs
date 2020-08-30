@@ -90,10 +90,13 @@ namespace Pandaros.API.Extender
             foreach (var extension in TimedUpdate)
                 try
                 {
-                    if (extension.NextUpdateTime < ServerTimeStamp.Now)
+                    if (extension.NextUpdateTime == default(ServerTimeStamp))
+                        extension.NextUpdateTime = ServerTimeStamp.Now;
+
+                    if (extension.NextUpdateTime.IsPassed)
                     {
-                        extension.OnTimedUpdate(); 
                         extension.NextUpdateTime = ServerTimeStamp.Now.Add(Pipliz.Random.Next(extension.NextUpdateTimeMinMs, extension.NextUpdateTimeMaxMs));
+                        extension.OnTimedUpdate();
                     }
                 }
                 catch (Exception ex)
@@ -279,7 +282,7 @@ namespace Pandaros.API.Extender
 
                                         if (constructor != null && !e.LoadedAssembalies.Contains(type))
                                             e.LoadedAssembalies.Add(type);
-                                        else
+                                        else if (constructor == null)
                                             APILogger.LogToFile("Warning: No empty constructor for " + type.Name);
                                     }
 
