@@ -90,7 +90,7 @@ namespace Pandaros.API.Monsters
                             switch (((MonsterSpawner)MonsterTracker.MonsterSpawner).TryGetSpawnLocation(context, bannerGoal.Position, bannerGoal.SafeRadius, 200, 500f, out positionFinal))
                             {
                                 case MonsterSpawner.ESpawnResult.Success:
-                                    if (context.Pathing.TryFindPath(positionFinal, bannerGoal.Position, out var path, 2000000000) == EPathFindingResult.Success)
+                                    if (context.Pathing.TryFindPath(ref context, positionFinal, bannerGoal.Position, out var path, 2000000000) == EPathFindingResult.Success)
                                     {
                                         var pandaboss = (IPandaBoss)CurrentPandaBoss.GetNewInstance(path, colony);
                                         _pandaBossesSpawnQueue.Enqueue(pandaboss);
