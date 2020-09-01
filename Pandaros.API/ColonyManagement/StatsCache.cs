@@ -111,8 +111,11 @@ namespace Pandaros.API.ColonyManagement
             if (!dict.ContainsKey(item))
                 dict.Add(item, 0);
 
-            data.menu.Items.Add(new HorizontalSplit(new Label(new LabelData(GameInitializer.NAMESPACE + ".inventory." + sentenceKey, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Sentence)),
-                                                    new Label(new LabelData(dict[item].ToString())), 30, 0.75f));
+            data.menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
+                                                     {
+                                                        (new Label(new LabelData(GameInitializer.NAMESPACE + ".inventory." + sentenceKey, UnityEngine.TextAnchor.MiddleLeft, 18, LabelData.ELocalizationType.Sentence)), 200),
+                                                        (new Label(new LabelData(dict[item].ToString())), 60)
+                                                    }));
             
         }
     }
