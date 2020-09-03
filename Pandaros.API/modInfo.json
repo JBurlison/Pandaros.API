@@ -3,11 +3,11 @@
     "dllpath": "Pandaros.API.dll",
     "name": "Pandaros.API",
     "namepretty": "Pandaros' API!",
-    "version": "0.1.9.1",
-    "enabled": true,
+    "version": "0.2.0.0",
+    "enableddefault": true,
     "marksgamemodded": true,
     "compatibleversions": [
-      "0.7.4"
+      "0.7.5"
     ],
     "jsonFiles": [
       {
@@ -19,6 +19,15 @@
     "website": "https://github.com/JBurlison/Pandaros.API/wiki/",
     "about": "Pandaros' API adds a slew of API features that the settlers mod is built upon, Comes with Colony management/job assignment and Player Magic items tool!",
     "patchnotes": [
+      {
+        "version": "0.2.0.0",
+        "notes": [
+          "Removed a bunch of interfaces that are now in the game.",
+          "No longer auto loads happiness for compatability to other mods.",
+          "Added priority to callbacks",
+          "Misc Fixes"
+        ]
+      },
       {
         "version": "0.1.9.0",
         "notes": [
