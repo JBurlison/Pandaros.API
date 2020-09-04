@@ -39,8 +39,10 @@ namespace Pandaros.API.Extender.Providers
 
                     ServerManager.RecipeStorage.AddLimitTypeRecipe(recipe.Job, newRecipe);
                     
-                    if (!ServerManager.RecipeStorage.BlockNameToLimitTypeMapping.ContainsKey(recipe.JobBlock))
-                        ServerManager.RecipeStorage.AddBlockToRecipeMapping(recipe.JobBlock, recipe.Job);
+                    if (recipe.JobBlock != null && recipe.JobBlock.Count != 0)
+                        foreach (var block in recipe.JobBlock)
+                            if (!ServerManager.RecipeStorage.BlockNameToLimitTypeMapping.ContainsKey(block))
+                                ServerManager.RecipeStorage.AddBlockToRecipeMapping(block, recipe.Job);
 
                     if (recipe.isOptional)
                         ServerManager.RecipeStorage.AddScienceRequirement(newRecipe);

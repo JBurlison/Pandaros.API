@@ -42,6 +42,6 @@ namespace Pandaros.API.Models
         bool isOptional { get; }
         int defaultLimit { get; }
         string Job { get; }
-        string JobBlock { get; }
+        List<string> JobBlock { get; }
     }
 }
