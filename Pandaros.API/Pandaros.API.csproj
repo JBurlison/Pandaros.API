@@ -240,6 +240,7 @@
     <Compile Include="Questing\BuiltinObjectives\CraftObjective.cs" />
     <Compile Include="Questing\BuiltinQuests\GenericQuest.cs" />
     <Compile Include="Questing\BuiltinRewards\RecipeUnlockReward.cs" />
+    <Compile Include="Questing\BuiltinRewards\TextReward.cs" />
     <Compile Include="Questing\Models\IPandaQuest.cs" />
     <Compile Include="Questing\Models\IPandaQuestObjective.cs" />
     <Compile Include="Questing\Models\IPandaQuestPrerequisite.cs" />

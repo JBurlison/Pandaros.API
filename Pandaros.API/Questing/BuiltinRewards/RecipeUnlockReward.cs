@@ -22,6 +22,9 @@ namespace Pandaros.API.Questing.BuiltinRewards
         {
             RecipeKey = itemName;
             RewardKey = rewardKey;
+            LocalizationHelper = localizationHelper;
+            LocalizationKey = localizationKey;
+
             if (ServerManager.RecipeStorage.TryGetRecipe(new Recipes.RecipeKey(itemName), out var recipe))
                 Recipe = recipe;
             else
