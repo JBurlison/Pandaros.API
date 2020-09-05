@@ -10,14 +10,15 @@ using System.Threading.Tasks;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class GenerateTypesProvider : IAfterSelectedWorldExtender
+    [LoadPriority(100)]
+    public class GenerateTypesProvider : IAfterModsLoadedExtention
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 
         public string InterfaceName => nameof(ICSGenerateType);
         public Type ClassType => null;
 
-        public void AfterSelectedWorld()
+        public void AfterModsLoaded(List<ModLoader.ModDescription> list)
         {
             StringBuilder sb = new StringBuilder();
             APILogger.LogToFile("-------------------Generate Type Loaded----------------------");
