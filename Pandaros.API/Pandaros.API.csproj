@@ -114,6 +114,8 @@
     <Compile Include="Extender\Providers\ArmorProvider.cs" />
     <Compile Include="Extender\Providers\BossesProvider.cs" />
     <Compile Include="Extender\Providers\ConnectedBlockCalculationTypeProvider.cs" />
+    <Compile Include="Extender\Providers\JobSettingsProvider.cs" />
+    <Compile Include="Extender\Providers\GuardJobSettingsProvider.cs" />
     <Compile Include="Extender\Providers\GenerateTypesProvider.cs" />
     <Compile Include="Extender\Providers\HappinessCausesProvider.cs" />
     <Compile Include="Extender\Providers\HappinessEffectProvider.cs" />
@@ -182,6 +184,7 @@
     <Compile Include="Models\BlockSides.cs" />
     <Compile Include="Models\BlockSideValuesAttribute.cs" />
     <Compile Include="Models\Colliders.cs" />
+    <Compile Include="Models\CSBlockJobSettings.cs" />
     <Compile Include="Models\HTTP\BannerModel.cs" />
     <Compile Include="Models\HTTP\ColonyJobs.cs" />
     <Compile Include="Models\HTTP\ColonyModel.cs" />
@@ -199,16 +202,19 @@
     <Compile Include="Models\HTTP\ScienceModel.cs" />
     <Compile Include="Models\HTTP\StockpileItem.cs" />
     <Compile Include="Models\HTTP\SuccessResponse.cs" />
+    <Compile Include="Models\ICSBlockJobSettings.cs" />
     <Compile Include="Models\ICSPlayerRecipe.cs" />
     <Compile Include="Models\ICSRecipe.cs" />
     <Compile Include="Models\ICSTextureMapping.cs" />
     <Compile Include="Models\ICSType.cs" />
     <Compile Include="Models\IGenerateType.cs" />
+    <Compile Include="Models\ICSGuardJobSettings.cs" />
     <Compile Include="Models\ILootTable.cs" />
     <Compile Include="Models\ILucky.cs" />
     <Compile Include="Models\IPlayerMagicItem.cs" />
     <Compile Include="Models\ItemId.cs" />
     <Compile Include="Models\ItemState.cs" />
+    <Compile Include="Models\CSGuardJobSettings.cs" />
     <Compile Include="Models\LootPoolEntry.cs" />
     <Compile Include="Models\OnRemove.cs" />
     <Compile Include="Models\OpenMenuSettings.cs" />
