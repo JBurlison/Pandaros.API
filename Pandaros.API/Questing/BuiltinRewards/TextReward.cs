@@ -17,11 +17,12 @@ namespace Pandaros.API.Questing.BuiltinRewards
         public string LocalizationKey { get; set; }
         public LocalizationHelper LocalizationHelper { get; set; }
 
-        public TextReward(string rewardKey, string localizationKey, LocalizationHelper localizationHelper)
+        public TextReward(string rewardKey, string itemIconName, string localizationKey, LocalizationHelper localizationHelper)
         {
             RewardKey = rewardKey;
             LocalizationKey = localizationKey;
             LocalizationHelper = localizationHelper;
+            ItemIconName = itemIconName;
         }
 
         public string GetRewardText(IPandaQuest quest, Colony colony, Players.Player player)
