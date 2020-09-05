@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Pandaros.API.Questing.Models;
+using Pandaros.API.Questing.BuiltinQuests;
 
 namespace Pandaros.API.Extender.Providers
 {
@@ -13,7 +14,7 @@ namespace Pandaros.API.Extender.Providers
 
         public string InterfaceName => nameof(IPandaQuest);
 
-        public Type ClassType => null;
+        public Type ClassType => typeof(GenericQuest);
 
         public void AfterWorldLoad()
         {

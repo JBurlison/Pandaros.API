@@ -9,6 +9,7 @@ namespace Pandaros.API.Questing.Models
 {
     public interface IPandaQuest
     {
+        string ItemIconName { get; set; }
         string QuestKey { get; }
         Dictionary<string, IPandaQuestObjective> QuestObjectives { get; set; }
         List<IPandaQuestReward> QuestRewards { get; set; }

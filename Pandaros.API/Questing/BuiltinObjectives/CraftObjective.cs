@@ -30,7 +30,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
 
         public string ObjectiveKey { get; set; }
         public string LocalizationKey { get; set; }
-        public int CraftCount { get; set; }
+        public float CraftCount { get; set; }
         public Dictionary<int, int> CurrentCraftCount { get; set; } = new Dictionary<int, int>();
 
         public string Item { get; set; }
@@ -54,7 +54,9 @@ namespace Pandaros.API.Questing.BuiltinObjectives
             if (!CurrentCraftCount.ContainsKey(colony.ColonyID))
                 CurrentCraftCount[colony.ColonyID] = 0;
 
-            if (CurrentCraftCount[colony.ColonyID] != 0)
+            if (CraftCount == 0)
+                return 1;
+            else if (CurrentCraftCount[colony.ColonyID] != 0)
                 return CurrentCraftCount[colony.ColonyID] / CraftCount;
             else
                 return 1;

@@ -22,13 +22,21 @@ namespace Pandaros.API.localization
             if (p.ConnectionState != Players.EConnectionState.Connected)
                 return key;
 
-            string fullKey = GetLocalizationKey(key);
-            var newVal = Localization.GetSentence(p.LastKnownLocale, fullKey);
-
-            if (newVal == fullKey)
-                return key;
+            if (ItemTypes.TryGetType(key, out ItemTypes.ItemType itemType) &&
+                Localization.TryGetType(p.LastKnownLocale, itemType, out var localizedTypeName))
+                return localizedTypeName;
             else
-                return newVal;
+            {
+                var fullKey = GetLocalizationKey(key);
+                var newVal = Localization.GetSentence(p.LastKnownLocale, fullKey);
+
+                if (newVal == fullKey)
+                    return key;
+                else
+                    return newVal;
+            }
+
+            
         }
 
         public string GetLocalizationKey(string key)

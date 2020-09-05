@@ -14,7 +14,7 @@ using ModLoaderInterfaces;
 
 namespace Pandaros.API.Questing
 {
-    public class QuestingSystem : IOnTimedUpdate, IOnConstructInventoryManageColonyUI, IOnLoadingColony, IOnSavingColony
+    public class QuestingSystem : IOnTimedUpdate, IOnConstructInventoryManageColonyUI, IOnLoadingColony, IOnSavingColony, IOnPlayerPushedNetworkUIButton
     {
         static readonly Pandaros.API.localization.LocalizationHelper _localizationHelper = new localization.LocalizationHelper(GameInitializer.NAMESPACE, "Quests");
         public static Dictionary<string, IPandaQuest> QuestPool { get; set; } = new Dictionary<string, IPandaQuest>();
@@ -34,8 +34,7 @@ namespace Pandaros.API.Questing
                 table.Item1.Rows.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenu", new LabelData(_localizationHelper.LocalizeOrDefault("Quests", player)), 200));
         }
 
-        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnPlayerPushedNetworkUIButton, GameInitializer.NAMESPACE + ".ColonyManager.ColonyTool.PressButton")]
-        public static void PressButton(ButtonPressCallbackData data)
+        public void OnPlayerPushedNetworkUIButton(ButtonPressCallbackData data)
         {
             if (!data.ButtonIdentifier.Contains(".QuestingMainMenu") || data.Player.ActiveColony == null)
                 return;
@@ -54,26 +53,35 @@ namespace Pandaros.API.Questing
             {
                 if (QuestPool.TryGetValue(questKey, out var quest))
                 {
-                    menu.Items.Add(new Line());
+                    menu.Items.Add(new Line(UnityEngine.Color.white));
+                    menu.Items.Add(new ItemIcon(quest.ItemIconName));
                     menu.Items.Add(new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)));
                     menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
                     menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Objectives", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
                     
+                    if (quest.QuestObjectives != null)
                     foreach (var req in quest.QuestObjectives)
                     {
                         var questObj = new List<ValueTuple<IItem, int>>();
                         questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.Value.GetObjectiveProgressText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 700));
-                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.Value.GetProgress(quest, data.Player.ActiveColony) * 100 + "%", UnityEngine.Color.white)), 200));
+                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(Math.Round(req.Value.GetProgress(quest, data.Player.ActiveColony), 2) * 100 + "%", UnityEngine.Color.white)), 200));
                         menu.Items.Add(new HorizontalRow(questObj));
                     }
 
                     menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
 
+                    if (quest.QuestRewards != null)
                     foreach (var reward in quest.QuestRewards)
-                        menu.Items.Add(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
+                    {
+                        var itemList = new List<ValueTuple<IItem, int>>();
+                        itemList.Add((new ItemIcon(reward.ItemIconName), 100));
+                        itemList.Add((new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 800));
+                        menu.Items.Add(new HorizontalRow(itemList));
+                    }
                 }
             }
 
+            menu.Items.Add(new Line(UnityEngine.Color.white));
             menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("RequrementsNotMet", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
 
             foreach (var qpq in QuestPool.OrderBy(key => key.Key))
@@ -82,10 +90,11 @@ namespace Pandaros.API.Questing
                 {
                     var quest = qpq.Value;
 
-                    menu.Items.Add(new Line());
+                    menu.Items.Add(new Line(UnityEngine.Color.white, 2));
                     menu.Items.Add(new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)));
                     menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
 
+                    if (quest.QuestPrerequisites != null)
                     foreach (var req in quest.QuestPrerequisites)
                     {
                         var questObj = new List<ValueTuple<IItem, int>>();
@@ -100,6 +109,8 @@ namespace Pandaros.API.Questing
                         menu.Items.Add(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
                 }
             }
+
+            NetworkMenuManager.SendServerPopup(data.Player, menu);
         }
 
         public void OnLoadingColony(Colony c, JSONNode n)
@@ -179,8 +190,11 @@ namespace Pandaros.API.Questing
         {
             foreach (var quest in QuestPool)
             {
-                foreach (var colony in ServerManager.ColonyTracker.ColoniesByID.ValsRaw)
+                foreach (var colony in ServerManager.ColonyTracker.ColoniesByID.Values)
                 {
+                    if (colony == null)
+                        return;
+
                     if (!CompletedQuests.ContainsKey(colony))
                         CompletedQuests.Add(colony, new HashSet<string>());
 
@@ -193,14 +207,20 @@ namespace Pandaros.API.Questing
                     bool ok = true;
 
                     if (!ActiveQuests[colony].Contains(quest.Key))
-                        foreach (var pre in quest.Value.QuestPrerequisites)
-                            if (!pre.MeetsPrerequisite(quest.Value, colony))
-                                ok = false;
-                            else
-                            {
-                                ActiveQuests[colony].Add(quest.Key);
-                                PandaChat.Send(colony, _localizationHelper, "NewQuestAvailable", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
-                            }
+                    {
+                        if (quest.Value.QuestPrerequisites != null)
+                        {
+                            foreach (var pre in quest.Value.QuestPrerequisites)
+                                if (!pre.MeetsPrerequisite(quest.Value, colony))
+                                    ok = false;
+                        }
+
+                        if (ok)
+                        {
+                            ActiveQuests[colony].Add(quest.Key);
+                            PandaChat.Send(colony, _localizationHelper, "NewQuestAvailable", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
+                        }
+                    }
 
                     if (ok)
                     {
@@ -214,8 +234,9 @@ namespace Pandaros.API.Questing
 
                         if (allComplete)
                         {
-                            foreach (var reward in quest.Value.QuestRewards)
-                                reward.IssueReward(quest.Value, colony);
+                            if (quest.Value.QuestRewards != null)
+                                foreach (var reward in quest.Value.QuestRewards)
+                                    reward.IssueReward(quest.Value, colony);
 
                             if (!NumberOfQuestsComplete[colony].ContainsKey(quest.Key))
                                 NumberOfQuestsComplete[colony].Add(quest.Key, 1);

@@ -233,9 +233,13 @@
     <Compile Include="CSConsoleAndFileLogger.cs" />
     <Compile Include="APILogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Questing\BuiltinObjectives\FoodStoredObjective.cs" />
+    <Compile Include="Questing\BuiltinObjectives\JobsTakenObjective.cs" />
+    <Compile Include="Questing\BuiltinObjectives\ItemsInStockpileObjective.cs" />
     <Compile Include="Questing\BuiltinObjectives\ColonistCountObjective.cs" />
     <Compile Include="Questing\BuiltinObjectives\CraftObjective.cs" />
     <Compile Include="Questing\BuiltinQuests\GenericQuest.cs" />
+    <Compile Include="Questing\BuiltinRewards\RecipeUnlockReward.cs" />
     <Compile Include="Questing\Models\IPandaQuest.cs" />
     <Compile Include="Questing\Models\IPandaQuestObjective.cs" />
     <Compile Include="Questing\Models\IPandaQuestPrerequisite.cs" />
@@ -243,6 +247,7 @@
     <Compile Include="Questing\Models\QuestingSave.cs" />
     <Compile Include="Questing\QuestingSystem.cs" />
     <Compile Include="QueueFactory.cs" />
+    <Compile Include="Research\Conditions\QuestCompleteCondition.cs" />
     <Compile Include="Research\IPandaResearch.cs" />
     <Compile Include="Research\PandaResearch.cs" />
     <Compile Include="Research\PandaResearchable.cs" />
