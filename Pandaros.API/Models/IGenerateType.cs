@@ -11,5 +11,6 @@ namespace Pandaros.API.Models
         ICSType baseType { get; }
         string generateType { get; }
         string typeName { get; }
+        string outlineColor { get; }
     }
 }

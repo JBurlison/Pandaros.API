@@ -13,5 +13,7 @@ namespace Pandaros.API.Models
         public virtual string generateType { get; set; }
 
         public virtual string typeName { get; set; }
+
+        public virtual string outlineColor { get; set; }
     }
 }
