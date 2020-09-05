@@ -16,7 +16,7 @@ namespace Pandaros.API.Extender.Providers
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 
         public string InterfaceName => nameof(ICSBlockJobSettings);
-        public Type ClassType => null;
+        public Type ClassType => typeof(CSBlockJobSettings);
 
         public void AfterModsLoaded(List<ModLoader.ModDescription> list)
         {

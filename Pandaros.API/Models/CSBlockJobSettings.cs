@@ -8,10 +8,10 @@ namespace Pandaros.API.Models
 {
     public class CSBlockJobSettings
     {
-        public string blockType { get; set; }
-        public int cooldown { get; set; }
-        public string jobType { get; set; }
-        public int maxCraftsPerHaul { get; set; }
-        public string npcType { get; set; }
+        public virtual string blockType { get; set; }
+        public virtual int cooldown { get; set; }
+        public virtual string jobType { get; set; }
+        public virtual int maxCraftsPerHaul { get; set; }
+        public virtual string npcType { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Pandaros.API.Extender.Providers
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 
         public string InterfaceName => nameof(ICSGuardJobSettings);
-        public Type ClassType => null;
+        public Type ClassType => typeof(CSGuardJobSettings);
 
         public void AfterModsLoaded(List<ModLoader.ModDescription> list)
         {
