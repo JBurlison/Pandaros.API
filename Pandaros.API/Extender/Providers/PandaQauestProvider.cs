@@ -8,7 +8,7 @@ using Pandaros.API.Questing.BuiltinQuests;
 
 namespace Pandaros.API.Extender.Providers
 {
-    public class PandaQuestProvider : IAfterWorldLoadExtender
+    public class PandaQuestProvider : IOnAddResearchablesExtender
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 
@@ -16,7 +16,7 @@ namespace Pandaros.API.Extender.Providers
 
         public Type ClassType => typeof(GenericQuest);
 
-        public void AfterWorldLoad()
+        public void OnAddResearchables()
         {
             StringBuilder sb = new StringBuilder();
             APILogger.LogToFile("-------------------Panda Quests Loaded----------------------");
