@@ -26,7 +26,10 @@ namespace Pandaros.API.Questing.BuiltinRewards
             LocalizationKey = localizationKey;
 
             if (ServerManager.RecipeStorage.TryGetRecipe(new Recipes.RecipeKey(itemName), out var recipe))
+            {
                 Recipe = recipe;
+                ServerManager.RecipeStorage.AddScienceRequirement(Recipe);
+            }
             else
                 APILogger.Log(ChatColor.red, "Item " + itemName + " recipe not found. unable to create RecipeUnlockReward for reward key " + rewardKey);
 
