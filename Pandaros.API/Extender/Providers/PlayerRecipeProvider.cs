@@ -38,9 +38,6 @@ namespace Pandaros.API.Extender.Providers
                     var newRecipe = new Recipe(recipe.name, requirements, results);
 
                     ServerManager.RecipeStorage.AddPlayerRecipe(newRecipe);
-
-                    if (recipe.isOptional)
-                        ServerManager.RecipeStorage.AddScienceRequirement(newRecipe);
                         
                     sb.Append($"{recipe.name}, ");
                     i++;

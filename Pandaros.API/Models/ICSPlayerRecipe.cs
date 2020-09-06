@@ -12,6 +12,5 @@ namespace Pandaros.API.Models
     {
         List<RecipeItem> requires { get; }
         List<RecipeResult> results { get; }
-        bool isOptional { get; }
     }
 }

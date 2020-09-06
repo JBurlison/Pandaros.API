@@ -39,7 +39,6 @@ namespace Pandaros.API.Models
         List<RecipeItem> requires { get; }
         List<RecipeResult> results { get; }
         CraftPriority defaultPriority { get; }
-        bool isOptional { get; }
         int defaultLimit { get; }
         string Job { get; }
         List<string> JobBlock { get; }
