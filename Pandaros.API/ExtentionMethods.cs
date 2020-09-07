@@ -2,6 +2,7 @@
 using Jobs;
 using Newtonsoft.Json;
 using NPC;
+using Pandaros.API.ColonyManagement;
 using Pandaros.API.Items;
 using Pandaros.API.Models;
 using Pipliz;
@@ -328,6 +329,44 @@ namespace Pandaros.API
             source.z = z;
 
             return source;
+        }
+
+        public static Dictionary<string, JobCounts> GetJobCounts(this Colony colony)
+        {
+            Dictionary<string, JobCounts> jobCounts = new Dictionary<string, JobCounts>();
+            var jobs = colony?.JobFinder?.JobsData?.OpenJobs;
+            var npcs = colony?.Followers;
+
+            if (jobs != null)
+                foreach (var job in jobs)
+                {
+                    if (NPCType.NPCTypes.TryGetValue(job.NPCType, out var nPCTypeSettings))
+                    {
+                        if (!jobCounts.ContainsKey(nPCTypeSettings.KeyName))
+                            jobCounts.Add(nPCTypeSettings.KeyName, new JobCounts() { Name = nPCTypeSettings.KeyName });
+
+                        jobCounts[nPCTypeSettings.KeyName].AvailableCount++;
+                        jobCounts[nPCTypeSettings.KeyName].AvailableJobs.Add(job);
+                    }
+                }
+
+
+            if (npcs != null)
+                foreach (var npc in npcs)
+                {
+                    if (npc.Job != null && npc.Job.IsValid && NPCType.NPCTypes.TryGetValue(npc.Job.NPCType, out var nPCTypeSettings))
+                    {
+                        if (!jobCounts.ContainsKey(nPCTypeSettings.KeyName))
+                            jobCounts.Add(nPCTypeSettings.KeyName, new JobCounts() { Name = nPCTypeSettings.KeyName });
+
+                        jobCounts[nPCTypeSettings.KeyName].TakenCount++;
+                        jobCounts[nPCTypeSettings.KeyName].TakenJobs.Add(npc.Job);
+                    }
+                }
+
+            var l = jobCounts.OrderBy(key => key.Key);
+
+            return l.ToDictionary((keyItem) => keyItem.Key, (valueItem) => valueItem.Value);
         }
     }
 }

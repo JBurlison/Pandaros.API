@@ -12,18 +12,18 @@ namespace Pandaros.API.Questing.BuiltinObjectives
 {
     public class JobsTakenObjective : IPandaQuestObjective
     {
-        public string JobPrintName { get; set; }
+        public string NpcTypeKey { get; set; }
         public string ObjectiveKey { get; set; }
         public float GoalCount { get; set; }
         public string LocalizationKey { get; set; }
         public LocalizationHelper LocalizationHelper { get; set; }
 
-        public JobsTakenObjective(string key, string jobPrintName, int goalCount, string localizationKey = null, LocalizationHelper localizationHelper = null)
+        public JobsTakenObjective(string key, string npcTypeKey, int goalCount, string localizationKey = null, LocalizationHelper localizationHelper = null)
         {
             ObjectiveKey = key;
             LocalizationHelper = localizationHelper;
             LocalizationKey = localizationKey;
-            JobPrintName = jobPrintName;
+            NpcTypeKey = npcTypeKey;
             GoalCount = goalCount;
 
             if (LocalizationHelper == null)
@@ -36,14 +36,14 @@ namespace Pandaros.API.Questing.BuiltinObjectives
         public string GetObjectiveProgressText(IPandaQuest quest, Colony colony, Players.Player player)
         {
             var formatStr = LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
-            var jobs = ColonyTool.GetJobCounts(colony);
+            var jobs = colony.GetJobCounts();
             var jobCount = 0;
 
-            if (jobs.TryGetValue(JobPrintName, out var counts))
+            if (jobs.TryGetValue(NpcTypeKey, out var counts))
                 jobCount = counts.TakenCount;
 
             if (formatStr.Count(c => c == '{') == 3)
-                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), jobCount, GoalCount, LocalizationHelper.LocalizeOrDefault(JobPrintName, player));
+                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), jobCount, GoalCount, LocalizationHelper.LocalizeOrDefault(NpcTypeKey, player));
             else
                 return formatStr;
         }
@@ -55,7 +55,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
 
             var jobs = ColonyTool.GetJobCounts(colony);
 
-            if (jobs.TryGetValue(JobPrintName, out var counts))
+            if (jobs.TryGetValue(NpcTypeKey, out var counts))
             {
                 if (counts.TakenCount == 0)
                     return 0;
