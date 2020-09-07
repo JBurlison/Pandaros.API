@@ -11,6 +11,8 @@ namespace Pandaros.API.Questing.Models
     {
         string ItemIconName { get; set; }
         string QuestKey { get; }
+        string QuestCompleteSoundKey { get; }
+        string QuestAvailableSoundKey { get; }
         Dictionary<string, IPandaQuestObjective> QuestObjectives { get; set; }
         List<IPandaQuestReward> QuestRewards { get; set; }
         List<IPandaQuestPrerequisite> QuestPrerequisites { get; set; }

@@ -35,6 +35,22 @@ namespace Pandaros.API.Extender.Providers
 
                     sb.Append(pandaResearch.name + ", ");
                     pandaResearch.BeforeRegister();
+
+                    foreach (var item in research.Recipes)
+                    {
+                        if (item.UnlockType == Science.ERecipeUnlockType.Recipe)
+                        {
+                            if (ServerManager.RecipeStorage.TryGetRecipe(new Recipes.RecipeKey(item.Identifier), out var recipe))
+                                ServerManager.RecipeStorage.AddScienceRequirement(recipe);
+                        }
+                        else
+                        {
+                            if (ServerManager.RecipeStorage.TryGetRecipes(item.Identifier, out var recipe))
+                                for (int r = 0; r < recipe.Count; r++)
+                                    ServerManager.RecipeStorage.AddScienceRequirement(recipe[r]);
+                        }
+                    }
+
                     research.Register();
                     pandaResearch.OnRegister();
                     i++;

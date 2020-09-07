@@ -28,11 +28,11 @@ namespace Pandaros.API
             int zMax = min.z < max.z ? max.z : min.z;
 
 
-            for (int Y = yMin; Y < yMax; Y++)
+            for (int Y = yMin - 1; Y < yMax; Y++)
             {
-                for (int Z = zMin; Z < zMax; Z++)
+                for (int Z = zMin - 1; Z < zMax; Z++)
                 {
-                    for (int X = xMin; X < xMax; X++)
+                    for (int X = xMin -1; X < xMax; X++)
                     {
                         var pos = new Vector3Int(X, Y, Z);
                         if (World.TryGetTypeAt(pos, out ItemTypes.ItemType worldType) && worldType != ColonyBuiltIn.ItemTypes.AIR)

@@ -33,6 +33,10 @@ namespace Pandaros.API.Questing.BuiltinQuests
         public virtual List<IPandaQuestReward> QuestRewards { get; set; }
         public virtual List<IPandaQuestPrerequisite> QuestPrerequisites { get; set; }
 
+        public virtual string QuestCompleteSoundKey { get; set; }
+
+        public virtual string QuestAvailableSoundKey { get; set; }
+
         public virtual bool CanRepeat(Colony colony)
         {
             return Repeatable;

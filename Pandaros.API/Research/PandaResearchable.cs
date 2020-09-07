@@ -17,6 +17,7 @@ namespace Pandaros.API.Research
         public override string RequiredScienceBiome { get; set; }
         public int IterationCount { get; private set; }
         public event EventHandler<ResearchCompleteEventArgs> ResearchComplete;
+        public List<RecipeUnlock> Recipes { get { return RecipeUnlocks; } }
 
         public PandaResearchable(IPandaResearch pandaResearch, int currentLevel)
         {
