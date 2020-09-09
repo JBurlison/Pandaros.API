@@ -126,6 +126,7 @@
     <Compile Include="Extender\Providers\PlayerRecipeProvider.cs" />
     <Compile Include="Extender\Providers\RecipeProvider.cs" />
     <Compile Include="Extender\Providers\ResearchProvider.cs" />
+    <Compile Include="Extender\Providers\TutorialProvider.cs" />
     <Compile Include="Extender\Providers\RoamingJobObjectiveProvider.cs" />
     <Compile Include="Extender\Providers\SimpleRestProvider.cs" />
     <Compile Include="Extender\Providers\TextureMappingProvider.cs" />
@@ -267,6 +268,10 @@
     <Compile Include="StatusIcons\Waiting.cs" />
     <Compile Include="Transportation\Train.cs" />
     <Compile Include="Transportation\TrainTransport.cs" />
+    <Compile Include="Tutorials\Models\ITutorial.cs" />
+    <Compile Include="Tutorials\Models\ITutorialPrerequisite.cs" />
+    <Compile Include="Tutorials\Prerequisites\ItemPlacedPrerequisite.cs" />
+    <Compile Include="Tutorials\TutorialFactory.cs" />
     <Compile Include="WorldGen\Ore.cs" />
     <Compile Include="WorldGen\PandarosSpawnPoint.cs" />
     <Compile Include="WorldGen\WorldHelper.cs" />
@@ -331,7 +336,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Tutorials\TutorialPrerequisites\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>pdb2mdb.exe Pandaros.API.dll</PostBuildEvent>
