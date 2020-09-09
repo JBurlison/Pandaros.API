@@ -239,6 +239,7 @@
     <Compile Include="CSConsoleAndFileLogger.cs" />
     <Compile Include="APILogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Questing\BuiltinObjectives\BlockPlacedObjective.cs" />
     <Compile Include="Questing\BuiltinObjectives\FoodStoredObjective.cs" />
     <Compile Include="Questing\BuiltinObjectives\JobsTakenObjective.cs" />
     <Compile Include="Questing\BuiltinObjectives\ItemsInStockpileObjective.cs" />

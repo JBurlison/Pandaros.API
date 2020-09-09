@@ -21,6 +21,7 @@
           "ColonistCountObjective": "{0} out of {1} colonists",
           "JobsTakenObjective": "{0} out of {1} {2} jobs taken",
           "ItemsInStockpileObjective": "{0} out of {1} {2} in stockpile",
+          "BlockPlacedObjective": "{0} out of {1} {2} block(s) placed",
           "ActiveQuests": "Active Quests",
           "RequrementsNotMet": "Requirements Not Met Quests",
           "RecipeUnlockReward": "Unlock Recipe: {0}",
