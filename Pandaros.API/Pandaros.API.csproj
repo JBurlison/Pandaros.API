@@ -244,6 +244,8 @@
     <Compile Include="Questing\BuiltinObjectives\ItemsInStockpileObjective.cs" />
     <Compile Include="Questing\BuiltinObjectives\ColonistCountObjective.cs" />
     <Compile Include="Questing\BuiltinObjectives\CraftObjective.cs" />
+    <Compile Include="Questing\BuiltinPrerequisites\SciencePrerequisite.cs" />
+    <Compile Include="Questing\BuiltinPrerequisites\QuestPrerequisite.cs" />
     <Compile Include="Questing\BuiltinQuests\GenericQuest.cs" />
     <Compile Include="Questing\BuiltinRewards\RecipeUnlockReward.cs" />
     <Compile Include="Questing\BuiltinRewards\TextReward.cs" />

@@ -26,7 +26,10 @@
           "RecipeUnlockReward": "Unlock Recipe: {0}",
           "Objectives": "Objectives",
           "Rewards": "Rewards",
-          "Done": "Complete"
+          "Done": "Complete",
+          "QuestPrerequisite": "Required Quest to be complete: {0}",
+          "SciencePrerequisite": "Required Science to be complete: {0}",
+          "QuestNotFound": "Quest Not Found: {0}"
         },
         "Settlers": {
           "SkillChance": "Additional Skill chance: {0}%"
