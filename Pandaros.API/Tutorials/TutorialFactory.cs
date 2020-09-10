@@ -59,6 +59,7 @@ namespace Pandaros.API.Tutorials
 
                 if (!hasCompleted && (tut.Prerequisites.Count == 0 || tut.Prerequisites.All(pre => pre.MeetsCondition(p))))
                 {
+                    ps.Tutorials[tut.Name] = true;
                     var menu = tut.ShowTutorial(p);
                     menu.Items.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".cancelalltorials", new LabelData(_localizationHelper.LocalizeOrDefault("CancelTutorials", p)), 200, 30, ButtonCallback.EOnClickActions.ClosePopup));
                     NetworkMenuManager.SendServerPopup(p, menu);
