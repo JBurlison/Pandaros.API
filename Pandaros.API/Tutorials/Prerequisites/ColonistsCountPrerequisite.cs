@@ -9,24 +9,23 @@ using System.Threading.Tasks;
 
 namespace Pandaros.API.Tutorials.Prerequisites
 {
-    public class ItemPlacedPrerequisite : ITutorialPrerequisite
+    public class ColonistsCountPrerequisite : ITutorialPrerequisite
     {
-        public string Item { get; set; }
         public int Count { get; set; }
 
-        public string Name => nameof(ItemPlacedPrerequisite);
+        public string Name => nameof(ColonistsCountPrerequisite);
 
-        public ItemPlacedPrerequisite(string item, int count)
+        public ColonistsCountPrerequisite(int count)
         {
-            Item = item;
             Count = count;
         }
 
         public bool MeetsCondition(Players.Player p)
         {
-            var ps = PlayerState.GetPlayerState(p);
+            if (p.ActiveColony == null)
+                return false;
 
-            return ps.ItemsPlaced.TryGetValue(ItemId.GetItemId(Item), out var itemsPlaced) && itemsPlaced >= Count;
+            return p.ActiveColony.FollowerCount >= Count;
         }
     }
 }

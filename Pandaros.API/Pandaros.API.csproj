@@ -270,6 +270,8 @@
     <Compile Include="Transportation\TrainTransport.cs" />
     <Compile Include="Tutorials\Models\ITutorial.cs" />
     <Compile Include="Tutorials\Models\ITutorialPrerequisite.cs" />
+    <Compile Include="Tutorials\Prerequisites\QuestPrerequisite.cs" />
+    <Compile Include="Tutorials\Prerequisites\ColonistsCountPrerequisite.cs" />
     <Compile Include="Tutorials\Prerequisites\ItemPlacedPrerequisite.cs" />
     <Compile Include="Tutorials\TutorialFactory.cs" />
     <Compile Include="WorldGen\Ore.cs" />
@@ -336,9 +338,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tutorials\TutorialPrerequisites\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>pdb2mdb.exe Pandaros.API.dll</PostBuildEvent>

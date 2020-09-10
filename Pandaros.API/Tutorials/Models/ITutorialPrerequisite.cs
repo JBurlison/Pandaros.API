@@ -8,6 +8,7 @@ namespace Pandaros.API.Tutorials.Models
 {
     public interface ITutorialPrerequisite
     {
+        string Name { get; }
         bool MeetsCondition(Players.Player p);
     }
 }
