@@ -13,6 +13,7 @@ namespace Pandaros.API.Questing.Models
         string QuestKey { get; }
         string QuestCompleteSoundKey { get; }
         string QuestAvailableSoundKey { get; }
+        bool HideQuest { get; }
         Dictionary<string, IPandaQuestObjective> QuestObjectives { get; set; }
         List<IPandaQuestReward> QuestRewards { get; set; }
         List<IPandaQuestPrerequisite> QuestPrerequisites { get; set; }

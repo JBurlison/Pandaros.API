@@ -93,7 +93,9 @@ namespace Pandaros.API.Questing
 
             foreach (var qpq in QuestPool.OrderBy(key => key.Key))
             {
-                if (!ActiveQuests[data.Player.ActiveColony].Contains(qpq.Key) && !CompletedQuests[data.Player.ActiveColony].Contains(qpq.Key))
+                if (!ActiveQuests[data.Player.ActiveColony].Contains(qpq.Key) && 
+                    !CompletedQuests[data.Player.ActiveColony].Contains(qpq.Key) &&
+                    !qpq.Value.HideQuest)
                 {
                     var quest = qpq.Value;
 

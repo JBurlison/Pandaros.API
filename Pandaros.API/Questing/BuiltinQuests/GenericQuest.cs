@@ -37,6 +37,8 @@ namespace Pandaros.API.Questing.BuiltinQuests
 
         public virtual string QuestAvailableSoundKey { get; set; }
 
+        public virtual bool HideQuest { get; }
+
         public virtual bool CanRepeat(Colony colony)
         {
             return Repeatable;
