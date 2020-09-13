@@ -43,8 +43,8 @@ namespace Pandaros.API.Questing.BuiltinObjectives
 
             var formatStr = LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
 
-            if (formatStr.Count(c => c == '{') == 2)
-                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), CurrentCraftCount[colony.ColonyID], CraftCount);
+            if (formatStr.Count(c => c == '{') == 3)
+                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), CurrentCraftCount[colony.ColonyID], CraftCount, LocalizationHelper.LocalizeOrDefault(Item, player));
             else
                 return formatStr;
         }
