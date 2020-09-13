@@ -43,7 +43,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
             ps.ItemsPlaced.TryGetValue(ItemId.GetItemId(BlockName), out itemsPlaced);
 
             if (formatStr.Count(c => c == '{') == 3)
-                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player),   BlocksGoal, BlockName);
+                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), itemsPlaced, BlocksGoal, BlockName);
             else
                 return formatStr;
         }
