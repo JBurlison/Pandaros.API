@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using NetworkUI.Items;
 using ModLoaderInterfaces;
 using System.Media;
+using UnityEngine.UI;
 
 namespace Pandaros.API.Questing
 {
@@ -45,7 +46,12 @@ namespace Pandaros.API.Questing
             menu.Width = 1000;
             menu.Height = 600;
             menu.ForceClosePopups = true;
-            menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("ActiveQuests", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
+            menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
+            {
+                (new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenu", new LabelData(_localizationHelper.LocalizeOrDefault("ActiveQuests", data.Player))), 310),
+                (new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenuInactive", new LabelData(_localizationHelper.LocalizeOrDefault("RequrementsNotMet", data.Player))), 310),
+                (new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenuCompleted", new LabelData(_localizationHelper.LocalizeOrDefault("Done", data.Player))), 310)
+            }));
 
             if (!ActiveQuests.ContainsKey(data.Player.ActiveColony))
                 ActiveQuests.Add(data.Player.ActiveColony, new HashSet<string>());
@@ -53,101 +59,112 @@ namespace Pandaros.API.Questing
             if (!CompletedQuests.ContainsKey(data.Player.ActiveColony))
                 CompletedQuests.Add(data.Player.ActiveColony, new HashSet<string>());
 
-            foreach (var questKey in ActiveQuests[data.Player.ActiveColony])
+            if (data.ButtonIdentifier == GameInitializer.NAMESPACE + ".QuestingMainMenu")
             {
-                if (QuestPool.TryGetValue(questKey, out var quest))
+                menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("ActiveQuests", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
+
+                foreach (var questKey in ActiveQuests[data.Player.ActiveColony])
                 {
-                    menu.Items.Add(new Line(UnityEngine.Color.white));
-                    menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
+                    if (QuestPool.TryGetValue(questKey, out var quest))
+                    {
+                        menu.Items.Add(new EmptySpace(5));
+                        menu.Items.Add(new Line(UnityEngine.Color.white));
+                        menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
                     {
                         (new ItemIcon(quest.ItemIconName), 80),
                         (new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)), 920)
                     }));
-                    menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
-                    menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Objectives", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
-                    
-                    if (quest.QuestObjectives != null)
-                    foreach (var req in quest.QuestObjectives)
-                    {
-                        var questObj = new List<ValueTuple<IItem, int>>();
-                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.Value.GetObjectiveProgressText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 700));
-                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(Math.Round(req.Value.GetProgress(quest, data.Player.ActiveColony), 2) * 100 + "%", UnityEngine.Color.white)), 200));
-                        menu.Items.Add(new HorizontalRow(questObj));
-                    }
+                        menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
+                        menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Objectives", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
 
-                    menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
+                        if (quest.QuestObjectives != null)
+                            foreach (var req in quest.QuestObjectives)
+                            {
+                                var questObj = new List<ValueTuple<IItem, int>>();
+                                questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.Value.GetObjectiveProgressText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 700));
+                                questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(Math.Round(req.Value.GetProgress(quest, data.Player.ActiveColony), 2) * 100 + "%", UnityEngine.Color.white)), 200));
+                                menu.Items.Add(new HorizontalRow(questObj));
+                            }
 
-                    if (quest.QuestRewards != null)
-                    foreach (var reward in quest.QuestRewards)
-                    {
-                        var itemList = new List<ValueTuple<IItem, int>>();
-                        itemList.Add((new ItemIcon(reward.ItemIconName), 100));
-                        itemList.Add((new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 800));
-                        menu.Items.Add(new HorizontalRow(itemList));
+                        menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
+
+                        if (quest.QuestRewards != null)
+                            foreach (var reward in quest.QuestRewards)
+                            {
+                                var itemList = new List<ValueTuple<IItem, int>>();
+                                itemList.Add((new ItemIcon(reward.ItemIconName), 100));
+                                itemList.Add((new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 800));
+                                menu.Items.Add(new HorizontalRow(itemList));
+                            }
                     }
                 }
             }
 
-            menu.Items.Add(new Line(UnityEngine.Color.white));
-            menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("RequrementsNotMet", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
-
-            foreach (var qpq in QuestPool.OrderBy(key => key.Key))
+            if (data.ButtonIdentifier.Contains(".QuestingMainMenuInactive"))
             {
-                if (!ActiveQuests[data.Player.ActiveColony].Contains(qpq.Key) && 
-                    !CompletedQuests[data.Player.ActiveColony].Contains(qpq.Key) &&
-                    !qpq.Value.HideQuest)
-                {
-                    var quest = qpq.Value;
+                menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("RequrementsNotMet", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
 
-                    menu.Items.Add(new Line(UnityEngine.Color.white, 2));
-                    menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
+                foreach (var qpq in QuestPool.OrderBy(key => key.Key))
+                {
+                    if (!ActiveQuests[data.Player.ActiveColony].Contains(qpq.Key) &&
+                        !CompletedQuests[data.Player.ActiveColony].Contains(qpq.Key) &&
+                        !qpq.Value.HideQuest)
+                    {
+                        var quest = qpq.Value;
+                        menu.Items.Add(new EmptySpace(5));
+                        menu.Items.Add(new Line(UnityEngine.Color.white, 2));
+                        menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
                     {
                         (new ItemIcon(quest.ItemIconName), 80),
                         (new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)), 920)
                     }));
-                    menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
+                        menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
 
-                    if (quest.QuestPrerequisites != null)
-                    foreach (var req in quest.QuestPrerequisites)
-                    {
-                        var questObj = new List<ValueTuple<IItem, int>>();
-                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.GetPrerequisiteText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 700));
-                        questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Done", data.Player) + ": " + req.MeetsPrerequisite(quest, data.Player.ActiveColony), UnityEngine.Color.white)), 200));
-                        menu.Items.Add(new HorizontalRow(questObj));
-                    }
+                        if (quest.QuestPrerequisites != null)
+                            foreach (var req in quest.QuestPrerequisites)
+                            {
+                                var questObj = new List<ValueTuple<IItem, int>>();
+                                questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.GetPrerequisiteText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 700));
+                                questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Done", data.Player) + ": " + req.MeetsPrerequisite(quest, data.Player.ActiveColony), UnityEngine.Color.white)), 200));
+                                menu.Items.Add(new HorizontalRow(questObj));
+                            }
 
-                    menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
+                        menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
 
-                    foreach (var reward in quest.QuestRewards)
-                        menu.Items.Add(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
-                }
-            }
-
-            menu.Items.Add(new Line(UnityEngine.Color.white));
-            menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Done", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
-
-            foreach (var questKey in CompletedQuests[data.Player.ActiveColony])
-            {
-                if (QuestPool.TryGetValue(questKey, out var quest))
-                {
-                    menu.Items.Add(new Line(UnityEngine.Color.white));
-                    menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
-                    {
-                        (new ItemIcon(quest.ItemIconName), 80),
-                        (new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)), 920)
-                    }));
-                    menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
-
-                    menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
-
-                    if (quest.QuestRewards != null)
                         foreach (var reward in quest.QuestRewards)
-                        {
-                            var itemList = new List<ValueTuple<IItem, int>>();
-                            itemList.Add((new ItemIcon(reward.ItemIconName), 100));
-                            itemList.Add((new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 800));
-                            menu.Items.Add(new HorizontalRow(itemList));
-                        }
+                            menu.Items.Add(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
+                    }
+                }
+            }
+
+            if (data.ButtonIdentifier.Contains(".QuestingMainMenuCompleted"))
+            {
+                menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Done", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
+
+                foreach (var questKey in CompletedQuests[data.Player.ActiveColony])
+                {
+                    if (QuestPool.TryGetValue(questKey, out var quest))
+                    {
+                        menu.Items.Add(new EmptySpace(5));
+                        menu.Items.Add(new Line(UnityEngine.Color.white));
+                        menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
+                    {
+                        (new ItemIcon(quest.ItemIconName), 80),
+                        (new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)), 920)
+                    }));
+                        menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
+
+                        menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
+
+                        if (quest.QuestRewards != null)
+                            foreach (var reward in quest.QuestRewards)
+                            {
+                                var itemList = new List<ValueTuple<IItem, int>>();
+                                itemList.Add((new ItemIcon(reward.ItemIconName), 100));
+                                itemList.Add((new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 800));
+                                menu.Items.Add(new HorizontalRow(itemList));
+                            }
+                    }
                 }
             }
 

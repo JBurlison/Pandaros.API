@@ -23,7 +23,7 @@
           "ItemsInStockpileObjective": "{0} out of {1} {2} in stockpile",
           "BlockPlacedObjective": "{0} out of {1} {2} block(s) placed",
           "ActiveQuests": "Active Quests",
-          "RequrementsNotMet": "Requirements Not Met Quests",
+          "RequrementsNotMet": "Requirements Not Met",
           "RecipeUnlockReward": "Unlock Recipe: {0}",
           "Objectives": "Objectives",
           "Rewards": "Rewards",
