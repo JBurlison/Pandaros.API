@@ -26,6 +26,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
             LocalizationHelper = localizationHelper;
             LocalizationKey = localizationKey;
             ItemName = jobName;
+            GoalCount = goalCount;
 
             if (LocalizationHelper == null)
                 LocalizationHelper = new LocalizationHelper(GameInitializer.NAMESPACE, "Quests");
