@@ -200,53 +200,5 @@ namespace Pandaros.API.Jobs.Roaming
                 TargetObjective           = null;
             }
         }
-
-        public override NPCBase.NPCGoal CalculateGoal(ref NPCBase.NPCState state)
-        {
-            return CalculateGoal(ref state, true);
-        }
-
-        public override void OnNPCAtStockpile(ref NPCBase.NPCState state)
-        {
-            ActionsPreformed = 0;
-            state.SetCooldown(5);
-            base.OnNPCAtStockpile(ref state);
-        }
-
-        public NPCBase.NPCGoal CalculateGoal(ref NPCBase.NPCState state, bool sleepAtNight)
-        {
-            var nPCGoal = NPCBase.NPCGoal.Job;
-
-            if (ActionsPreformed > 6)
-                nPCGoal = NPCBase.NPCGoal.Stockpile;
-            else if (sleepAtNight && !TimeCycle.IsDay)
-            {
-                nPCGoal = NPCBase.NPCGoal.Bed;
-
-                if (TargetObjective != null)
-                {
-                    TargetObjective.JobRef = null;
-                    TargetObjective = null;
-                }
-            }
-            else if (TimeCycle.IsDay && !sleepAtNight)
-            {
-                nPCGoal = NPCBase.NPCGoal.Bed;
-                if (TargetObjective != null)
-                {
-                    TargetObjective.JobRef = null;
-                    TargetObjective = null;
-                }
-            }
-
-            if (nPCGoal != LastNPCGoal)
-            {
-                Settings.OnGoalChanged(this, LastNPCGoal, nPCGoal);
-                LastNPCGoal = nPCGoal;
-            }
-
-            return nPCGoal;
-        }
-       
     }
 }

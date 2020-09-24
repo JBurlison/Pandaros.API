@@ -10,8 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using static AI.PathFinder;
 using static AI.PathingManager;
-using static AI.PathingManager.PathFinder;
 using Random = Pipliz.Random;
 using Time = Pipliz.Time;
 

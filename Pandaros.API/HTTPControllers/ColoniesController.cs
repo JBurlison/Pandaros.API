@@ -186,14 +186,12 @@ namespace Pandaros.API.HTTPControllers
             return new NPCModel()
             {
                 FoodHoursCarried = follower.FoodHoursCarried,
-                GoalPosition = new SerializableVector3(follower.UsedPath.path?.Goal.Vector),
                 Health = follower.health,
                 Id = follower.ID,
                 NpcTypeJobId = follower.Job.NPCType.Type,
                 NPCInventory = follower.Inventory,
                 Position = new SerializableVector3(follower.Position),
-                ColonistInventory = ColonistInventory.Get(follower),
-                BedPosition = new SerializableVector3(follower.UsedBedLocation)
+                ColonistInventory = ColonistInventory.Get(follower)
             };
         }
 

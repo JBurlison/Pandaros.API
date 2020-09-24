@@ -3,8 +3,8 @@ using Pandaros.API.Entities;
 using Pipliz;
 using System.Collections.Generic;
 using System.Linq;
+using static AI.PathFinder;
 using static AI.PathingManager;
-using static AI.PathingManager.PathFinder;
 
 namespace Pandaros.API.Monsters
 {
