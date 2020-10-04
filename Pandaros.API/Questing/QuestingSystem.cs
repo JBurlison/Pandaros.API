@@ -13,6 +13,7 @@ using NetworkUI.Items;
 using ModLoaderInterfaces;
 using System.Media;
 using UnityEngine.UI;
+using Pandaros.API.Gui;
 
 namespace Pandaros.API.Questing
 {
@@ -291,6 +292,7 @@ namespace Pandaros.API.Questing
                             }
 
                             PandaChat.Send(colony, _localizationHelper, "NewQuestAvailable", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
+                            Notifications.IssueNotification(colony, _localizationHelper, "NewQuestAvailable", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
                         }
                     }
 
@@ -307,6 +309,7 @@ namespace Pandaros.API.Questing
                         if (allComplete)
                         {
                             PandaChat.Send(colony, _localizationHelper, "QuestComplete", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
+                            Notifications.IssueNotification(colony, _localizationHelper, "QuestComplete", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
 
                             if (!string.IsNullOrEmpty(quest.Value.QuestCompleteSoundKey))
                             {

@@ -17,6 +17,11 @@ namespace Pandaros.API.localization
             Namespace = modNamespace;
         }
 
+        public string LocalizeOrDefault(string key, Players.Player p, params string[] args)
+        {
+            return string.Format(LocalizeOrDefault(key, p), PandaChat.LocalizeArgs(p, this, args));
+        }
+
         public string LocalizeOrDefault(string key, Players.Player p)
         {
             if (p.ConnectionState != Players.EConnectionState.Connected)

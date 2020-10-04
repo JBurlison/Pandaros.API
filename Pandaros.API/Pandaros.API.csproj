@@ -135,6 +135,7 @@
     <Compile Include="ExtentionMethods.cs" />
     <Compile Include="GameDifficulty.cs" />
     <Compile Include="GameInitializer.cs" />
+    <Compile Include="Gui\Notifications.cs" />
     <Compile Include="Help\UIManager.cs" />
     <Compile Include="HTTPControllers\APIController.cs" />
     <Compile Include="HTTPControllers\ImageController.cs" />

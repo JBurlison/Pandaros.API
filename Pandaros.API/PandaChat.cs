@@ -233,6 +233,7 @@ namespace Pandaros.API
 
         public static string[] LocalizeArgs(Players.Player p, localization.LocalizationHelper localizationHelper, params string[] args)
         {
+            if (args != null)
             for (int i = 0; i < args.Length; i++)
             {
                 args[i] = localizationHelper.LocalizeOrDefault(args[i], p);
