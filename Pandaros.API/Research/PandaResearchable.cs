@@ -61,7 +61,7 @@ namespace Pandaros.API.Research
                     RecipeUnlocks.AddRange(listUnlocks);
 
                 List<(string, RecipeUnlockClient.EType)> additionalUnlocks;
-                if (pandaResearch.Unlocks != null && (pandaResearch.AdditionalUnlocks.TryGetValue(currentLevel, out additionalUnlocks) || pandaResearch.AdditionalUnlocks.TryGetValue(0, out additionalUnlocks)))
+                if (pandaResearch.AdditionalUnlocks != null && (pandaResearch.AdditionalUnlocks.TryGetValue(currentLevel, out additionalUnlocks) || pandaResearch.AdditionalUnlocks.TryGetValue(0, out additionalUnlocks)))
                     AdditionalClientUnlocks.AddRange(additionalUnlocks.Select(tuple =>
                         {
                             if (tuple.Item2 == RecipeUnlockClient.EType.Recipe)
