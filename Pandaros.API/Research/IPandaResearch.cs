@@ -10,6 +10,7 @@ namespace Pandaros.API.Research
         string IconDirectory { get; }
         Dictionary<int, List<InventoryItem>> RequiredItems { get; }
         Dictionary<int, List<IResearchableCondition>> Conditions { get; }
+        Dictionary<int, List<(string, RecipeUnlockClient.EType)>> AdditionalUnlocks { get; }
         Dictionary<int, List<RecipeUnlock>> Unlocks { get; }
         Dictionary<int, List<string>> Dependancies { get; }
         int NumberOfLevels { get; }

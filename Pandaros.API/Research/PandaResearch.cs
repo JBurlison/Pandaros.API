@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Science;
+using Shared;
 
 namespace Pandaros.API.Research
 {
@@ -17,6 +18,8 @@ namespace Pandaros.API.Research
 
         public virtual Dictionary<int, List<IResearchableCondition>> Conditions { get; }
 
+        public virtual Dictionary<int, List<(string, RecipeUnlockClient.EType)>> AdditionalUnlocks { get; }
+
         public virtual Dictionary<int, List<RecipeUnlock>> Unlocks { get; }
 
         public virtual Dictionary<int, List<string>> Dependancies { get; }
@@ -28,6 +31,7 @@ namespace Pandaros.API.Research
         public virtual int BaseIterationCount { get; } = 10;
 
         public virtual bool AddLevelToName { get; } = true;
+
 
         public virtual void BeforeRegister()
         {

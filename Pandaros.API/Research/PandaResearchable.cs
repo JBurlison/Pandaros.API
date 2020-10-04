@@ -24,6 +24,7 @@ namespace Pandaros.API.Research
             Conditions = new List<IResearchableCondition>();
             RecipeUnlocks = new List<RecipeUnlock>();
             Dependencies = new List<string>();
+            AdditionalClientUnlocks = new List<RecipeUnlockClient>();
 
             try
             {
@@ -58,6 +59,32 @@ namespace Pandaros.API.Research
                 List<RecipeUnlock> listUnlocks;
                 if (pandaResearch.Unlocks != null && (pandaResearch.Unlocks.TryGetValue(currentLevel, out listUnlocks) || pandaResearch.Unlocks.TryGetValue(0, out listUnlocks)))
                     RecipeUnlocks.AddRange(listUnlocks);
+
+                List<(string, RecipeUnlockClient.EType)> additionalUnlocks;
+                if (pandaResearch.Unlocks != null && (pandaResearch.AdditionalUnlocks.TryGetValue(currentLevel, out additionalUnlocks) || pandaResearch.AdditionalUnlocks.TryGetValue(0, out additionalUnlocks)))
+                    AdditionalClientUnlocks.AddRange(additionalUnlocks.Select(tuple =>
+                        {
+                            if (tuple.Item2 == RecipeUnlockClient.EType.Recipe)
+                            {
+                                return new RecipeUnlockClient
+                                {
+                                    Payload = new Recipes.RecipeKey(tuple.Item1).Index,
+                                    UnlockType = tuple.Item2
+                                };
+                            }
+                            else if (tuple.Item2 == RecipeUnlockClient.EType.NPCType)
+                            {
+                                return new RecipeUnlockClient
+                                {
+                                    Payload = NPC.NPCType.GetByKeyNameOrDefault(tuple.Item1).Type,
+                                    UnlockType = tuple.Item2
+                                };
+                            }
+                            else
+                            {
+                                throw new ArgumentOutOfRangeException("type", tuple.Item2, "unexpected recipe unlock type");
+                            }
+                        }));
 
                 APILogger.LogToFile($"PandaResearch Added: {pandaResearch.name} Level {currentLevel}");
             }
