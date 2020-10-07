@@ -9,15 +9,15 @@ namespace Pandaros.API.ColonyManagement
     public static class StatsCache
     {
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnConstructTooltipUI, GameInitializer.NAMESPACE + ".ColonyManager.StatsCache.ConstructTooltip")]
-        static void ConstructTooltip(ConstructTooltipUIData data)
+        static void ConstructTooltip(Players.Player player, ConstructTooltipUIData data)
         {
             if (data.hoverType != Shared.ETooltipHoverType.Item ||
-                data.player.ID.type == NetworkID.IDType.Server ||
-                data.player.ID.type == NetworkID.IDType.Invalid ||
+                player.ID.type == NetworkID.IDType.Server ||
+                player.ID.type == NetworkID.IDType.Invalid ||
                 !ItemTypes.TryGetType(data.hoverItem, out var item))
                 return;
 
-            var ps = PlayerState.GetPlayerState(data.player);
+            var ps = PlayerState.GetPlayerState(player);
             var cs = ColonyState.GetColonyState(ps.Player.ActiveColony);
 
             if (ps != null)
