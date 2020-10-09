@@ -53,7 +53,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
             if (GoalCount == 0)
                 return 1;
 
-            var jobs = ColonyTool.GetJobCounts(colony);
+            var jobs = colony.GetJobCounts();
 
             if (jobs.TryGetValue(NpcTypeKey, out var counts))
             {
