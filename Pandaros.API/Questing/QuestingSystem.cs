@@ -40,7 +40,7 @@ namespace Pandaros.API.Questing
 
         public void OnPlayerPushedNetworkUIButton(ButtonPressCallbackData data)
         {
-            if (!data.ButtonIdentifier.Contains(".QuestingMainMenu") || data.Player.ActiveColony == null)
+            if (string.IsNullOrEmpty(data.ButtonIdentifier) || !data.ButtonIdentifier.Contains(".QuestingMainMenu") || data.Player.ActiveColony == null)
                 return;
 
             NetworkMenu menu = new NetworkMenu();
@@ -98,10 +98,15 @@ namespace Pandaros.API.Questing
                         if (quest.QuestRewards != null)
                             foreach (var reward in quest.QuestRewards)
                             {
-                                var itemList = new List<ValueTuple<IItem, int>>();
-                                itemList.Add((new ItemIcon(reward.ItemIconName), 100));
-                                itemList.Add((new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 800));
-                                menu.Items.Add(AddBackground(new HorizontalRow(itemList)));
+                                if (!string.IsNullOrEmpty(reward.ItemIconName))
+                                {
+                                    var itemList = new List<ValueTuple<IItem, int>>();
+                                    itemList.Add((new ItemIcon(reward.ItemIconName), 100));
+                                    itemList.Add((new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 800));
+                                    menu.Items.Add(AddBackground(new HorizontalRow(itemList)));
+                                }
+                                else
+                                    menu.Items.Add(AddBackground(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white))));
                             }
 
                         menu.Items.Add(AddBackground(new EmptySpace(5)));
@@ -176,10 +181,15 @@ namespace Pandaros.API.Questing
                         if (quest.QuestRewards != null)
                             foreach (var reward in quest.QuestRewards)
                             {
-                                var itemList = new List<ValueTuple<IItem, int>>();
-                                itemList.Add((new ItemIcon(reward.ItemIconName), 100));
-                                itemList.Add((new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 800));
-                                menu.Items.Add(AddBackground(new HorizontalRow(itemList)));
+                                if (!string.IsNullOrEmpty(reward.ItemIconName))
+                                {
+                                    var itemList = new List<ValueTuple<IItem, int>>();
+                                    itemList.Add((new ItemIcon(reward.ItemIconName), 100));
+                                    itemList.Add((new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 800));
+                                    menu.Items.Add(AddBackground(new HorizontalRow(itemList)));
+                                }
+                                else
+                                    menu.Items.Add(AddBackground(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white))));
                             }
 
                         menu.Items.Add(AddBackground(new EmptySpace(5)));
