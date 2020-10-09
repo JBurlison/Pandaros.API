@@ -150,7 +150,15 @@ namespace Pandaros.API.Questing
                         menu.Items.Add(AddBackground(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
 
                         foreach (var reward in quest.QuestRewards)
-                            menu.Items.Add(AddBackground(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white))));
+                            if (!string.IsNullOrEmpty(reward.ItemIconName))
+                            {
+                                var itemList = new List<ValueTuple<IItem, int>>();
+                                itemList.Add((new ItemIcon(reward.ItemIconName), 100));
+                                itemList.Add((new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 800));
+                                menu.Items.Add(AddBackground(new HorizontalRow(itemList)));
+                            }
+                            else
+                                menu.Items.Add(AddBackground(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white))));
 
                         menu.Items.Add(AddBackground(new EmptySpace(5)));
                     }
