@@ -14,6 +14,7 @@ using ModLoaderInterfaces;
 using System.Media;
 using UnityEngine.UI;
 using Pandaros.API.Gui;
+using System.Net.Http.Headers;
 
 namespace Pandaros.API.Questing
 {
@@ -46,7 +47,9 @@ namespace Pandaros.API.Questing
             menu.LocalStorage.SetAs("header", _localizationHelper.LocalizeOrDefault("Quests", data.Player));
             menu.Width = 1000;
             menu.Height = 600;
+            menu.SpacingBetweenItems = 0;
             menu.ForceClosePopups = true;
+           
             menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
             {
                 (new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenu", new LabelData(_localizationHelper.LocalizeOrDefault("ActiveQuests", data.Player))), 310),
@@ -68,15 +71,17 @@ namespace Pandaros.API.Questing
                 {
                     if (QuestPool.TryGetValue(questKey, out var quest))
                     {
-                        menu.Items.Add(new EmptySpace(5));
-                        menu.Items.Add(new Line(UnityEngine.Color.white));
-                        menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
-                    {
-                        (new ItemIcon(quest.ItemIconName), 80),
-                        (new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)), 920)
-                    }));
-                        menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
-                        menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Objectives", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
+                        AddQuestDivider(menu);
+                        menu.Items.Add(AddBackground(new HorizontalRow(new List<(IItem, int)>()
+                            {
+                                (new ItemIcon(quest.ItemIconName), 80),
+                                (new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)), 920)
+                            })));
+                        menu.Items.Add(AddBackground(new EmptySpace(5)));
+                        menu.Items.Add(AddBackground(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white))));
+
+                        AddQuestDescriptionDivider(menu);
+                        menu.Items.Add(AddBackground(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Objectives", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
 
                         if (quest.QuestObjectives != null)
                             foreach (var req in quest.QuestObjectives)
@@ -84,10 +89,11 @@ namespace Pandaros.API.Questing
                                 var questObj = new List<ValueTuple<IItem, int>>();
                                 questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.Value.GetObjectiveProgressText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 700));
                                 questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(Math.Round(req.Value.GetProgress(quest, data.Player.ActiveColony), 2) * 100 + "%", UnityEngine.Color.white)), 200));
-                                menu.Items.Add(new HorizontalRow(questObj));
+                                menu.Items.Add(AddBackground(new HorizontalRow(questObj)));
                             }
 
-                        menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
+                        AddQuestDescriptionDivider(menu);
+                        menu.Items.Add(AddBackground(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
 
                         if (quest.QuestRewards != null)
                             foreach (var reward in quest.QuestRewards)
@@ -95,8 +101,10 @@ namespace Pandaros.API.Questing
                                 var itemList = new List<ValueTuple<IItem, int>>();
                                 itemList.Add((new ItemIcon(reward.ItemIconName), 100));
                                 itemList.Add((new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 800));
-                                menu.Items.Add(new HorizontalRow(itemList));
+                                menu.Items.Add(AddBackground(new HorizontalRow(itemList)));
                             }
+
+                        menu.Items.Add(AddBackground(new EmptySpace(5)));
                     }
                 }
             }
@@ -112,28 +120,34 @@ namespace Pandaros.API.Questing
                         !qpq.Value.HideQuest)
                     {
                         var quest = qpq.Value;
-                        menu.Items.Add(new EmptySpace(5));
-                        menu.Items.Add(new Line(UnityEngine.Color.white, 2));
-                        menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
-                    {
-                        (new ItemIcon(quest.ItemIconName), 80),
-                        (new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)), 920)
-                    }));
-                        menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
+                        AddQuestDivider(menu);
+                        menu.Items.Add(AddBackground(new HorizontalRow(new List<(IItem, int)>()
+                            {
+                                (new ItemIcon(quest.ItemIconName), 80),
+                                (new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)), 920)
+                            })));
 
+                        menu.Items.Add(AddBackground(new EmptySpace(5)));
+                        menu.Items.Add(AddBackground(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white))));
+
+                        AddQuestDescriptionDivider(menu);
                         if (quest.QuestPrerequisites != null)
                             foreach (var req in quest.QuestPrerequisites)
                             {
                                 var questObj = new List<ValueTuple<IItem, int>>();
                                 questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.GetPrerequisiteText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 700));
                                 questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Done", data.Player) + ": " + req.MeetsPrerequisite(quest, data.Player.ActiveColony), UnityEngine.Color.white)), 200));
-                                menu.Items.Add(new HorizontalRow(questObj));
+                                menu.Items.Add(AddBackground(new HorizontalRow(questObj)));
                             }
 
-                        menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
+
+                        AddQuestDescriptionDivider(menu);
+                        menu.Items.Add(AddBackground(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
 
                         foreach (var reward in quest.QuestRewards)
-                            menu.Items.Add(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
+                            menu.Items.Add(AddBackground(new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white))));
+
+                        menu.Items.Add(AddBackground(new EmptySpace(5)));
                     }
                 }
             }
@@ -146,16 +160,18 @@ namespace Pandaros.API.Questing
                 {
                     if (QuestPool.TryGetValue(questKey, out var quest))
                     {
-                        menu.Items.Add(new EmptySpace(5));
-                        menu.Items.Add(new Line(UnityEngine.Color.white));
-                        menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
-                    {
-                        (new ItemIcon(quest.ItemIconName), 80),
-                        (new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)), 920)
-                    }));
-                        menu.Items.Add(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white)));
+                        AddQuestDivider(menu);
+                        menu.Items.Add(AddBackground(new HorizontalRow(new List<(IItem, int)>()
+                            {
+                                (new ItemIcon(quest.ItemIconName), 80),
+                                (new Label(new LabelData(quest.GetQuestTitle(data.Player.ActiveColony, data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 26)), 920)
+                            })));
 
-                        menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20)));
+                        menu.Items.Add(AddBackground(new EmptySpace(5)));
+                        menu.Items.Add(AddBackground(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white))));
+
+                        AddQuestDescriptionDivider(menu);
+                        menu.Items.Add(AddBackground(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
 
                         if (quest.QuestRewards != null)
                             foreach (var reward in quest.QuestRewards)
@@ -163,13 +179,34 @@ namespace Pandaros.API.Questing
                                 var itemList = new List<ValueTuple<IItem, int>>();
                                 itemList.Add((new ItemIcon(reward.ItemIconName), 100));
                                 itemList.Add((new Label(new LabelData(reward.GetRewardText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 800));
-                                menu.Items.Add(new HorizontalRow(itemList));
+                                menu.Items.Add(AddBackground(new HorizontalRow(itemList)));
                             }
+
+                        menu.Items.Add(AddBackground(new EmptySpace(5)));
                     }
                 }
             }
 
             NetworkMenuManager.SendServerPopup(data.Player, menu);
+        }
+
+        private static void AddQuestDivider(NetworkMenu menu)
+        {
+           menu.Items.Add(new EmptySpace(10));
+            //menu.Items.Add(new Line(UnityEngine.Color.white, 2, 800, 100));
+           menu.Items.Add(AddBackground(new EmptySpace(5)));
+        }
+
+        private static void AddQuestDescriptionDivider(NetworkMenu menu)
+        {
+            menu.Items.Add(AddBackground(new EmptySpace(15)));
+            menu.Items.Add(AddBackground(new Line(new UnityEngine.Color(191, 171, 140), 2, 200, 0)));
+            menu.Items.Add(AddBackground(new EmptySpace(10)));
+        }
+
+        private static IItem AddBackground(IItem item)
+        {
+            return new BackgroundColor(item, -1, 30, 0, 0, 4, 0, new UnityEngine.Color32(96, 79, 73, 255));
         }
 
         public void OnLoadingColony(Colony c, JSONNode n)

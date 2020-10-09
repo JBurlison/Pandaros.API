@@ -77,8 +77,6 @@ namespace Pandaros.API.Monsters
             }
 
             NetworkUI.NetworkMenuManager.SendColonySettingsUI(player);
-            PandaChat.Send(player, _localizationHelper, "AdminDisabledBosses", ChatColor.red);
-            
 
             return true;
         }

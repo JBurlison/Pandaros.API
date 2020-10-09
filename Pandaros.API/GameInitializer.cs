@@ -44,7 +44,8 @@ namespace Pandaros.API
             WorldLoaded                 = true;
             SAVE_LOC                    = GAMEDATA_FOLDER + "savegames/" + ServerManager.WorldName + "/";
             StubColony = Colony.CreateStub(-99998);
-
+            StubColony.Name = "Pandaros.API.StubColony";
+            StubColony.Banners = new BlockEntities.Implementations.BannerTracker.Banner[0];
             APIConfiguration.Save();
         }
 
