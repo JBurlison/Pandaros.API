@@ -20,7 +20,7 @@ namespace Pandaros.API.Questing
 {
     public class QuestingSystem : IOnTimedUpdate, IOnConstructInventoryManageColonyUI, IOnLoadingColony, IOnSavingColony, IOnPlayerPushedNetworkUIButton
     {
-        static readonly Pandaros.API.localization.LocalizationHelper _localizationHelper = new localization.LocalizationHelper(GameInitializer.NAMESPACE, "Quests");
+        public static readonly Pandaros.API.localization.LocalizationHelper LocalizationHelper = new localization.LocalizationHelper(GameInitializer.NAMESPACE, "Quests");
         public static Dictionary<string, IPandaQuest> QuestPool { get; set; } = new Dictionary<string, IPandaQuest>();
         public static Dictionary<Colony, HashSet<string>> CompletedQuests { get; set; } = new Dictionary<Colony, HashSet<string>>();
         public static Dictionary<Colony, Dictionary<string, long>> NumberOfQuestsComplete { get; set; } = new Dictionary<Colony, Dictionary<string, long>>();
@@ -35,7 +35,7 @@ namespace Pandaros.API.Questing
         public void OnConstructInventoryManageColonyUI(Players.Player player, NetworkMenu networkMenu, (Table, Table) table)
         {
             if (QuestPool.Count != 0 && player.ActiveColony != null)
-                table.Item1.Rows.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenu", new LabelData(_localizationHelper.LocalizeOrDefault("Quests", player)), 200));
+                table.Item1.Rows.Add(new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenu", new LabelData(LocalizationHelper.LocalizeOrDefault("Quests", player)), 200));
         }
 
         public void OnPlayerPushedNetworkUIButton(ButtonPressCallbackData data)
@@ -44,7 +44,7 @@ namespace Pandaros.API.Questing
                 return;
 
             NetworkMenu menu = new NetworkMenu();
-            menu.LocalStorage.SetAs("header", _localizationHelper.LocalizeOrDefault("Quests", data.Player));
+            menu.LocalStorage.SetAs("header", LocalizationHelper.LocalizeOrDefault("Quests", data.Player));
             menu.Width = 1000;
             menu.Height = 600;
             menu.SpacingBetweenItems = 0;
@@ -52,9 +52,9 @@ namespace Pandaros.API.Questing
            
             menu.Items.Add(new HorizontalRow(new List<(IItem, int)>()
             {
-                (new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenu", new LabelData(_localizationHelper.LocalizeOrDefault("ActiveQuests", data.Player))), 310),
-                (new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenuInactive", new LabelData(_localizationHelper.LocalizeOrDefault("RequrementsNotMet", data.Player))), 310),
-                (new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenuCompleted", new LabelData(_localizationHelper.LocalizeOrDefault("Done", data.Player))), 310)
+                (new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenu", new LabelData(LocalizationHelper.LocalizeOrDefault("ActiveQuests", data.Player))), 310),
+                (new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenuInactive", new LabelData(LocalizationHelper.LocalizeOrDefault("RequrementsNotMet", data.Player))), 310),
+                (new ButtonCallback(GameInitializer.NAMESPACE + ".QuestingMainMenuCompleted", new LabelData(LocalizationHelper.LocalizeOrDefault("Done", data.Player))), 310)
             }));
 
             if (!ActiveQuests.ContainsKey(data.Player.ActiveColony))
@@ -65,7 +65,7 @@ namespace Pandaros.API.Questing
 
             if (data.ButtonIdentifier == GameInitializer.NAMESPACE + ".QuestingMainMenu")
             {
-                menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("ActiveQuests", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
+                menu.Items.Add(new Label(new LabelData(LocalizationHelper.LocalizeOrDefault("ActiveQuests", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
 
                 foreach (var questKey in ActiveQuests[data.Player.ActiveColony])
                 {
@@ -81,7 +81,7 @@ namespace Pandaros.API.Questing
                         menu.Items.Add(AddBackground(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white))));
 
                         AddQuestDescriptionDivider(menu);
-                        menu.Items.Add(AddBackground(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Objectives", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
+                        menu.Items.Add(AddBackground(new Label(new LabelData(LocalizationHelper.LocalizeOrDefault("Objectives", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
 
                         if (quest.QuestObjectives != null)
                             foreach (var req in quest.QuestObjectives)
@@ -93,7 +93,7 @@ namespace Pandaros.API.Questing
                             }
 
                         AddQuestDescriptionDivider(menu);
-                        menu.Items.Add(AddBackground(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
+                        menu.Items.Add(AddBackground(new Label(new LabelData(LocalizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
 
                         if (quest.QuestRewards != null)
                             foreach (var reward in quest.QuestRewards)
@@ -116,7 +116,7 @@ namespace Pandaros.API.Questing
 
             if (data.ButtonIdentifier.Contains(".QuestingMainMenuInactive"))
             {
-                menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("RequrementsNotMet", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
+                menu.Items.Add(new Label(new LabelData(LocalizationHelper.LocalizeOrDefault("RequrementsNotMet", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
 
                 foreach (var qpq in QuestPool.OrderBy(key => key.Key))
                 {
@@ -141,13 +141,13 @@ namespace Pandaros.API.Questing
                             {
                                 var questObj = new List<ValueTuple<IItem, int>>();
                                 questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(req.GetPrerequisiteText(quest, data.Player.ActiveColony, data.Player), UnityEngine.Color.white)), 700));
-                                questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Done", data.Player) + ": " + req.MeetsPrerequisite(quest, data.Player.ActiveColony), UnityEngine.Color.white)), 200));
+                                questObj.Add(ValueTuple.Create<IItem, int>(new Label(new LabelData(LocalizationHelper.LocalizeOrDefault("Done", data.Player) + ": " + req.MeetsPrerequisite(quest, data.Player.ActiveColony), UnityEngine.Color.white)), 200));
                                 menu.Items.Add(AddBackground(new HorizontalRow(questObj)));
                             }
 
 
                         AddQuestDescriptionDivider(menu);
-                        menu.Items.Add(AddBackground(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
+                        menu.Items.Add(AddBackground(new Label(new LabelData(LocalizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
 
                         foreach (var reward in quest.QuestRewards)
                             if (!string.IsNullOrEmpty(reward.ItemIconName))
@@ -167,7 +167,7 @@ namespace Pandaros.API.Questing
 
             if (data.ButtonIdentifier.Contains(".QuestingMainMenuCompleted"))
             {
-                menu.Items.Add(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Done", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
+                menu.Items.Add(new Label(new LabelData(LocalizationHelper.LocalizeOrDefault("Done", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 30)));
 
                 foreach (var questKey in CompletedQuests[data.Player.ActiveColony])
                 {
@@ -184,7 +184,7 @@ namespace Pandaros.API.Questing
                         menu.Items.Add(AddBackground(new Label(new LabelData(quest.GetQuestText(data.Player.ActiveColony, data.Player), UnityEngine.Color.white))));
 
                         AddQuestDescriptionDivider(menu);
-                        menu.Items.Add(AddBackground(new Label(new LabelData(_localizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
+                        menu.Items.Add(AddBackground(new Label(new LabelData(LocalizationHelper.LocalizeOrDefault("Rewards", data.Player), UnityEngine.Color.white, UnityEngine.TextAnchor.LowerLeft, 20))));
 
                         if (quest.QuestRewards != null)
                             foreach (var reward in quest.QuestRewards)
@@ -346,8 +346,8 @@ namespace Pandaros.API.Questing
                                         AudioManager.SendAudio(p.Position, quest.Value.QuestAvailableSoundKey);
                             }
 
-                            PandaChat.Send(colony, _localizationHelper, "NewQuestAvailable", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
-                            Notifications.IssueNotification(colony, _localizationHelper, "NewQuestAvailable", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
+                            PandaChat.Send(colony, LocalizationHelper, "NewQuestAvailable", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
+                            Notifications.IssueNotification(colony, LocalizationHelper, "NewQuestAvailable", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
                         }
                     }
 
@@ -363,8 +363,8 @@ namespace Pandaros.API.Questing
 
                         if (allComplete)
                         {
-                            PandaChat.Send(colony, _localizationHelper, "QuestComplete", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
-                            Notifications.IssueNotification(colony, _localizationHelper, "QuestComplete", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
+                            PandaChat.Send(colony, LocalizationHelper, "QuestComplete", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
+                            Notifications.IssueNotification(colony, LocalizationHelper, "QuestComplete", quest.Value.GetQuestTitle(colony, colony.Owners.FirstOrDefault()));
 
                             if (!string.IsNullOrEmpty(quest.Value.QuestCompleteSoundKey))
                             {

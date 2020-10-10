@@ -15,17 +15,11 @@ namespace Pandaros.API.Questing.BuiltinObjectives
         public string ObjectiveKey { get; set; }
         public float GoalCount { get; set; }
         public string LocalizationKey { get; set; }
-        public LocalizationHelper LocalizationHelper { get; set; }
 
-        public FoodStoredObjective(string key, int goalCount, string localizationKey = null, LocalizationHelper localizationHelper = null)
+        public FoodStoredObjective(string key, int goalCount)
         {
             ObjectiveKey = key;
-            LocalizationHelper = localizationHelper;
-            LocalizationKey = localizationKey;
             GoalCount = goalCount;
-
-            if (LocalizationHelper == null)
-                LocalizationHelper = new LocalizationHelper(GameInitializer.NAMESPACE, "Quests");
 
             if (string.IsNullOrEmpty(LocalizationKey))
                 LocalizationKey = nameof(FoodStoredObjective);
@@ -33,10 +27,10 @@ namespace Pandaros.API.Questing.BuiltinObjectives
 
         public string GetObjectiveProgressText(IPandaQuest quest, Colony colony, Players.Player player)
         {
-            var formatStr = LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
+            var formatStr = QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
 
             if (formatStr.Count(c => c == '{') == 3)
-                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), colony.Stockpile.TotalFood, GoalCount);
+                return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), colony.Stockpile.TotalFood, GoalCount);
             else
                 return formatStr;
         }

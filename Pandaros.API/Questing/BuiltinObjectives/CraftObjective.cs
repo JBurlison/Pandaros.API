@@ -13,16 +13,11 @@ namespace Pandaros.API.Questing.BuiltinObjectives
 {
     public class CraftObjective : IPandaQuestObjective
     {
-        public CraftObjective(string objectiveKey, string item, int count, string localizationKey = null, LocalizationHelper localizationHelper = null)
+        public CraftObjective(string objectiveKey, string item, int count)
         {
             ObjectiveKey = objectiveKey;
             Item = item;
             CraftCount = count;
-            LocalizationHelper = localizationHelper;
-            LocalizationKey = localizationKey;
-
-            if (LocalizationHelper == null)
-                LocalizationHelper = new LocalizationHelper(GameInitializer.NAMESPACE, "Quests");
 
             if (string.IsNullOrEmpty(LocalizationKey))
                 LocalizationKey = nameof(CraftObjective);
@@ -34,17 +29,16 @@ namespace Pandaros.API.Questing.BuiltinObjectives
         public Dictionary<int, int> CurrentCraftCount { get; set; } = new Dictionary<int, int>();
 
         public string Item { get; set; }
-        public LocalizationHelper LocalizationHelper { get; set; }
 
         public string GetObjectiveProgressText(IPandaQuest quest, Colony colony, Players.Player player)
         {
             if (!CurrentCraftCount.ContainsKey(colony.ColonyID))
                 CurrentCraftCount[colony.ColonyID] = 0;
 
-            var formatStr = LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
+            var formatStr = QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
 
             if (formatStr.Count(c => c == '{') == 3)
-                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), CurrentCraftCount[colony.ColonyID], CraftCount, LocalizationHelper.LocalizeOrDefault(Item, player));
+                return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), CurrentCraftCount[colony.ColonyID], CraftCount, QuestingSystem.LocalizationHelper.LocalizeOrDefault(Item, player));
             else
                 return formatStr;
         }

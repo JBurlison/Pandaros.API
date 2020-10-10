@@ -16,14 +16,10 @@ namespace Pandaros.API.Questing.BuiltinPrerequisites
         public string LocalizationKey { get; set; }
         public LocalizationHelper LocalizationHelper { get; set; }
 
-        public SciencePrerequisite(string scienceKey, string localizationKey = null, LocalizationHelper localizationHelper = null)
+        public SciencePrerequisite(string scienceKey, LocalizationHelper localizationHelper)
         {
             ScienceKey = scienceKey;
             LocalizationHelper = localizationHelper;
-            LocalizationKey = localizationKey;
-
-            if (LocalizationHelper == null)
-                LocalizationHelper = new LocalizationHelper(GameInitializer.NAMESPACE, "Quests");
 
             if (string.IsNullOrEmpty(LocalizationKey))
                 LocalizationKey = nameof(SciencePrerequisite);
@@ -31,7 +27,7 @@ namespace Pandaros.API.Questing.BuiltinPrerequisites
 
         public string GetPrerequisiteText(IPandaQuest quest, Colony colony, Players.Player player)
         {
-            return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), LocalizationHelper.LocalizeOrDefault(ScienceKey, player));
+            return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), LocalizationHelper.LocalizeOrDefault(ScienceKey, player));
         }
 
         public bool MeetsPrerequisite(IPandaQuest quest, Colony colony)

@@ -16,34 +16,25 @@ namespace Pandaros.API.Questing.BuiltinObjectives
         public string ObjectiveKey { get; set; }
         public string BlockName { get; set; }
         public float BlocksGoal { get; set; }
-        public string LocalizationKey { get; set; }
-        public LocalizationHelper LocalizationHelper { get; set; }
+        public string LocalizationKey { get; set; } = nameof(BlockPlacedObjective);
 
-        public BlockPlacedObjective(string key, string blockName, int goalCount, string localizationKey = null, LocalizationHelper localizationHelper = null)
+        public BlockPlacedObjective(string key, string blockName, int goalCount)
         {
             ObjectiveKey = key;
-            LocalizationHelper = localizationHelper;
-            LocalizationKey = localizationKey;
             BlocksGoal = goalCount;
             BlockName = blockName;
-
-            if (LocalizationHelper == null)
-                LocalizationHelper = new LocalizationHelper(GameInitializer.NAMESPACE, "Quests");
-
-            if (string.IsNullOrEmpty(LocalizationKey))
-                LocalizationKey = nameof(BlockPlacedObjective);
         }
 
         public string GetObjectiveProgressText(IPandaQuest quest, Colony colony, Players.Player player)
         {
-            var formatStr = LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
+            var formatStr = QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
             var ps = PlayerState.GetPlayerState(player);
             var itemsPlaced = 0;
 
             ps.ItemsPlaced.TryGetValue(ItemId.GetItemId(BlockName), out itemsPlaced);
 
             if (formatStr.Count(c => c == '{') == 3)
-                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), itemsPlaced, BlocksGoal, BlockName);
+                return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), itemsPlaced, BlocksGoal, QuestingSystem.LocalizationHelper.LocalizeOrDefault(BlockName, player));
             else
                 return formatStr;
         }

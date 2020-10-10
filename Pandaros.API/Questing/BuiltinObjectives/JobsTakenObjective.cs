@@ -18,16 +18,12 @@ namespace Pandaros.API.Questing.BuiltinObjectives
         public string LocalizationKey { get; set; }
         public LocalizationHelper LocalizationHelper { get; set; }
 
-        public JobsTakenObjective(string key, string npcTypeKey, int goalCount, string localizationKey = null, LocalizationHelper localizationHelper = null)
+        public JobsTakenObjective(string key, string npcTypeKey, int goalCount, LocalizationHelper localizationHelper)
         {
             ObjectiveKey = key;
             LocalizationHelper = localizationHelper;
-            LocalizationKey = localizationKey;
             NpcTypeKey = npcTypeKey;
             GoalCount = goalCount;
-
-            if (LocalizationHelper == null)
-                LocalizationHelper = new LocalizationHelper(GameInitializer.NAMESPACE, "Quests");
 
             if (string.IsNullOrEmpty(LocalizationKey))
                 LocalizationKey = nameof(JobsTakenObjective);
@@ -35,7 +31,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
 
         public string GetObjectiveProgressText(IPandaQuest quest, Colony colony, Players.Player player)
         {
-            var formatStr = LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
+            var formatStr = QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
             var jobs = colony.GetJobCounts();
             var jobCount = 0;
 
@@ -43,7 +39,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
                 jobCount = counts.TakenCount;
 
             if (formatStr.Count(c => c == '{') == 3)
-                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), jobCount, GoalCount, LocalizationHelper.LocalizeOrDefault(NpcTypeKey, player));
+                return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), jobCount, GoalCount, LocalizationHelper.LocalizeOrDefault(NpcTypeKey, player));
             else
                 return formatStr;
         }

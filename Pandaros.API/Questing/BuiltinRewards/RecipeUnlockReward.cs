@@ -18,12 +18,11 @@ namespace Pandaros.API.Questing.BuiltinRewards
         public string LocalizationKey { get; set; }
         public LocalizationHelper LocalizationHelper { get; set; }
 
-        public RecipeUnlockReward(string itemName, string rewardKey, string localizationKey = null, LocalizationHelper localizationHelper = null)
+        public RecipeUnlockReward(string itemName, string rewardKey, LocalizationHelper localizationHelper)
         {
             RecipeKey = itemName;
             RewardKey = rewardKey;
             LocalizationHelper = localizationHelper;
-            LocalizationKey = localizationKey;
 
             if (ServerManager.RecipeStorage.TryGetRecipe(new Recipes.RecipeKey(itemName), out var recipe))
             {
@@ -32,9 +31,6 @@ namespace Pandaros.API.Questing.BuiltinRewards
             }
             else
                 APILogger.Log(ChatColor.red, "Item " + itemName + " recipe not found. unable to create RecipeUnlockReward for reward key " + rewardKey);
-
-            if (LocalizationHelper == null)
-                LocalizationHelper = new LocalizationHelper(GameInitializer.NAMESPACE, "Quests");
 
             if (string.IsNullOrEmpty(LocalizationKey))
                 LocalizationKey = nameof(RecipeUnlockReward);
@@ -46,7 +42,7 @@ namespace Pandaros.API.Questing.BuiltinRewards
             var item = ItemId.GetItemId(RecipeKey);
 
             if (formatStr.Count(c => c == '{') == 1)
-                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), LocalizationHelper.LocalizeOrDefault(RecipeKey, player));
+                return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), LocalizationHelper.LocalizeOrDefault(RecipeKey, player));
             else
                 return formatStr;
         }

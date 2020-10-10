@@ -36,7 +36,12 @@ namespace Pandaros.API.localization
                 var newVal = Localization.GetSentence(p.LastKnownLocale, fullKey);
 
                 if (newVal == fullKey)
-                    return key;
+                {
+                    if (Localization.TryGetSentence(p.LastKnownLocale, key, out newVal))
+                        return newVal;
+                    else
+                        return key;
+                }
                 else
                     return newVal;
             }

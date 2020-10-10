@@ -13,16 +13,10 @@ namespace Pandaros.API.Questing.BuiltinPrerequisites
     {
         public string QuestKey { get; set; }
         public string LocalizationKey { get; set; }
-        public LocalizationHelper LocalizationHelper { get; set; }
 
-        public QuestPrerequisite(string questKey, string localizationKey = null, LocalizationHelper localizationHelper = null)
+        public QuestPrerequisite(string questKey)
         {
             QuestKey = questKey;
-            LocalizationHelper = localizationHelper;
-            LocalizationKey = localizationKey;
-
-            if (LocalizationHelper == null)
-                LocalizationHelper = new LocalizationHelper(GameInitializer.NAMESPACE, "Quests");
 
             if (string.IsNullOrEmpty(LocalizationKey))
                 LocalizationKey = nameof(QuestPrerequisite);
@@ -32,11 +26,11 @@ namespace Pandaros.API.Questing.BuiltinPrerequisites
         {
             if (QuestingSystem.QuestPool.TryGetValue(QuestKey, out var requiredQuest))
             {
-                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), requiredQuest.GetQuestTitle(colony, player));
+                return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), requiredQuest.GetQuestTitle(colony, player));
             }
             else
             {
-                return string.Format(LocalizationHelper.LocalizeOrDefault("QuestNotFound", player), QuestKey);
+                return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault("QuestNotFound", player), QuestKey);
             }
         }
 

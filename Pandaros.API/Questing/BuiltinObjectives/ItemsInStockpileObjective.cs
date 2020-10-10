@@ -20,11 +20,10 @@ namespace Pandaros.API.Questing.BuiltinObjectives
         public string LocalizationKey { get; set; }
         public LocalizationHelper LocalizationHelper { get; set; }
 
-        public ItemsInStockpileObjective(string key, string jobName, int goalCount, string localizationKey = null, LocalizationHelper localizationHelper = null)
+        public ItemsInStockpileObjective(string key, string jobName, int goalCount, LocalizationHelper localizationHelper)
         {
             ObjectiveKey = key;
             LocalizationHelper = localizationHelper;
-            LocalizationKey = localizationKey;
             ItemName = jobName;
             GoalCount = goalCount;
 
@@ -37,7 +36,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
 
         public string GetObjectiveProgressText(IPandaQuest quest, Colony colony, Players.Player player)
         {
-            var formatStr = LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
+            var formatStr = QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
             int itemCount = 0;
             var item = ItemId.GetItemId(ItemName);
 
@@ -45,7 +44,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
                 itemCount = colony.Stockpile.Items[item];
 
             if (formatStr.Count(c => c == '{') == 3)
-                return string.Format(LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), itemCount, GoalCount, LocalizationHelper.LocalizeOrDefault(ItemName, player));
+                return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), itemCount, GoalCount, LocalizationHelper.LocalizeOrDefault(ItemName, player));
             else
                 return formatStr;
         }
