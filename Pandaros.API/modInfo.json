@@ -3,7 +3,7 @@
     "dllpath": "Pandaros.API.dll",
     "name": "Pandaros.API",
     "namepretty": "Pandaros' API!",
-    "version": "0.2.0.1",
+    "version": "0.2.0.2",
     "enableddefault": true,
     "marksgamemodded": true,
     "compatibleversions": [
@@ -19,6 +19,13 @@
     "website": "https://github.com/JBurlison/Pandaros.API/wiki/",
     "about": "Pandaros' API adds a slew of API features that the settlers mod is built upon, Comes with Colony management/job assignment and Player Magic items tool!",
     "patchnotes": [
+      {
+        "version": "0.2.0.1",
+        "notes": [
+          "Fixed quest craft goal.",
+          "Fixed issue with WorldHelper.GetBlocksInArea not properly returning blocks in area."
+        ]
+      },
       {
         "version": "0.2.0.1",
         "notes": [
