@@ -37,7 +37,7 @@ namespace Pandaros.API.localization
 
                 if (newVal == fullKey)
                 {
-                    if (Localization.TryGetSentence(p.LastKnownLocale, key, out newVal))
+                    if (Localization.TryGetSentence(p.LastKnownLocale, key, out newVal) || Localization.TryGetSentence(p.LastKnownLocale, ColonyBuiltIn.NPCLocalizationPrefix + key, out newVal))
                         return newVal;
                     else
                         return key;
