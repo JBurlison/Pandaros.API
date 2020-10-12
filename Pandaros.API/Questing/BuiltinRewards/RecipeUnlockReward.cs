@@ -38,7 +38,7 @@ namespace Pandaros.API.Questing.BuiltinRewards
 
         public string GetRewardText(IPandaQuest quest, Colony colony, Players.Player player)
         {
-            var formatStr = LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
+            var formatStr = QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
             var item = ItemId.GetItemId(RecipeKey);
 
             if (formatStr.Count(c => c == '{') == 1)
