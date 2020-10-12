@@ -18,10 +18,11 @@ namespace Pandaros.API.Questing.BuiltinRewards
         public string LocalizationKey { get; set; }
         public LocalizationHelper LocalizationHelper { get; set; }
 
-        public RecipeUnlockReward(string itemName, string rewardKey, LocalizationHelper localizationHelper)
+        public RecipeUnlockReward(string itemName, string rewardKey, string itemIconName, LocalizationHelper localizationHelper)
         {
             RecipeKey = itemName;
             RewardKey = rewardKey;
+            ItemIconName = itemIconName;
             LocalizationHelper = localizationHelper;
 
             if (ServerManager.RecipeStorage.TryGetRecipe(new Recipes.RecipeKey(itemName), out var recipe))
