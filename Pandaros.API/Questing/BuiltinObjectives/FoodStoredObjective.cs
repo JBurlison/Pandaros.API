@@ -29,7 +29,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
         {
             var formatStr = QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
 
-            if (formatStr.Count(c => c == '{') == 3)
+            if (formatStr.Count(c => c == '{') == 2)
                 return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), colony.Stockpile.TotalFood, GoalCount);
             else
                 return formatStr;

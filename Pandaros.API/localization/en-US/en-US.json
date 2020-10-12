@@ -17,7 +17,7 @@
           "NewQuestAvailable": "The quest {0} is now available!",
           "QuestComplete": "The quest {0} has been completed!",
           "CraftObjective": "{0} out of {1} {2} crafted",
-          "FoodStoredObjective": "",
+          "FoodStoredObjective": "{0} out of {1} food stored",
           "ColonistCountObjective": "{0} out of {1} colonists",
           "JobsTakenObjective": "{0} out of {1} {2} jobs taken",
           "ItemsInStockpileObjective": "{0} out of {1} {2} in stockpile",

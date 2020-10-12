@@ -32,6 +32,7 @@ namespace Pandaros.API.Entities
         public double NextGenTime { get; set; }
         public int SettlersToggledTimes { get; set; }
         public float FoodPerHour { get; set; }
+        public bool MonstersEnabled { get; set; } = true;
         public Dictionary<ushort, int> ItemsPlaced { get; set; } = new Dictionary<ushort, int>();
         public Dictionary<ushort, int> ItemsRemoved { get; set; } = new Dictionary<ushort, int>();
         public Dictionary<ushort, int> ItemsInWorld { get; set; } = new Dictionary<ushort, int>();
@@ -116,6 +117,9 @@ namespace Pandaros.API.Entities
                 if (stateNode.TryGetAs(nameof(BossesEnabled), out bool bosses))
                     _colonyStates[c].BossesEnabled = bosses;
 
+                if (stateNode.TryGetAs(nameof(MonstersEnabled), out bool monsters))
+                    _colonyStates[c].MonstersEnabled = monsters;
+
                 if (stateNode.TryGetAs(nameof(SettlersEnabled), out SettlersState notify))
                     _colonyStates[c].SettlersEnabled = notify;
 
@@ -142,6 +146,7 @@ namespace Pandaros.API.Entities
                 var node = new JSONNode();
 
                 node.SetAs("Difficulty", _colonyStates[c].DifficultyStr);
+                node.SetAs(nameof(MonstersEnabled), _colonyStates[c].MonstersEnabled);
                 node.SetAs(nameof(BossesEnabled), _colonyStates[c].BossesEnabled);
                 node.SetAs(nameof(SettlersEnabled), _colonyStates[c].SettlersEnabled);
                 node.SetAs(nameof(HighestColonistCount), _colonyStates[c].HighestColonistCount);
