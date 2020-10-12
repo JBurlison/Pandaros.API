@@ -325,8 +325,15 @@ namespace Pandaros.API.Questing
                         if (quest.Value.QuestPrerequisites != null)
                         {
                             foreach (var pre in quest.Value.QuestPrerequisites)
-                                if (!pre.MeetsPrerequisite(quest.Value, colony))
-                                    ok = false;
+                                try
+                                {
+                                    if (!pre.MeetsPrerequisite(quest.Value, colony))
+                                        ok = false;
+                                }
+                                catch (Exception ex)
+                                {
+                                    APILogger.LogError(ex);
+                                }
                         }
 
                         if (CompletedQuests[colony].Contains(quest.Key))
@@ -357,8 +364,15 @@ namespace Pandaros.API.Questing
 
                         foreach (var objective in quest.Value.QuestObjectives.Values)
                         {
-                            if (objective.GetProgress(quest.Value, colony) < 1f)
-                                allComplete = false;
+                            try
+                            {
+                                if (objective.GetProgress(quest.Value, colony) < 1f)
+                                    allComplete = false;
+                            }
+                            catch (Exception ex)
+                            {
+                                APILogger.LogError(ex);
+                            }
                         }
 
                         if (allComplete)
@@ -374,8 +388,15 @@ namespace Pandaros.API.Questing
                             }
 
                             if (quest.Value.QuestRewards != null)
-                                foreach (var reward in quest.Value.QuestRewards)
-                                    reward.IssueReward(quest.Value, colony);
+                                try
+                                {
+                                    foreach (var reward in quest.Value.QuestRewards)
+                                        reward.IssueReward(quest.Value, colony);
+                                }
+                                catch (Exception ex)
+                                {
+                                    APILogger.LogError(ex);
+                                }
 
                             if (!NumberOfQuestsComplete[colony].ContainsKey(quest.Key))
                                 NumberOfQuestsComplete[colony].Add(quest.Key, 1);
