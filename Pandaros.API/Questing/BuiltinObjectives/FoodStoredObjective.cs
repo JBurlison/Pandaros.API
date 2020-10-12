@@ -30,7 +30,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
             var formatStr = QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
 
             if (formatStr.Count(c => c == '{') == 2)
-                return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), colony.Stockpile.TotalFood, GoalCount);
+                return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), colony.Stockpile.TotalFood * 2000, GoalCount);
             else
                 return formatStr;
         }
@@ -40,12 +40,14 @@ namespace Pandaros.API.Questing.BuiltinObjectives
             if (GoalCount == 0)
                 return 1;
 
-            if (colony.Stockpile.TotalFood == GoalCount)
+            var total = colony.Stockpile.TotalFood * 2000;
+
+            if (total == GoalCount)
                 return 1;
-            else if (colony.Stockpile.TotalFood == 0)
+            else if (total == 0)
                 return 0;
             else
-                return colony.Stockpile.TotalFood / GoalCount;
+                return total / GoalCount;
         }
 
         public void Load(JObject node, IPandaQuest quest, Colony colony)
