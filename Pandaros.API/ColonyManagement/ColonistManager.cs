@@ -185,7 +185,7 @@ namespace Pandaros.API.ColonyManagement
         }
 
 
-        [ModLoader.ModCallback(ModLoader.EModCallbackType.OnNPCJobChanged, GameInitializer.NAMESPACE + ".SettlerManager.OnNPCJobChanged")]
+        //[ModLoader.ModCallback(ModLoader.EModCallbackType.OnNPCJobChanged, GameInitializer.NAMESPACE + ".SettlerManager.OnNPCJobChanged")]
         public static void OnNPCJobChanged(ValueTuple<NPCBase, IJob, IJob> data)
         {
             try
