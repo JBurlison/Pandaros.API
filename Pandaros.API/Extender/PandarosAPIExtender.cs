@@ -351,7 +351,7 @@ namespace Pandaros.API.Extender
 
                         try
                         {
-                            if (isExtention && Activator.CreateInstance(type) is IPandarosExtention extension)
+                            if (isExtention && type.GetConstructors().Any(c => c.GetParameters() == null || c.GetParameters().Length == 0) && Activator.CreateInstance(type) is IPandarosExtention extension)
                             {
                                 foreach (var iface in ifaces)
                                     if (iface.Name != nameof(IPandarosExtention))
