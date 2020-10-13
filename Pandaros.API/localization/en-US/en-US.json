@@ -22,6 +22,7 @@
           "JobsTakenObjective": "{0} out of {1} {2} jobs taken",
           "ItemsInStockpileObjective": "{0} out of {1} {2} in stockpile",
           "BlockPlacedObjective": "{0} out of {1} {2} block(s) placed",
+          "BedCountObjective": "{0} out of {1} beds",
           "ActiveQuests": "Active Quests",
           "RequrementsNotMet": "Requirements Not Met",
           "RecipeUnlockReward": "Unlock Recipe: {0}",
