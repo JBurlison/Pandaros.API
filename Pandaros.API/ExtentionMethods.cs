@@ -383,7 +383,7 @@ namespace Pandaros.API
             }
         }
 
-        public static IEnumerable<T> IterateTracker<T>(InstanceTracker<T> tracker)
+        public static IEnumerable<T> IterateTracker<T>(this InstanceTracker<T> tracker)
         {
             foreach (var item in tracker.Regions)
             {
