@@ -1,4 +1,5 @@
 ﻿using AI;
+using BlockEntities.Helpers;
 using Jobs;
 using Newtonsoft.Json;
 using NPC;
@@ -380,6 +381,32 @@ namespace Pandaros.API
                 list[k] = list[n];
                 list[n] = value;
             }
+        }
+
+        public static IEnumerable<T> IterateTracker<T>(InstanceTracker<T> tracker)
+        {
+            foreach (var item in tracker.Regions)
+            {
+                InstanceTracker<T>.PositionRegion region = item.Value;
+                if (region.Count > 0)
+                {
+                    var positions = region.Positions;
+                    var regionPos = region.RegionPosition;
+                    region.RWLock.EnterReadLock();
+                    try
+                    {
+                        for (int p = 0; p < positions.Count; p++)
+                        {
+                            yield return positions.GetValueAtIndex(p);
+                        }
+                    }
+                    finally
+                    {
+                        region.RWLock.ExitReadLock();
+                    }
+                }
+            }
+            yield break;
         }
     }
 }
