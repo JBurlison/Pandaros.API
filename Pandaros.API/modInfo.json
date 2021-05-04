@@ -3,7 +3,7 @@
     "dllpath": "Pandaros.API.dll",
     "name": "Pandaros.API",
     "namepretty": "Pandaros' API!",
-    "version": "0.2.0.3",
+    "version": "0.2.0.4",
     "enableddefault": true,
     "marksgamemodded": true,
     "compatibleversions": [
@@ -20,7 +20,13 @@
     "about": "Pandaros' API adds a slew of API features that the settlers mod is built upon, Comes with Colony management/job assignment and Player Magic items tool!",
     "patchnotes": [
       {
-        "version": "0.2.0.8",
+        "version": "0.2.0.4",
+        "notes": [
+          "Fixed Science Loading"
+        ]
+      },
+      {
+        "version": "0.2.0.3",
         "notes": [
           "Added skill chance",
           "Updated to support CS 8.1."

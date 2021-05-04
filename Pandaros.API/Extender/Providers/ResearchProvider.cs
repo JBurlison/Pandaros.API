@@ -23,35 +23,32 @@ namespace Pandaros.API.Extender.Providers
                 if (Activator.CreateInstance(s) is IPandaResearch pandaResearch &&
                     !string.IsNullOrEmpty(pandaResearch.name))
                 {
-                    var research = new PandaResearchable(pandaResearch, 1);
-                    research.ResearchComplete += pandaResearch.ResearchComplete;
-
-                    if (pandaResearch.NumberOfLevels > 1)
-                        for (var l = 2; l <= pandaResearch.NumberOfLevels; l++)
-                        {
-                            research = new PandaResearchable(pandaResearch, l);
-                            research.ResearchComplete += pandaResearch.ResearchComplete;
-                        }
-
                     sb.Append(pandaResearch.name + ", ");
                     pandaResearch.BeforeRegister();
 
-                    foreach (var item in research.Recipes)
+                    for (var l = 1; l <= pandaResearch.NumberOfLevels; l++)
                     {
-                        if (item.UnlockType == Science.ERecipeUnlockType.Recipe)
+                        var research = new PandaResearchable(pandaResearch, l);
+                        research.ResearchComplete += pandaResearch.ResearchComplete;
+
+                        foreach (var item in research.Recipes)
                         {
-                            if (ServerManager.RecipeStorage.TryGetRecipe(new Recipes.RecipeKey(item.Identifier), out var recipe))
-                                ServerManager.RecipeStorage.AddScienceRequirement(recipe);
+                            if (item.UnlockType == Science.ERecipeUnlockType.Recipe)
+                            {
+                                if (ServerManager.RecipeStorage.TryGetRecipe(new Recipes.RecipeKey(item.Identifier), out var recipe))
+                                    ServerManager.RecipeStorage.AddScienceRequirement(recipe);
+                            }
+                            else
+                            {
+                                if (ServerManager.RecipeStorage.TryGetRecipes(item.Identifier, out var recipe))
+                                    for (int r = 0; r < recipe.Count; r++)
+                                        ServerManager.RecipeStorage.AddScienceRequirement(recipe[r]);
+                            }
                         }
-                        else
-                        {
-                            if (ServerManager.RecipeStorage.TryGetRecipes(item.Identifier, out var recipe))
-                                for (int r = 0; r < recipe.Count; r++)
-                                    ServerManager.RecipeStorage.AddScienceRequirement(recipe[r]);
-                        }
+
+                        research.Register();
                     }
 
-                    research.Register();
                     pandaResearch.OnRegister();
                     i++;
                     
