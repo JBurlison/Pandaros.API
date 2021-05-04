@@ -244,7 +244,15 @@ namespace Pandaros.API.Extender
 
         public void OnRegisterUpgrades(UpgradesManager upgrades)
         {
-            
+            foreach (var extension in GetCallbacks<IOnRegisterUpgradesExtender>())
+                try
+                {
+                    extension.OnRegisterUpgrades(upgrades);
+                }
+                catch (Exception ex)
+                {
+                    APILogger.LogError(ex);
+                }
         }
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnAssemblyLoaded, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnConstructInventoryManageColonyUI")]
@@ -270,13 +278,14 @@ namespace Pandaros.API.Extender
         private static void LoadImplementation(List<ModLoader.ModDescription> list)
         {
             foreach (var mod in list.Where(m => m.HasAssembly && !string.IsNullOrEmpty(m.assemblyPath) && !m.assemblyPath.Contains("Pipliz\\modInfo.json")))
-                try
-                {
-                    // Get all Types available in the assembly in an array
-                    var typeArray = mod.LoadedAssembly.GetTypes();
+            {
+                // Get all Types available in the assembly in an array
+                var typeArray = mod.LoadedAssembly.GetTypes();
 
-                    // Walk through each Type and list their Information
-                    foreach (var type in typeArray)
+                // Walk through each Type and list their Information
+                foreach (var type in typeArray)
+                {
+                    try
                     {
                         var ifaces = type.GetInterfaces();
 
@@ -311,11 +320,12 @@ namespace Pandaros.API.Extender
                                 if (e.ClassType != null && type.Equals(e.ClassType))
                                     e.LoadedAssembalies.Add(type);
                     }
+                    catch (Exception)
+                    {
+                        // Do not log it is not the correct type.
+                    }
                 }
-                catch (Exception)
-                {
-                    // Do not log it is not the correct type.
-                }
+            }
 
             foreach (var iface in SettlersExtensions.Keys)
             {

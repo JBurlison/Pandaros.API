@@ -4,6 +4,7 @@ using Pandaros.API.AI;
 using Pandaros.API.ColonyManagement;
 using Pandaros.API.Items.Armor;
 using Pandaros.API.Models;
+using Pandaros.API.Upgrades;
 using Pipliz.JSON;
 using System;
 using System.Collections.Generic;

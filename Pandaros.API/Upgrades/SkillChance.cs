@@ -1,6 +1,6 @@
 ﻿using Pandaros.API.Upgrades;
 
-namespace Pandaros.API.ColonyManagement
+namespace Pandaros.API.Upgrades
 {
     public class SkillChance : IPandaUpgrade
     {
@@ -13,29 +13,18 @@ namespace Pandaros.API.ColonyManagement
         public string UniqueKey => KEY;
 
         public static float GetSkillChance(Colony colony, int level = -1)
-        { 
+        {
             if (level == -1)
                 level = colony.GetUpgradeLevel(KEY);
 
-            var boost = 0f;
-            
-            if (level < 0)
-                boost = level * .05f;
-
-            if (boost > .25f)
-                boost = .25f;
-
-            if (boost < -.25)
-                boost = -.25f;
-
-            return (float)System.Math.Round(boost, 2);
+            return level * .05f;
         }
 
         public void GetLocalizedValues(Players.Player player, Colony colony, int unlockedLevelCount, out string upgradeName, out string currentResults, out string nextResults)
         {
             upgradeName = _localization.LocalizeOrDefault("SkillChance", player);
             currentResults = string.Format(_localization.LocalizeOrDefault("SkillChancepct", player), GetSkillChance(colony) * 100);
-            nextResults = string.Format(_localization.LocalizeOrDefault("SkillChancepct", player), GetSkillChance(colony) * 100);
+            nextResults = string.Format(_localization.LocalizeOrDefault("SkillChancepct", player), GetSkillChance(colony, colony.GetUpgradeLevel(KEY) + 1) * 100);
         }
 
         public long GetUpgradeCost(int unlockedLevels)

@@ -83,7 +83,7 @@
     <Compile Include="ColonyManagement\ColonyTool.cs" />
     <Compile Include="ColonyManagement\JobSettingsExtention.cs" />
     <Compile Include="ColonyManagement\ColonistManager.cs" />
-    <Compile Include="ColonyManagement\SkillChance.cs" />
+    <Compile Include="Upgrades\SkillChance.cs" />
     <Compile Include="ColonyManagement\StatsCache.cs" />
     <Compile Include="CSModConfiguration.cs" />
     <Compile Include="DamageType.cs" />
