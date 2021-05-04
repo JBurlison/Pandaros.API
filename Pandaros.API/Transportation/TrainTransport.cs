@@ -217,33 +217,28 @@ namespace Pandaros.API.Transportation
 
                                         var existing = roamingJobState.GetActionEnergy(TrainType.TrainConfiguration.EnergyActionEnergyName);
                                         bool isWorked = true;
-
+                                        
                                         try
                                         {
-                                            if (roamingJobState.Colony.JobFinder.JobsData != null)
-                                                foreach (var job in roamingJobState.Colony.JobFinder.JobsData.OpenJobs)
+                                            var jtd = roamingJobState.Colony.JobFinder.JobsData.PerJobData[roamingJobState.JobRef.NPCType];
+                                            for (int i =0; i <= jtd.JobCount; i++)
+                                            {
+                                                var job = jtd.Jobs[i];
+                                                try
                                                 {
-                                                    try
+                                                    if (job != null && job.GetJobLocation() == stationCheck)
                                                     {
-                                                        if (job != null && job.GetJobLocation() == stationCheck)
-                                                        {
-                                                            isWorked = false;
-                                                            break;
-                                                        }
+                                                        isWorked = false;
+                                                        break;
                                                     }
-                                                    catch { }
                                                 }
+                                                catch { }
+                                            }
                                         }
                                         catch (Exception ex)
                                         {
                                             if (roamingJobState.Colony.JobFinder == null)
                                                 APILogger.Log("roamingJobState.Colony.JobFinder == null");
-
-                                            if (roamingJobState.Colony.JobFinder.JobsData == null)
-                                                APILogger.Log("roamingJobState.Colony.JobFinder.JobsData == null");
-
-                                            if (roamingJobState.Colony.JobFinder.JobsData.OpenJobs == null)
-                                                APILogger.Log("roamingJobState.Colony.JobFinder.JobsData.OpenJobs == null");
 
                                             APILogger.LogError(ex);
                                         }

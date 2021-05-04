@@ -1,4 +1,6 @@
 ﻿using AI;
+using Assets.ColonyPointUpgrades;
+using Assets.ColonyPointUpgrades.Implementations;
 using BlockEntities.Helpers;
 using Jobs;
 using Newtonsoft.Json;
@@ -22,6 +24,14 @@ namespace Pandaros.API
 {
     public static class ExtentionMethods
     {
+        public static int GetUpgradeLevel(this Colony colony, string upgradeKey)
+        {
+            if (ServerManager.UpgradeManager.TryGetKeyUpgrade(upgradeKey, out var keyEfficiency, out var iUpgradeEfficiency))
+                return colony.UpgradeState.GetUnlockedLevels(keyEfficiency);
+            else
+                return -1;
+        }
+
         private static BlockSide[] _blockSides = (BlockSide[])Enum.GetValues(typeof(BlockSide));
 
         public static bool IsConnected(this Players.Player p)
@@ -335,19 +345,25 @@ namespace Pandaros.API
         public static Dictionary<string, JobCounts> GetJobCounts(this Colony colony)
         {
             Dictionary<string, JobCounts> jobCounts = new Dictionary<string, JobCounts>();
-            var jobs = colony?.JobFinder?.JobsData?.OpenJobs;
+            var jobs = colony?.JobFinder?.JobsData.PerJobData;
             var npcs = colony?.Followers;
 
             if (jobs != null)
                 foreach (var job in jobs)
                 {
-                    if (NPCType.NPCTypes.TryGetValue(job.NPCType, out var nPCTypeSettings))
+                    if (NPCType.NPCTypes.TryGetValue(job.Key, out var nPCTypeSettings))
                     {
                         if (!jobCounts.ContainsKey(nPCTypeSettings.KeyName))
                             jobCounts.Add(nPCTypeSettings.KeyName, new JobCounts() { Name = nPCTypeSettings.KeyName });
 
-                        jobCounts[nPCTypeSettings.KeyName].AvailableCount++;
-                        jobCounts[nPCTypeSettings.KeyName].AvailableJobs.Add(job);
+                        for (var i = 0; i < job.Value.JobCount; i++)
+                        {
+                            if (job.Value.Jobs[i].NPC == null)
+                            {
+                                jobCounts[nPCTypeSettings.KeyName].AvailableCount++;
+                                jobCounts[nPCTypeSettings.KeyName].AvailableJobs.Add(job.Value.Jobs[i]);
+                            }
+                        }
                     }
                 }
 

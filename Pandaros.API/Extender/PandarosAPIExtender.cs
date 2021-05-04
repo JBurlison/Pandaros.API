@@ -1,4 +1,6 @@
-﻿using NetworkUI;
+﻿using Assets.ColonyPointUpgrades;
+using ModLoaderInterfaces;
+using NetworkUI;
 using NetworkUI.Items;
 using Pipliz;
 using Pipliz.JSON;
@@ -10,7 +12,7 @@ using System.Reflection;
 namespace Pandaros.API.Extender
 {
     [ModLoader.ModManager]
-    public class PandarosAPIExtender : ModLoaderInterfaces.IOnLoadModJSONFiles
+    public class PandarosAPIExtender : ModLoaderInterfaces.IOnLoadModJSONFiles, IOnRegisterUpgrades
     {
         public static Dictionary<string, List<IPandarosExtention>> SettlersExtensions { get; set; } = new Dictionary<string, List<IPandarosExtention>>();
         public static List<IOnTimedUpdate> TimedUpdate { get; set; } = new List<IOnTimedUpdate>();
@@ -182,6 +184,7 @@ namespace Pandaros.API.Extender
         [ModLoader.ModCallback(ModLoader.EModCallbackType.AfterItemTypesDefined, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.AfterItemTypesDefined")]
         [ModLoader.ModCallbackProvidesFor("pipliz.server.loadresearchables")]
         [ModLoader.ModCallbackProvidesFor("pipliz.server.loadnpctypes")]
+        [ModLoader.ModCallbackProvidesFor("blockentitycallback.autoloaders")]
         public static void AfterItemTypesDefined()
         {
             foreach (var extension in GetCallbacks<IAfterItemTypesDefinedExtender>())
@@ -237,6 +240,11 @@ namespace Pandaros.API.Extender
                 {
                     APILogger.LogError(ex);
                 }
+        }
+
+        public void OnRegisterUpgrades(UpgradesManager upgrades)
+        {
+            
         }
 
         [ModLoader.ModCallback(ModLoader.EModCallbackType.OnAssemblyLoaded, GameInitializer.NAMESPACE + ".Extender.SettlersExtender.OnConstructInventoryManageColonyUI")]

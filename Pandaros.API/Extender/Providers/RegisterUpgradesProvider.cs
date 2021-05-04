@@ -1,5 +1,5 @@
-﻿using Happiness;
-using Pipliz.JSON;
+﻿using Assets.ColonyPointUpgrades;
+using Pandaros.API.Upgrades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,26 +8,27 @@ using System.Threading.Tasks;
 
 namespace Pandaros.API.Extender.Providers
 {
-    class HappinessCausesProvider : IOnColonyCreatedExtender, IOnLoadingColonyExtender
+    public class RegisterUpgradesProvider : IOnRegisterUpgradesExtender
     {
         public List<Type> LoadedAssembalies { get; } = new List<Type>();
 
-        public string InterfaceName { get; } = nameof(IHappinessCause);
+        public string InterfaceName => nameof(IPandaUpgrade);
 
-        public Type ClassType => null;
+        public Type ClassType => throw new NotImplementedException();
 
-        public void ColonyCreated(Colony c)
+        public void OnRegisterUpgrades(UpgradesManager upgrades)
         {
             StringBuilder sb = new StringBuilder();
-            APILogger.LogToFile("-------------------Happiness Cause Loaded----------------------");
+            APILogger.LogToFile("-------------------Colony Upgrades Loaded----------------------");
             var i = 0;
 
             foreach (var item in LoadedAssembalies)
             {
-                if (Activator.CreateInstance(item) is IHappinessCause cause)
+                if (Activator.CreateInstance(item) is IPandaUpgrade upgrade)
                 {
-                    c.HappinessData.HappinessCauses.Add(cause);
-                    sb.Append($"{cause.GetType().Name}, ");
+                    upgrades.RegisterUpgrade(upgrade);
+
+                    sb.Append($"{upgrade.UniqueKey}, ");
                     i++;
 
                     if (i > 5)
@@ -40,11 +41,6 @@ namespace Pandaros.API.Extender.Providers
 
             APILogger.LogToFile(sb.ToString());
             APILogger.LogToFile("---------------------------------------------------------");
-        }
-
-        public void OnLoadingColony(Colony c, JSONNode n)
-        {
-            ColonyCreated(c);
         }
     }
 }

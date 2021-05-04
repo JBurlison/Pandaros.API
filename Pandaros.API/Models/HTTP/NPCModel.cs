@@ -16,7 +16,6 @@ namespace Pandaros.API.Models.HTTP
         public SerializableVector3 Position { get; set; }
         public SerializableVector3 GoalPosition { get; set; }
         public SerializableVector3 BedPosition { get; set; }
-        public float FoodHoursCarried { get; set; }
         public int Id { get; set; }
         public ushort NpcTypeJobId { get; set; }
         public ColonistInventory ColonistInventory { get; set; }

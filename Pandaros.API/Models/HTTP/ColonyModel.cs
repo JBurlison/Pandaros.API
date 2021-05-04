@@ -16,7 +16,7 @@ namespace Pandaros.API.Models.HTTP
         public int BannerCount { get; set; }
         public int BedCount { get; set; }
         public float Happiness { get; set; }
-        public float AvailableFood { get; set; }
+        public float AvailableMeals { get; set; }
         public int StockpileCount { get; set; }
         public int OpenJobCount { get; set; }
         public bool AutoRecruit { get; set; }

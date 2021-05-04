@@ -1,4 +1,5 @@
-﻿using Jobs;
+﻿using Chatting;
+using Jobs;
 using ModLoaderInterfaces;
 using NetworkUI;
 using NetworkUI.Items;
@@ -157,7 +158,6 @@ namespace Pandaros.API.ColonyManagement
                                     var npc = firedJobCounts.TakenJobs[i].NPC;
                                     npc.ClearJob();
                                     npc.TakeJob(job.Value.AvailableJobs[i]);
-                                    data.Player.ActiveColony.JobFinder.Remove(job.Value.AvailableJobs[i]);
                                 }
                                 else
                                     break;
@@ -184,28 +184,32 @@ namespace Pandaros.API.ColonyManagement
 
                         for (int i = 0; i < count; i++)
                         {
-                            var num = 0f;
-                            data.Player.ActiveColony.HappinessData.RecruitmentCostCalculator.GetCost(data.Player.ActiveColony.HappinessData.CachedHappiness, data.Player.ActiveColony, out float foodCost);
-                            if (data.Player.ActiveColony.Stockpile.TotalFood < foodCost ||
-                                !data.Player.ActiveColony.Stockpile.TryRemoveFood(ref num, foodCost))
+                           
+                            if (data.Player.ActiveColony.Followers.Count >= data.Player.ActiveColony.ColonistCap)
                             {
-                                PandaChat.Send(data.Player, _localizationHelper, "Notenoughfood", ChatColor.red);
+                                Chat.Send(data.Player, Localization.GetSentence(data.Player.LastKnownLocale, "colonymanagement.recruitfailedcap"));
                                 break;
                             }
-                            else
+                            if (data.Player.ActiveColony.CalculateBedCount() <= data.Player.ActiveColony.Followers.Count)
                             {
-                                var newGuy = new NPCBase(data.Player.ActiveColony, data.Player.ActiveColony.GetClosestBanner(new Vector3Int(data.Player.Position)).Position);
-                                newGuy.FoodHoursCarried = ServerManager.ServerSettings.NPCs.InitialFoodCarriedHours;
-                                data.Player.ActiveColony.RegisterNPC(newGuy);
-                                ColonistInventory.Get(newGuy);
-                                NPCTracker.Add(newGuy);
-                                ModLoader.Callbacks.OnNPCRecruited.Invoke(newGuy);
+                                Chat.Send(data.Player, Localization.GetSentence(data.Player.LastKnownLocale, "colonymanagement.recruitfailedbeds"));
+                                break;
+                            }
+                            if (data.Player.ActiveColony.Followers.Count >= ServerManager.ServerSettings.NPCs.FreeNPCs && !data.Player.ActiveColony.Stockpile.TryTakeMeal(ServerManager.ServerSettings.NPCs.RecruitmentCost))
+                            {
+                                Chat.Send(data.Player, Localization.GetSentence(data.Player.LastKnownLocale, "colonymanagement.recruitfailednomeals"));
+                                break;
+                            }
 
-                                if (newGuy.IsValid)
-                                {
-                                    newGuy.TakeJob(job.Value.AvailableJobs[i]);
-                                    data.Player.ActiveColony.JobFinder.Remove(job.Value.AvailableJobs[i]);
-                                }
+                            var newGuy = new NPCBase(data.Player.ActiveColony, data.Player.ActiveColony.GetClosestBanner(new Vector3Int(data.Player.Position)).Position);
+                            data.Player.ActiveColony.RegisterNPC(newGuy);
+                            ColonistInventory.Get(newGuy);
+                            NPCTracker.Add(newGuy);
+                            ModLoader.Callbacks.OnNPCRecruited.Invoke(newGuy);
+
+                            if (newGuy.IsValid)
+                            {
+                                newGuy.TakeJob(job.Value.AvailableJobs[i]);
                             }
                         }
 
@@ -248,17 +252,6 @@ namespace Pandaros.API.ColonyManagement
             }
 
             menu.Items.Add(new Line());
-
-            if (!fired)
-            {
-                ColonyState ps = ColonyState.GetColonyState(player.ActiveColony);
-                
-                player.ActiveColony.HappinessData.RecruitmentCostCalculator.GetCost(player.ActiveColony.HappinessData.CachedHappiness, player.ActiveColony, out float cost);
-                cost = UnityEngine.Mathf.Round(cost * 100f) * 0.01f;
-                menu.Items.Add(new HorizontalSplit(new Label(new LabelData(_localizationHelper.GetLocalizationKey("RecruitmentCost"), UnityEngine.Color.white)),
-                                                    new Label(new LabelData(Pipliz.Math.RoundToInt(2000f * cost).ToString(), UnityEngine.Color.white))));
-                
-            }
 
 
             List<ValueTuple<IItem, int>> header = new List<ValueTuple<IItem, int>>();
@@ -318,19 +311,25 @@ namespace Pandaros.API.ColonyManagement
         public static Dictionary<string, JobCounts> GetJobCounts(Colony colony)
         {
             Dictionary<string, JobCounts> jobCounts = new Dictionary<string, JobCounts>();
-            var jobs = colony?.JobFinder?.JobsData?.OpenJobs;
+            var jobs = colony?.JobFinder?.JobsData.PerJobData;
             var npcs = colony?.Followers;
 
             if (jobs != null)
                 foreach (var job in jobs)
                 {
-                    if (NPCType.NPCTypes.TryGetValue(job.NPCType, out var nPCTypeSettings))
+                    if (NPCType.NPCTypes.TryGetValue(job.Key, out var nPCTypeSettings))
                     {
-                        if (!jobCounts.ContainsKey(nPCTypeSettings.PrintName))
-                            jobCounts.Add(nPCTypeSettings.PrintName, new JobCounts() { Name = nPCTypeSettings.PrintName });
+                        if (!jobCounts.ContainsKey(nPCTypeSettings.KeyName))
+                            jobCounts.Add(nPCTypeSettings.KeyName, new JobCounts() { Name = nPCTypeSettings.KeyName });
 
-                        jobCounts[nPCTypeSettings.PrintName].AvailableCount++;
-                        jobCounts[nPCTypeSettings.PrintName].AvailableJobs.Add(job);
+                        for (var i = 0; i < job.Value.JobCount; i++)
+                        {
+                            if (job.Value.Jobs[i].NPC == null)
+                            {
+                                jobCounts[nPCTypeSettings.KeyName].AvailableCount++;
+                                jobCounts[nPCTypeSettings.KeyName].AvailableJobs.Add(job.Value.Jobs[i]);
+                            }
+                        }
                     }
                 }
 
@@ -340,11 +339,11 @@ namespace Pandaros.API.ColonyManagement
                 {
                     if (npc.Job != null && npc.Job.IsValid && NPCType.NPCTypes.TryGetValue(npc.Job.NPCType, out var nPCTypeSettings))
                     {
-                        if (!jobCounts.ContainsKey(nPCTypeSettings.PrintName))
-                            jobCounts.Add(nPCTypeSettings.PrintName, new JobCounts() { Name = nPCTypeSettings.PrintName });
+                        if (!jobCounts.ContainsKey(nPCTypeSettings.KeyName))
+                            jobCounts.Add(nPCTypeSettings.KeyName, new JobCounts() { Name = nPCTypeSettings.KeyName });
 
-                        jobCounts[nPCTypeSettings.PrintName].TakenCount++;
-                        jobCounts[nPCTypeSettings.PrintName].TakenJobs.Add(npc.Job);
+                        jobCounts[nPCTypeSettings.KeyName].TakenCount++;
+                        jobCounts[nPCTypeSettings.KeyName].TakenJobs.Add(npc.Job);
                     }
                 }
 

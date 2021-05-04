@@ -36,9 +36,10 @@
         "Tutorial": {
           "CancelTutorials": "Dont show any more tutorials"
         },
-          "Settlers": {
-            "SkillChance": "Additional Skill chance: {0}%"
-          },
+        "Settlers": {
+          "SkillChancepct": "Chance to proc addition items when skilled workers craft: {0}%",
+          "SkillChance": "Skill Chance"
+        },
           "Bosses": {
             "AdminDisabledBosses": "The server administrator had disabled the changing of bosses.",
             "BossesToggled": "Pandaros.API! Mod Bosses are now ",

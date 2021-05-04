@@ -30,7 +30,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
             var formatStr = QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player);
 
             if (formatStr.Count(c => c == '{') == 2)
-                return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), colony.Stockpile.TotalFood * 2000, GoalCount);
+                return string.Format(QuestingSystem.LocalizationHelper.LocalizeOrDefault(LocalizationKey, player), colony.Stockpile.TotalMeals, GoalCount);
             else
                 return formatStr;
         }
@@ -40,7 +40,7 @@ namespace Pandaros.API.Questing.BuiltinObjectives
             if (GoalCount == 0)
                 return 1;
 
-            var total = colony.Stockpile.TotalFood * 2000;
+            var total = colony.Stockpile.TotalMeals;
 
             if (total == GoalCount)
                 return 1;

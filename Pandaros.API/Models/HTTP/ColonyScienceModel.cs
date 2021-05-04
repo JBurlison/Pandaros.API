@@ -11,7 +11,7 @@ namespace Pandaros.API.Models.HTTP
     public class ColonyScienceModel
     {
         public List<uint> CompletedScience { get; set; } = new List<uint>();
-        public Dictionary<uint, float> CompletedCycles { get; set; } = new Dictionary<uint, float>();
+        public Dictionary<uint, int> CompletedCycles { get; set; } = new Dictionary<uint, int>();
     }
 
     

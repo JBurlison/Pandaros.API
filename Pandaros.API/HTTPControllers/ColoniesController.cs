@@ -1,6 +1,7 @@
 ﻿using Jobs;
 using Microsoft.OpenApi.Models;
 using Monsters;
+using Pandaros.API.ColonyManagement;
 using Pandaros.API.Entities;
 using Pandaros.API.Extender;
 using Pandaros.API.Models;
@@ -156,16 +157,16 @@ namespace Pandaros.API.HTTPControllers
                     TakenJobsByTypeId = new Dictionary<int, int>()
                 };
 
-                List<IJob> openJobs = colony.JobFinder?.JobsData?.OpenJobs;
+                //List<IJob> openJobs = colony.JobFinder?.JobsData?.OpenJobs;
 
-                if (openJobs != null)
-                    foreach (var job in openJobs)
-                    {
-                        if (!colonyJobs.OpenJobsByTypeId.ContainsKey(job.NPCType.Type))
-                            colonyJobs.OpenJobsByTypeId.Add(job.NPCType.Type, 0);
+                //if (openJobs != null)
+                //    foreach (var job in openJobs)
+                //    {
+                //        if (!colonyJobs.OpenJobsByTypeId.ContainsKey(job.NPCType.Type))
+                //            colonyJobs.OpenJobsByTypeId.Add(job.NPCType.Type, 0);
 
-                        colonyJobs.OpenJobsByTypeId[job.NPCType.Type]++;
-                    }
+                //        colonyJobs.OpenJobsByTypeId[job.NPCType.Type]++;
+                //    }
 
                 foreach (var npc in colony.Followers)
                 {
@@ -185,7 +186,6 @@ namespace Pandaros.API.HTTPControllers
         {
             return new NPCModel()
             {
-                FoodHoursCarried = follower.FoodHoursCarried,
                 Health = follower.health,
                 Id = follower.ID,
                 NpcTypeJobId = follower.Job.NPCType.Type,
@@ -225,10 +225,9 @@ namespace Pandaros.API.HTTPControllers
                 Name = c.Name,
                 LaborerCount = c.LaborerCount,
                 AutoRecruit = c.JobFinder.AutoRecruit,
-                AvailableFood = c.Stockpile.TotalFood,
+                AvailableMeals = c.Stockpile.TotalMeals,
                 BedCount = c.BedTracker.BedCount,
-                Happiness = c.HappinessData.CachedHappiness,
-                OpenJobCount = c.JobFinder.OpenJobCount,
+                OpenJobCount = ColonyTool.GetJobCounts(c).Select(kvp => kvp.Value.AvailableCount).Sum(),
                 StockpileCount = c.Stockpile.ItemCount,
                 BannerCount = c.Banners.Length,
                 ColonistCount = c.FollowerCount,

@@ -16,7 +16,6 @@ namespace Pandaros.API.Models.HTTP
         public string Icon { get; set; }
         public ScientistCyclesCondition ScientistCyclesCondition { get; set; }
         public ColonistCountCondition ColonistCountCondition { get; set; }
-        public HappinessCondition HappinessCondition { get; set; }
         public List<RecipeUnlockClient> Unlocks { get; set; }
     }
 }

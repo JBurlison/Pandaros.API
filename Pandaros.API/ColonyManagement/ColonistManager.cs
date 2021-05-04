@@ -174,13 +174,12 @@ namespace Pandaros.API.ColonyManagement
 
         public static float PenalizeFood(Colony c, float percent)
         {
-            var cost = (float)System.Math.Ceiling(c.Stockpile.TotalFood * percent);
-            var num = 0f;
+            var cost = (float)System.Math.Ceiling(c.Stockpile.TotalMeals * percent);
 
             if (cost < 1)
                 cost = 1;
 
-            c.Stockpile.TryRemoveFood(ref num, cost);
+            c.Stockpile.TryTakeMeal(Pipliz.Math.RoundToInt(cost));
             return cost;
         }
 

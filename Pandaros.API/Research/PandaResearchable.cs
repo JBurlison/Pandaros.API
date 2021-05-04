@@ -33,15 +33,7 @@ namespace Pandaros.API.Research
                 if (pandaResearch.Conditions != null && (pandaResearch.Conditions.TryGetValue(currentLevel, out researchableConditions) || pandaResearch.Conditions.TryGetValue(0, out researchableConditions)))
                 {
                     foreach (var condition in researchableConditions)
-                        if (condition is HappinessCondition happinessCondition)
-                        {
-                            if (ServerManager.WorldSettingsReadOnly.EnableHappiness)
-                                Conditions.Add(condition);
-                        }
-                        else
-                        {
                             Conditions.Add(condition);
-                        }
                 }
 
                 List<string> dependancies = null;

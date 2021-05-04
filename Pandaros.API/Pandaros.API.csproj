@@ -104,6 +104,7 @@
     <Compile Include="Extender\IOnLoadingColonyExtender.cs" />
     <Compile Include="Extender\IOnLoadModJSONFilesExtender.cs" />
     <Compile Include="Extender\IOnChangedBlockExtender.cs" />
+    <Compile Include="Extender\IOnRegisterUpgradesExtender.cs" />
     <Compile Include="Extender\IOnTryChangeBlockExtender.cs" />
     <Compile Include="Extender\IOnSendAreaHighlightsExtender.cs" />
     <Compile Include="Extender\IOnTimedUpdate.cs" />
@@ -117,14 +118,13 @@
     <Compile Include="Extender\Providers\JobSettingsProvider.cs" />
     <Compile Include="Extender\Providers\GuardJobSettingsProvider.cs" />
     <Compile Include="Extender\Providers\GenerateTypesProvider.cs" />
-    <Compile Include="Extender\Providers\HappinessCausesProvider.cs" />
-    <Compile Include="Extender\Providers\HappinessEffectProvider.cs" />
     <Compile Include="Extender\Providers\ItemsProvider.cs" />
     <Compile Include="Extender\Providers\LootTableProvider.cs" />
     <Compile Include="Extender\Providers\PandaQauestProvider.cs" />
     <Compile Include="Extender\Providers\PandaZombieProvider.cs" />
     <Compile Include="Extender\Providers\PlayerRecipeProvider.cs" />
     <Compile Include="Extender\Providers\RecipeProvider.cs" />
+    <Compile Include="Extender\Providers\RegisterUpgradesProvider.cs" />
     <Compile Include="Extender\Providers\ResearchProvider.cs" />
     <Compile Include="Extender\Providers\TutorialProvider.cs" />
     <Compile Include="Extender\Providers\RoamingJobObjectiveProvider.cs" />
@@ -285,6 +285,7 @@
     <Compile Include="Tutorials\Prerequisites\ColonistsCountPrerequisite.cs" />
     <Compile Include="Tutorials\Prerequisites\ItemPlacedPrerequisite.cs" />
     <Compile Include="Tutorials\TutorialFactory.cs" />
+    <Compile Include="Upgrades\IPandaUpgrade.cs" />
     <Compile Include="WorldGen\Ore.cs" />
     <Compile Include="WorldGen\PandarosSpawnPoint.cs" />
     <Compile Include="WorldGen\WorldHelper.cs" />

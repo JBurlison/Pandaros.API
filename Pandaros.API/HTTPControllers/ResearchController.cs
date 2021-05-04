@@ -56,9 +56,6 @@ namespace Pandaros.API.HTTPControllers
                 if (item is ScientistCyclesCondition cycles)
                     scienceModel.ScientistCyclesCondition = cycles;
 
-                if (item is HappinessCondition happy)
-                    scienceModel.HappinessCondition = happy;
-
                 if (item is ColonistCountCondition count)
                     scienceModel.ColonistCountCondition = count;
             }
